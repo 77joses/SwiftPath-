@@ -4,8 +4,8 @@ export default function App() {
       minHeight: "100vh",
       background: "#07152b",
       color: "white",
-      fontFamily: "Arial",
-      padding: "40px"
+      padding: "40px",
+      fontFamily: "Arial"
     }}>
       <h1>SwiftPath</h1>
       <p>Pathways to Success</p>
