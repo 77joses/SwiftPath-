@@ -56,10 +56,14 @@ export default function App() {
           }}
         >
           {questions.map((item) => (
-            <QuestionCard
-              key={item.id}
-              question={item.question}
-            />
+            
+<QuestionCard
+  key={item.id}
+  question={item.question}
+  type={item.type}
+  options={item.options}
+/>
+    
           ))}
         </div>
 
