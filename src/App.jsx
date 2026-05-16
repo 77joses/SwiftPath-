@@ -1,3 +1,5 @@
+import subjects from "./data/subjects";
+import PerformanceCard from "./components/PerformanceCard";
 import pathways from "./data/pathways";
 import questions from "./data/questions";
 
@@ -66,7 +68,26 @@ export default function App() {
     
           ))}
         </div>
+<div
+  style={{
+    marginTop: "80px",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  }}
+>
+  <h2 style={{ marginBottom: "20px" }}>
+    Subject Performance
+  </h2>
 
+  {subjects.map((subject, index) => (
+    <PerformanceCard
+      key={index}
+      subject={subject}
+    />
+  ))}
+</div>
       </section>
 
     </div>
