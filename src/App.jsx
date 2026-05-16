@@ -20,6 +20,16 @@ export default function App() {
 const [answers, setAnswers] = useState({});
   const [performances, setPerformances] =
   useState({});
+  const handlePerformanceChange = (
+  subject,
+  band
+) => {
+
+  setPerformances((prev) => ({
+    ...prev,
+    [subject]: band,
+  }));
+};
 const handleAnswer = (
   question,
   answer
