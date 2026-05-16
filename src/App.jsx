@@ -325,6 +325,25 @@ else {
     onCountyChange={setSelectedCounty}
   />
 </div>
+  {recommendedPathway && (
+  <div
+    style={{
+      marginTop: "80px",
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    }}
+  >
+    <h2>
+      Recommended Schools
+    </h2>
+
+    <SchoolRecommendations
+      schools={filteredSchools}
+    />
+  </div>
+)}
       </section>
 
     </div>
