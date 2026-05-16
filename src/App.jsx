@@ -43,18 +43,64 @@ const handleAnswer = (
 
 const generateRecommendation = () => {
 
+  let stemScore = 0;
+  let artsScore = 0;
+  let socialScore = 0;
+
   if (
     answers[
       "Do you enjoy solving complex problems?"
     ] === "Yes"
   ) {
+    stemScore += 3;
+  }
+
+  if (
+    answers[
+      "Do you enjoy creative activities?"
+    ] === "Yes"
+  ) {
+    artsScore += 3;
+  }
+
+  if (
+    performances["Mathematics"] === "EE1" ||
+    performances["Mathematics"] === "EE2"
+  ) {
+    stemScore += 4;
+  }
+
+  if (
+    performances["Integrated Science"] === "EE1" ||
+    performances["Integrated Science"] === "EE2"
+  ) {
+    stemScore += 4;
+  }
+
+  if (
+    performances["Visual Arts"] === "EE1" ||
+    performances["Performing Arts"] === "EE1"
+  ) {
+    artsScore += 4;
+  }
+
+  if (
+    performances["Social Studies"] === "EE1" ||
+    performances["Social Studies"] === "EE2"
+  ) {
+    socialScore += 4;
+  }
+
+  if (
+    stemScore >= artsScore &&
+    stemScore >= socialScore
+  ) {
     setRecommendedPathway("STEM");
   }
 
   else if (
-    answers[
-      "Do you enjoy creative activities?"
-    ] === "Yes"
+    artsScore >= stemScore &&
+    artsScore >= socialScore
   ) {
     setRecommendedPathway(
       "Arts & Sports Science"
@@ -65,9 +111,14 @@ const generateRecommendation = () => {
     setRecommendedPathway(
       "Social Sciences"
     );
-    console.log(answers);
-console.log(performances);
   }
+
+  console.log({
+    stemScore,
+    artsScore,
+    socialScore,
+  });
+};
 };
   return (
     <div className="container">
