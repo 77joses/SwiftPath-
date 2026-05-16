@@ -33,6 +33,9 @@ export default function App() {
   const [selectedCounty, setSelectedCounty] =
     useState("");
 
+  const [pathwayScores, setPathwayScores] =
+    useState([]);
+
   const handlePerformanceChange = (
     subject,
     band
@@ -105,12 +108,39 @@ export default function App() {
       socialScore += 4;
     }
 
-    if (
-      stemScore >= artsScore &&
-      stemScore >= socialScore
-    ) {
+    const rankedScores = [
+      {
+        pathway: "STEM",
+        score: stemScore,
+      },
 
-      setRecommendedPathway("STEM");
+      {
+        pathway:
+          "Arts & Sports Science",
+        score: artsScore,
+      },
+
+      {
+        pathway:
+          "Social Sciences",
+        score: socialScore,
+      },
+    ];
+
+    rankedScores.sort(
+      (a, b) => b.score - a.score
+    );
+
+    setPathwayScores(rankedScores);
+
+    const topPathway =
+      rankedScores[0].pathway;
+
+    setRecommendedPathway(
+      topPathway
+    );
+
+    if (topPathway === "STEM") {
 
       setRecommendationReason(
         "Your strengths in Mathematics, Science and analytical thinking align strongly with STEM pathways."
@@ -118,13 +148,9 @@ export default function App() {
     }
 
     else if (
-      artsScore >= stemScore &&
-      artsScore >= socialScore
+      topPathway ===
+      "Arts & Sports Science"
     ) {
-
-      setRecommendedPathway(
-        "Arts & Sports Science"
-      );
 
       setRecommendationReason(
         "Your creativity and artistic strengths align strongly with Arts & Sports Science pathways."
@@ -132,10 +158,6 @@ export default function App() {
     }
 
     else {
-
-      setRecommendedPathway(
-        "Social Sciences"
-      );
 
       setRecommendationReason(
         "Your interests and performance patterns align more closely with Social Sciences pathways."
@@ -213,6 +235,35 @@ export default function App() {
             >
               {recommendationReason}
             </p>
+
+            <div
+              style={{
+                marginTop: "25px",
+              }}
+            >
+
+              <h3>
+                Alternative Pathways
+              </h3>
+
+              {pathwayScores.map(
+                (item, index) => (
+                  <p
+                    key={index}
+                    style={{
+                      marginTop: "10px",
+                    }}
+                  >
+                    {index + 1}.
+                    {" "}
+                    {item.pathway}
+                    {" "}
+                    ({item.score} points)
+                  </p>
+                )
+              )}
+
+            </div>
 
           </div>
         )}
