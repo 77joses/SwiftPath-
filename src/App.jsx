@@ -18,10 +18,44 @@ export default function App() {
     useState("");
   
 const [answers, setAnswers] = useState({});
-  const generateRecommendation = () => {
-    setRecommendedPathway("STEM");
-  };
+  
+const handleAnswer = (
+  question,
+  answer
+) => {
 
+  setAnswers((prev) => ({
+    ...prev,
+    [question]: answer,
+  }));
+};
+
+const generateRecommendation = () => {
+
+  if (
+    answers[
+      "Do you enjoy solving complex problems?"
+    ] === "Yes"
+  ) {
+    setRecommendedPathway("STEM");
+  }
+
+  else if (
+    answers[
+      "Do you enjoy creative activities?"
+    ] === "Yes"
+  ) {
+    setRecommendedPathway(
+      "Arts & Sports Science"
+    );
+  }
+
+  else {
+    setRecommendedPathway(
+      "Social Sciences"
+    );
+  }
+};
   return (
     <div className="container">
 
