@@ -16,7 +16,8 @@ export default function App() {
 
   const [recommendedPathway, setRecommendedPathway] =
     useState("");
-
+  
+const [answers, setAnswers] = useState({});
   const generateRecommendation = () => {
     setRecommendedPathway("STEM");
   };
