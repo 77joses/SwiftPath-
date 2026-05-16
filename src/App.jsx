@@ -1,3 +1,5 @@
+import subjectCombinations from "./data/subjectCombinations";
+import CombinationSelector from "./components/CombinationSelector";
 import pathwayChoices from "./data/pathwayChoices";
 import PathwaySelector from "./components/PathwaySelector";
 import subjects from "./data/subjects";
@@ -105,6 +107,23 @@ export default function App() {
 
   <PathwaySelector
     pathways={pathwayChoices}
+  />
+</div>
+    <div
+  style={{
+    marginTop: "80px",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  }}
+>
+  <h2 style={{ marginBottom: "20px" }}>
+    Subject Combinations
+  </h2>
+
+  <CombinationSelector
+    combinations={subjectCombinations}
   />
 </div>
       </section>
