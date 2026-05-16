@@ -137,13 +137,18 @@ const generateRecommendation = () => {
           }}
         >
           {questions.map((item) => (
-            <QuestionCard
-              key={item.id}
-              question={item.question}
-              type={item.type}
-              options={item.options}
-            />
-          ))}
+              <QuestionCard
+  key={item.id}
+  question={item.question}
+  type={item.type}
+  options={item.options}
+  onAnswer={(answer) =>
+    handleAnswer(
+      item.question,
+      answer
+    )
+  }
+/>        ))}
         </div>
 
         <div
