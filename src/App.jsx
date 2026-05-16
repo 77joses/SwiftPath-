@@ -95,10 +95,16 @@ const generateRecommendation = () => {
   }
 
   if (
-    stemScore >= artsScore &&
-    stemScore >= socialScore
-  ) {
-    setRecommendedPathway("STEM");
+  stemScore >= artsScore &&
+  stemScore >= socialScore
+) {
+
+  setRecommendedPathway("STEM");
+
+  setRecommendationReason(
+    "Your strengths in Mathematics, Science and analytical thinking align strongly with STEM pathways."
+  );
+}
   }
 
   else if (
