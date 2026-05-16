@@ -107,13 +107,19 @@ const generateRecommendation = () => {
 }
   }
 
-  else if (
-    artsScore >= stemScore &&
-    artsScore >= socialScore
-  ) {
-    setRecommendedPathway(
-      "Arts & Sports Science"
-    );
+else if (
+  artsScore >= stemScore &&
+  artsScore >= socialScore
+) {
+
+  setRecommendedPathway(
+    "Arts & Sports Science"
+  );
+
+  setRecommendationReason(
+    "Your creativity and artistic strengths align strongly with Arts & Sports Science pathways."
+  );
+}
   }
 
   else {
