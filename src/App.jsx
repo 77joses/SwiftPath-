@@ -122,11 +122,16 @@ else if (
 }
   }
 
-  else {
-    setRecommendedPathway(
-      "Social Sciences"
-    );
-  }
+else {
+
+  setRecommendedPathway(
+    "Social Sciences"
+  );
+
+  setRecommendationReason(
+    "Your interests and performance patterns align more closely with Social Sciences pathways."
+  );
+}
 
   console.log({
     stemScore,
