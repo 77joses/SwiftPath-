@@ -65,6 +65,8 @@ const generateRecommendation = () => {
     setRecommendedPathway(
       "Social Sciences"
     );
+    console.log(answers);
+console.log(performances);
   }
 };
   return (
