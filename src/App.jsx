@@ -25,6 +25,8 @@ const [recommendationReason, setRecommendationReason] =
 const [answers, setAnswers] = useState({});
   const [performances, setPerformances] =
   useState({});
+ const [selectedCounty, setSelectedCounty] =
+  useState(""); 
   const handlePerformanceChange = (
   subject,
   band
