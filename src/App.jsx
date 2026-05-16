@@ -177,9 +177,12 @@ const generateRecommendation = () => {
 
           {subjects.map((subject, index) => (
             <PerformanceCard
-              key={index}
-              subject={subject}
-            />
+  key={index}
+  subject={subject}
+  onPerformanceChange={
+    handlePerformanceChange
+  }
+/>
           ))}
         </div>
 
