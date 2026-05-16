@@ -1,16 +1,26 @@
-import subjectCombinations from "./data/subjectCombinations";
-import CombinationSelector from "./components/CombinationSelector";
-import pathwayChoices from "./data/pathwayChoices";
-import PathwaySelector from "./components/PathwaySelector";
-import subjects from "./data/subjects";
-import PerformanceCard from "./components/PerformanceCard";
+import { useState } from "react";
+
 import pathways from "./data/pathways";
 import questions from "./data/questions";
+import subjects from "./data/subjects";
+import pathwayChoices from "./data/pathwayChoices";
+import subjectCombinations from "./data/subjectCombinations";
 
 import PathwayCard from "./components/PathwayCard";
 import QuestionCard from "./components/QuestionCard";
+import PerformanceCard from "./components/PerformanceCard";
+import PathwaySelector from "./components/PathwaySelector";
+import CombinationSelector from "./components/CombinationSelector";
 
 export default function App() {
+
+  const [recommendedPathway, setRecommendedPathway] =
+    useState("");
+
+  const generateRecommendation = () => {
+    setRecommendedPathway("STEM");
+  };
+
   return (
     <div className="container">
 
@@ -25,14 +35,44 @@ export default function App() {
         </p>
 
         <div className="buttons">
-          <button className="primary">
-            Start Analysis
+          <button
+            className="primary"
+            onClick={generateRecommendation}
+          >
+            Generate Recommendation
           </button>
 
           <button className="secondary">
             Explore Pathways
           </button>
         </div>
+
+        {recommendedPathway && (
+          <div
+            style={{
+              background: "#0b63f6",
+              padding: "25px",
+              borderRadius: "18px",
+              marginTop: "40px",
+              width: "100%",
+              maxWidth: "700px",
+            }}
+          >
+            <h2>
+              Recommended Pathway:
+            </h2>
+
+            <p
+              style={{
+                marginTop: "10px",
+                fontSize: "1.3rem",
+                fontWeight: "bold",
+              }}
+            >
+              {recommendedPathway}
+            </p>
+          </div>
+        )}
 
         <div
           style={{
@@ -62,70 +102,72 @@ export default function App() {
           }}
         >
           {questions.map((item) => (
-            
-<QuestionCard
-  key={item.id}
-  question={item.question}
-  type={item.type}
-  options={item.options}
-/>
-    
+            <QuestionCard
+              key={item.id}
+              question={item.question}
+              type={item.type}
+              options={item.options}
+            />
           ))}
         </div>
-<div
-  style={{
-    marginTop: "80px",
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  }}
->
-  <h2 style={{ marginBottom: "20px" }}>
-    Subject Performance
-  </h2>
 
-  {subjects.map((subject, index) => (
-    <PerformanceCard
-      key={index}
-      subject={subject}
-    />
-  ))}
-</div>
-    <div
-  style={{
-    marginTop: "80px",
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  }}
->
-  <h2 style={{ marginBottom: "20px" }}>
-    Preferred Pathways
-  </h2>
+        <div
+          style={{
+            marginTop: "80px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <h2 style={{ marginBottom: "20px" }}>
+            Subject Performance
+          </h2>
 
-  <PathwaySelector
-    pathways={pathwayChoices}
-  />
-</div>
-    <div
-  style={{
-    marginTop: "80px",
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  }}
->
-  <h2 style={{ marginBottom: "20px" }}>
-    Subject Combinations
-  </h2>
+          {subjects.map((subject, index) => (
+            <PerformanceCard
+              key={index}
+              subject={subject}
+            />
+          ))}
+        </div>
 
-  <CombinationSelector
-    combinations={subjectCombinations}
-  />
-</div>
+        <div
+          style={{
+            marginTop: "80px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <h2 style={{ marginBottom: "20px" }}>
+            Preferred Pathways
+          </h2>
+
+          <PathwaySelector
+            pathways={pathwayChoices}
+          />
+        </div>
+
+        <div
+          style={{
+            marginTop: "80px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <h2 style={{ marginBottom: "20px" }}>
+            Subject Combinations
+          </h2>
+
+          <CombinationSelector
+            combinations={subjectCombinations}
+          />
+        </div>
+
       </section>
 
     </div>
