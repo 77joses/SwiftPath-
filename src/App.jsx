@@ -325,6 +325,16 @@ else {
     onCountyChange={setSelectedCounty}
   />
 </div>
+       <h2 style={{ marginBottom: "20px" }}>
+            Subject Performance
+          </h2>
+
+          {subjects.map((subject, index) => (
+            <PerformanceCard
+  key={index}
+  subject={subject}
+  onPerformanceChange={
+    handlePerformanceChange 
   {recommendedPathway && (
   <div
     style={{
