@@ -64,12 +64,18 @@ export default function App() {
     let artsScore = 0;
     let socialScore = 0;
 
+    let reasons = [];
+
     if (
       answers[
         "Do you enjoy solving complex problems?"
       ] === "Yes"
     ) {
       stemScore += 3;
+
+      reasons.push(
+        "You enjoy analytical problem solving."
+      );
     }
 
     if (
@@ -78,34 +84,70 @@ export default function App() {
       ] === "Yes"
     ) {
       artsScore += 3;
+
+      reasons.push(
+        "You show strong creative interests."
+      );
     }
 
     if (
       performances["Mathematics"] === "EE1" ||
       performances["Mathematics"] === "EE2"
     ) {
+
       stemScore += 4;
+
+      reasons.push(
+        "You performed strongly in Mathematics."
+      );
+    }
+
+    else if (
+      performances["Mathematics"] === "AE" ||
+      performances["Mathematics"] === "BE"
+    ) {
+
+      stemScore -= 2;
+
+      reasons.push(
+        "Your Mathematics performance may make advanced STEM pathways more challenging."
+      );
     }
 
     if (
       performances["Integrated Science"] === "EE1" ||
       performances["Integrated Science"] === "EE2"
     ) {
+
       stemScore += 4;
+
+      reasons.push(
+        "You demonstrated strength in Integrated Science."
+      );
     }
 
     if (
       performances["Visual Arts"] === "EE1" ||
       performances["Performing Arts"] === "EE1"
     ) {
+
       artsScore += 4;
+
+      reasons.push(
+        "Your artistic performance supports creative pathways."
+      );
     }
 
     if (
       performances["Social Studies"] === "EE1" ||
       performances["Social Studies"] === "EE2"
     ) {
+
       socialScore += 4;
+
+      reasons.push(
+        "You performed strongly in Social Studies."
+      );
     }
 
     const rankedScores = [
@@ -140,29 +182,9 @@ export default function App() {
       topPathway
     );
 
-    if (topPathway === "STEM") {
-
-      setRecommendationReason(
-        "Your strengths in Mathematics, Science and analytical thinking align strongly with STEM pathways."
-      );
-    }
-
-    else if (
-      topPathway ===
-      "Arts & Sports Science"
-    ) {
-
-      setRecommendationReason(
-        "Your creativity and artistic strengths align strongly with Arts & Sports Science pathways."
-      );
-    }
-
-    else {
-
-      setRecommendationReason(
-        "Your interests and performance patterns align more closely with Social Sciences pathways."
-      );
-    }
+    setRecommendationReason(
+      reasons.join(" ")
+    );
   };
 
   const filteredSchools = schools.filter(
