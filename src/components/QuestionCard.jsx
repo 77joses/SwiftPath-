@@ -1,8 +1,10 @@
 export default function QuestionCard({
   question,
   type,
-  options
+  options,
+  onAnswer
 }) {
+
   return (
     <div
       style={{
@@ -24,13 +26,27 @@ export default function QuestionCard({
             gap: "12px",
           }}
         >
-          <button className="primary">Yes</button>
-          <button className="secondary">No</button>
+          <button
+            className="primary"
+            onClick={() => onAnswer("Yes")}
+          >
+            Yes
+          </button>
+
+          <button
+            className="secondary"
+            onClick={() => onAnswer("No")}
+          >
+            No
+          </button>
         </div>
       )}
 
       {type === "select" && (
         <select
+          onChange={(e) =>
+            onAnswer(e.target.value)
+          }
           style={{
             marginTop: "20px",
             width: "100%",
