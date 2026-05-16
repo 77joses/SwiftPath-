@@ -29,6 +29,14 @@ const [answers, setAnswers] = useState({});
   useState({});
  const [selectedCounty, setSelectedCounty] =
   useState(""); 
+  const filteredSchools = schools.filter(
+  (school) =>
+    school.pathway === recommendedPathway &&
+    (
+      selectedCounty === "" ||
+      school.county === selectedCounty
+    )
+);
   const handlePerformanceChange = (
   subject,
   band
