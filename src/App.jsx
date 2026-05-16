@@ -1,5 +1,8 @@
 import pathways from "./data/pathways";
+import questions from "./data/questions";
+
 import PathwayCard from "./components/PathwayCard";
+import QuestionCard from "./components/QuestionCard";
 
 export default function App() {
   return (
@@ -39,6 +42,23 @@ export default function App() {
               key={pathway.id}
               name={pathway.name}
               description={pathway.description}
+            />
+          ))}
+        </div>
+
+        <div
+          style={{
+            marginTop: "80px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {questions.map((item) => (
+            <QuestionCard
+              key={item.id}
+              question={item.question}
             />
           ))}
         </div>
