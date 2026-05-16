@@ -181,15 +181,14 @@ else {
               Recommended Pathway:
             </h2>
 
-            <p
-              style={{
-                marginTop: "10px",
-                fontSize: "1.3rem",
-                fontWeight: "bold",
-              }}
-            >
-              {recommendedPathway}
-            </p>
+          <p
+  style={{
+    marginTop: "15px",
+    lineHeight: "1.7",
+  }}
+>
+  {recommendationReason}
+</p>
           </div>
         )}
 
