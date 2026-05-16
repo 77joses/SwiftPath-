@@ -1,3 +1,5 @@
+import pathwayChoices from "./data/pathwayChoices";
+import PathwaySelector from "./components/PathwaySelector";
 import subjects from "./data/subjects";
 import PerformanceCard from "./components/PerformanceCard";
 import pathways from "./data/pathways";
@@ -87,6 +89,23 @@ export default function App() {
       subject={subject}
     />
   ))}
+</div>
+    <div
+  style={{
+    marginTop: "80px",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  }}
+>
+  <h2 style={{ marginBottom: "20px" }}>
+    Preferred Pathways
+  </h2>
+
+  <PathwaySelector
+    pathways={pathwayChoices}
+  />
 </div>
       </section>
 
