@@ -1,7 +1,3 @@
-import schools from "./data/schools";
-import SchoolRecommendations from "./components/SchoolRecommendations";
-import counties from "./data/counties";
-import SchoolFilter from "./components/SchoolFilter";
 import { useState } from "react";
 
 import pathways from "./data/pathways";
@@ -9,151 +5,153 @@ import questions from "./data/questions";
 import subjects from "./data/subjects";
 import pathwayChoices from "./data/pathwayChoices";
 import subjectCombinations from "./data/subjectCombinations";
+import counties from "./data/counties";
+import schools from "./data/schools";
 
 import PathwayCard from "./components/PathwayCard";
 import QuestionCard from "./components/QuestionCard";
 import PerformanceCard from "./components/PerformanceCard";
 import PathwaySelector from "./components/PathwaySelector";
 import CombinationSelector from "./components/CombinationSelector";
+import SchoolFilter from "./components/SchoolFilter";
+import SchoolRecommendations from "./components/SchoolRecommendations";
 
 export default function App() {
 
   const [recommendedPathway, setRecommendedPathway] =
-  useState("");
+    useState("");
 
-const [recommendationReason, setRecommendationReason] =
-  useState("");
-  
-const [answers, setAnswers] = useState({});
+  const [recommendationReason, setRecommendationReason] =
+    useState("");
+
+  const [answers, setAnswers] =
+    useState({});
+
   const [performances, setPerformances] =
-  useState({});
- const [selectedCounty, setSelectedCounty] =
-  useState(""); 
-  const filteredSchools = schools.filter(
-  (school) =>
-    school.pathway === recommendedPathway &&
-    (
-      selectedCounty === "" ||
-      school.county === selectedCounty
-    )
-);
+    useState({});
+
+  const [selectedCounty, setSelectedCounty] =
+    useState("");
+
   const handlePerformanceChange = (
-  subject,
-  band
-) => {
+    subject,
+    band
+  ) => {
 
-  setPerformances((prev) => ({
-    ...prev,
-    [subject]: band,
-  }));
-};
-const handleAnswer = (
-  question,
-  answer
-) => {
+    setPerformances((prev) => ({
+      ...prev,
+      [subject]: band,
+    }));
+  };
 
-  setAnswers((prev) => ({
-    ...prev,
-    [question]: answer,
-  }));
-};
+  const handleAnswer = (
+    question,
+    answer
+  ) => {
 
-const generateRecommendation = () => {
+    setAnswers((prev) => ({
+      ...prev,
+      [question]: answer,
+    }));
+  };
 
-  let stemScore = 0;
-  let artsScore = 0;
-  let socialScore = 0;
+  const generateRecommendation = () => {
 
-  if (
-    answers[
-      "Do you enjoy solving complex problems?"
-    ] === "Yes"
-  ) {
-    stemScore += 3;
-  }
+    let stemScore = 0;
+    let artsScore = 0;
+    let socialScore = 0;
 
-  if (
-    answers[
-      "Do you enjoy creative activities?"
-    ] === "Yes"
-  ) {
-    artsScore += 3;
-  }
+    if (
+      answers[
+        "Do you enjoy solving complex problems?"
+      ] === "Yes"
+    ) {
+      stemScore += 3;
+    }
 
-  if (
-    performances["Mathematics"] === "EE1" ||
-    performances["Mathematics"] === "EE2"
-  ) {
-    stemScore += 4;
-  }
+    if (
+      answers[
+        "Do you enjoy creative activities?"
+      ] === "Yes"
+    ) {
+      artsScore += 3;
+    }
 
-  if (
-    performances["Integrated Science"] === "EE1" ||
-    performances["Integrated Science"] === "EE2"
-  ) {
-    stemScore += 4;
-  }
+    if (
+      performances["Mathematics"] === "EE1" ||
+      performances["Mathematics"] === "EE2"
+    ) {
+      stemScore += 4;
+    }
 
-  if (
-    performances["Visual Arts"] === "EE1" ||
-    performances["Performing Arts"] === "EE1"
-  ) {
-    artsScore += 4;
-  }
+    if (
+      performances["Integrated Science"] === "EE1" ||
+      performances["Integrated Science"] === "EE2"
+    ) {
+      stemScore += 4;
+    }
 
-  if (
-    performances["Social Studies"] === "EE1" ||
-    performances["Social Studies"] === "EE2"
-  ) {
-    socialScore += 4;
-  }
+    if (
+      performances["Visual Arts"] === "EE1" ||
+      performances["Performing Arts"] === "EE1"
+    ) {
+      artsScore += 4;
+    }
 
-  if (
-  stemScore >= artsScore &&
-  stemScore >= socialScore
-) {
+    if (
+      performances["Social Studies"] === "EE1" ||
+      performances["Social Studies"] === "EE2"
+    ) {
+      socialScore += 4;
+    }
 
-  setRecommendedPathway("STEM");
+    if (
+      stemScore >= artsScore &&
+      stemScore >= socialScore
+    ) {
 
-  setRecommendationReason(
-    "Your strengths in Mathematics, Science and analytical thinking align strongly with STEM pathways."
+      setRecommendedPathway("STEM");
+
+      setRecommendationReason(
+        "Your strengths in Mathematics, Science and analytical thinking align strongly with STEM pathways."
+      );
+    }
+
+    else if (
+      artsScore >= stemScore &&
+      artsScore >= socialScore
+    ) {
+
+      setRecommendedPathway(
+        "Arts & Sports Science"
+      );
+
+      setRecommendationReason(
+        "Your creativity and artistic strengths align strongly with Arts & Sports Science pathways."
+      );
+    }
+
+    else {
+
+      setRecommendedPathway(
+        "Social Sciences"
+      );
+
+      setRecommendationReason(
+        "Your interests and performance patterns align more closely with Social Sciences pathways."
+      );
+    }
+  };
+
+  const filteredSchools = schools.filter(
+    (school) =>
+      school.pathway === recommendedPathway &&
+      (
+        selectedCounty === "" ||
+        school.county === selectedCounty
+      )
   );
-}
-  }
 
-else if (
-  artsScore >= stemScore &&
-  artsScore >= socialScore
-) {
-
-  setRecommendedPathway(
-    "Arts & Sports Science"
-  );
-
-  setRecommendationReason(
-    "Your creativity and artistic strengths align strongly with Arts & Sports Science pathways."
-  );
-}
-  }
-
-else {
-
-  setRecommendedPathway(
-    "Social Sciences"
-  );
-
-  setRecommendationReason(
-    "Your interests and performance patterns align more closely with Social Sciences pathways."
-  );
-}
-
-  console.log({
-    stemScore,
-    artsScore,
-    socialScore,
-  });
-};
-};
   return (
     <div className="container">
 
@@ -168,6 +166,7 @@ else {
         </p>
 
         <div className="buttons">
+
           <button
             className="primary"
             onClick={generateRecommendation}
@@ -178,6 +177,7 @@ else {
           <button className="secondary">
             Explore Pathways
           </button>
+
         </div>
 
         {recommendedPathway && (
@@ -195,14 +195,25 @@ else {
               Recommended Pathway:
             </h2>
 
-          <p
-  style={{
-    marginTop: "15px",
-    lineHeight: "1.7",
-  }}
->
-  {recommendationReason}
-</p>
+            <p
+              style={{
+                marginTop: "10px",
+                fontSize: "1.3rem",
+                fontWeight: "bold",
+              }}
+            >
+              {recommendedPathway}
+            </p>
+
+            <p
+              style={{
+                marginTop: "15px",
+                lineHeight: "1.7",
+              }}
+            >
+              {recommendationReason}
+            </p>
+
           </div>
         )}
 
@@ -215,6 +226,7 @@ else {
             alignItems: "center",
           }}
         >
+
           {pathways.map((pathway) => (
             <PathwayCard
               key={pathway.id}
@@ -222,6 +234,7 @@ else {
               description={pathway.description}
             />
           ))}
+
         </div>
 
         <div
@@ -233,19 +246,22 @@ else {
             alignItems: "center",
           }}
         >
+
           {questions.map((item) => (
-              <QuestionCard
-  key={item.id}
-  question={item.question}
-  type={item.type}
-  options={item.options}
-  onAnswer={(answer) =>
-    handleAnswer(
-      item.question,
-      answer
-    )
-  }
-/>        ))}
+            <QuestionCard
+              key={item.id}
+              question={item.question}
+              type={item.type}
+              options={item.options}
+              onAnswer={(answer) =>
+                handleAnswer(
+                  item.question,
+                  answer
+                )
+              }
+            />
+          ))}
+
         </div>
 
         <div
@@ -257,19 +273,21 @@ else {
             alignItems: "center",
           }}
         >
+
           <h2 style={{ marginBottom: "20px" }}>
             Subject Performance
           </h2>
 
           {subjects.map((subject, index) => (
             <PerformanceCard
-  key={index}
-  subject={subject}
-  onPerformanceChange={
-    handlePerformanceChange
-  }
-/>
+              key={index}
+              subject={subject}
+              onPerformanceChange={
+                handlePerformanceChange
+              }
+            />
           ))}
+
         </div>
 
         <div
@@ -281,6 +299,7 @@ else {
             alignItems: "center",
           }}
         >
+
           <h2 style={{ marginBottom: "20px" }}>
             Preferred Pathways
           </h2>
@@ -288,6 +307,7 @@ else {
           <PathwaySelector
             pathways={pathwayChoices}
           />
+
         </div>
 
         <div
@@ -299,6 +319,7 @@ else {
             alignItems: "center",
           }}
         >
+
           <h2 style={{ marginBottom: "20px" }}>
             Subject Combinations
           </h2>
@@ -306,54 +327,54 @@ else {
           <CombinationSelector
             combinations={subjectCombinations}
           />
-        </div>
-<div
-  style={{
-    marginTop: "80px",
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  }}
->
-  <h2 style={{ marginBottom: "20px" }}>
-    School Preferences
-  </h2>
 
-  <SchoolFilter
-    counties={counties}
-    onCountyChange={setSelectedCounty}
-  />
-</div>
-       <h2 style={{ marginBottom: "20px" }}>
-            Subject Performance
+        </div>
+
+        <div
+          style={{
+            marginTop: "80px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+
+          <h2 style={{ marginBottom: "20px" }}>
+            School Preferences
           </h2>
 
-          {subjects.map((subject, index) => (
-            <PerformanceCard
-  key={index}
-  subject={subject}
-  onPerformanceChange={
-    handlePerformanceChange 
-  {recommendedPathway && (
-  <div
-    style={{
-      marginTop: "80px",
-      width: "100%",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    }}
-  >
-    <h2>
-      Recommended Schools
-    </h2>
+          <SchoolFilter
+            counties={counties}
+            onCountyChange={
+              setSelectedCounty
+            }
+          />
 
-    <SchoolRecommendations
-      schools={filteredSchools}
-    />
-  </div>
-)}
+        </div>
+
+        {recommendedPathway && (
+          <div
+            style={{
+              marginTop: "80px",
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+
+            <h2>
+              Recommended Schools
+            </h2>
+
+            <SchoolRecommendations
+              schools={filteredSchools}
+            />
+
+          </div>
+        )}
+
       </section>
 
     </div>
