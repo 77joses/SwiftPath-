@@ -15,7 +15,10 @@ import CombinationSelector from "./components/CombinationSelector";
 export default function App() {
 
   const [recommendedPathway, setRecommendedPathway] =
-    useState("");
+  useState("");
+
+const [recommendationReason, setRecommendationReason] =
+  useState("");
   
 const [answers, setAnswers] = useState({});
   const [performances, setPerformances] =
