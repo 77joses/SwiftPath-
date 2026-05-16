@@ -297,7 +297,24 @@ else {
             combinations={subjectCombinations}
           />
         </div>
+<div
+  style={{
+    marginTop: "80px",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  }}
+>
+  <h2 style={{ marginBottom: "20px" }}>
+    School Preferences
+  </h2>
 
+  <SchoolFilter
+    counties={counties}
+    onCountyChange={setSelectedCounty}
+  />
+</div>
       </section>
 
     </div>
