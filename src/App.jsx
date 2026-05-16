@@ -1,3 +1,5 @@
+import counties from "./data/counties";
+import SchoolFilter from "./components/SchoolFilter";
 import { useState } from "react";
 
 import pathways from "./data/pathways";
