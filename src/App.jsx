@@ -1,3 +1,5 @@
+import schools from "./data/schools";
+import SchoolRecommendations from "./components/SchoolRecommendations";
 import counties from "./data/counties";
 import SchoolFilter from "./components/SchoolFilter";
 import { useState } from "react";
