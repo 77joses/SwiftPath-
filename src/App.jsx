@@ -18,7 +18,8 @@ export default function App() {
     useState("");
   
 const [answers, setAnswers] = useState({});
-  
+  const [performances, setPerformances] =
+  useState({});
 const handleAnswer = (
   question,
   answer
