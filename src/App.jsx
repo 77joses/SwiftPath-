@@ -1,18 +1,13 @@
 import { useState } from "react";
 
-import pathways from "./data/pathways";
 import questions from "./data/questions";
 import subjects from "./data/subjects";
-import pathwayChoices from "./data/pathwayChoices";
-import subjectCombinations from "./data/subjectCombinations";
 import counties from "./data/counties";
+import subcounties from "./data/subcounties";
 import schools from "./data/schools";
 
-import PathwayCard from "./components/PathwayCard";
 import QuestionCard from "./components/QuestionCard";
 import PerformanceCard from "./components/PerformanceCard";
-import PathwaySelector from "./components/PathwaySelector";
-import CombinationSelector from "./components/CombinationSelector";
 import SchoolFilter from "./components/SchoolFilter";
 import SchoolRecommendations from "./components/SchoolRecommendations";
 
@@ -33,7 +28,13 @@ export default function App() {
   const [selectedCounty, setSelectedCounty] =
     useState("");
 
+  const [selectedSubcounty, setSelectedSubcounty] =
+    useState("");
+
   const [selectedCategory, setSelectedCategory] =
+    useState("");
+
+  const [selectedDisability, setSelectedDisability] =
     useState("");
 
   const [pathwayScores, setPathwayScores] =
@@ -117,42 +118,6 @@ export default function App() {
       );
     }
 
-    if (
-      performances["Integrated Science"] === "EE1" ||
-      performances["Integrated Science"] === "EE2"
-    ) {
-
-      stemScore += 4;
-
-      reasons.push(
-        "You demonstrated strength in Integrated Science."
-      );
-    }
-
-    if (
-      performances["Visual Arts"] === "EE1" ||
-      performances["Performing Arts"] === "EE1"
-    ) {
-
-      artsScore += 4;
-
-      reasons.push(
-        "Your artistic performance supports creative pathways."
-      );
-    }
-
-    if (
-      performances["Social Studies"] === "EE1" ||
-      performances["Social Studies"] === "EE2"
-    ) {
-
-      socialScore += 4;
-
-      reasons.push(
-        "You performed strongly in Social Studies."
-      );
-    }
-
     const rankedScores = [
       {
         pathway: "STEM",
@@ -193,13 +158,31 @@ export default function App() {
   const filteredSchools = schools.filter(
     (school) =>
       school.pathway === recommendedPathway &&
+
       (
         selectedCounty === "" ||
         school.county === selectedCounty
       ) &&
+
+      (
+        selectedSubcounty === "" ||
+        school.subcounty ===
+          selectedSubcounty
+      ) &&
+
       (
         selectedCategory === "" ||
-        school.category === selectedCategory
+        school.category ===
+          selectedCategory
+      ) &&
+
+      (
+        selectedDisability === "" ||
+        selectedDisability ===
+          "None" ||
+
+        school.disabilitySupport ===
+          selectedDisability
       )
   );
 
@@ -211,19 +194,15 @@ export default function App() {
         <h1>SwiftPath</h1>
 
         <p>
-          Discover the pathway built for your future.
+          Pathways to Success
         </p>
 
-        <div className="buttons">
-
-          <button
-            className="primary"
-            onClick={generateRecommendation}
-          >
-            Generate Recommendation
-          </button>
-
-        </div>
+        <button
+          className="primary"
+          onClick={generateRecommendation}
+        >
+          Generate Recommendation
+        </button>
 
         {recommendedPathway && (
           <div
@@ -238,7 +217,7 @@ export default function App() {
           >
 
             <h2>
-              Recommended Pathway:
+              Recommended Pathway
             </h2>
 
             <p
@@ -328,11 +307,18 @@ export default function App() {
 
           <SchoolFilter
             counties={counties}
+            subcounties={subcounties}
             onCountyChange={
               setSelectedCounty
             }
+            onSubcountyChange={
+              setSelectedSubcounty
+            }
             onCategoryChange={
               setSelectedCategory
+            }
+            onDisabilityChange={
+              setSelectedDisability
             }
           />
 
