@@ -1,33 +1,18 @@
 import { useState } from "react";
 
-import questions from "./data/questions";
-import subjects from "./data/subjects";
-import counties from "./data/counties";
-import subcounties from "./data/subcounties";
-import schools from "./data/schools";
-import subjectCombinations from "./data/subjectCombinations";
+import kieniWestSchools from "./data/kieniWestSchools";
+import kieniEastSchools from "./data/kieniEastSchools";
+import mathiraSchools from "./data/mathiraSchools";
+import tetuSchools from "./data/tetuSchools";
+import othayaSchools from "./data/othayaSchools";
+import mukurweiniSchools from "./data/mukurweiniSchools";
+import nyeriCentralSchools from "./data/nyeriCentralSchools";
 
-import QuestionCard from "./components/QuestionCard";
-import PerformanceCard from "./components/PerformanceCard";
-import SchoolFilter from "./components/SchoolFilter";
-import SchoolRecommendations from "./components/SchoolRecommendations";
-import CombinationSelector from "./components/CombinationSelector";
+import mountKenyaC2Schools from "./data/mountKenyaC2Schools";
+import c1SchoolsKenya from "./data/c1SchoolsKenya";
 
-export default function App() {
-
-  const [recommendedPathway, setRecommendedPathway] =
-    useState("");
-
-  const [recommendationReason, setRecommendationReason] =
-    useState("");
-
-  const [answers, setAnswers] =
-    useState({});
-
-  const [performances, setPerformances] =
-    useState({});
-
-  const [selectedCounty, setSelectedCounty] =
+function App() {
+  const [selectedPathway, setSelectedPathway] =
     useState("");
 
   const [selectedSubcounty, setSelectedSubcounty] =
@@ -36,517 +21,298 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] =
     useState("");
 
-  const [selectedDisability, setSelectedDisability] =
-    useState("");
+  const nyeriSubcountySchools = {
+    "Kieni West": kieniWestSchools,
 
-  const [selectedCombination, setSelectedCombination] =
-    useState("");
+    "Kieni East": kieniEastSchools,
 
-  const [combinationFeedback, setCombinationFeedback] =
-    useState("");
+    Mathira: mathiraSchools,
 
-  const [pathwayScores, setPathwayScores] =
-    useState([]);
+    Tetu: tetuSchools,
 
-  const handlePerformanceChange = (
-    subject,
-    band
-  ) => {
+    Othaya: othayaSchools,
 
-    setPerformances((prev) => ({
-      ...prev,
-      [subject]: band,
-    }));
+    "Mukurwe-ini": mukurweiniSchools,
+
+    "Nyeri Central": nyeriCentralSchools,
   };
 
-  const handleAnswer = (
-    question,
-    answer
-  ) => {
+  let recommendedSchools = [];
 
-    setAnswers((prev) => ({
-      ...prev,
-      [question]: answer,
-    }));
-  };
+  const selectedSubcountySchools =
+    nyeriSubcountySchools[
+      selectedSubcounty
+    ] || [];
 
-  const analyzeCombination = (
-    pathway
-  ) => {
+  const pathwayMatchedSchools =
+    selectedSubcountySchools.filter(
+      (school) =>
+        school.pathways.includes(
+          selectedPathway
+        )
+    );
 
-    if (
-      selectedCombination === ""
-    ) {
+  recommendedSchools = [
+    ...pathwayMatchedSchools,
+  ];
 
-      setCombinationFeedback(
-        "Please select a subject combination."
-      );
-
-      return;
-    }
-
-    const combination =
-      selectedCombination.toLowerCase();
-
-    if (
-      pathway === "STEM" &&
-      (
-        combination.includes("physics") ||
-        combination.includes("chemistry") ||
-        combination.includes("biology")
-      )
-    ) {
-
-      setCombinationFeedback(
-        "Excellent combination alignment for STEM pathways."
-      );
-    }
-
-    else if (
-      pathway ===
-        "Arts & Sports Science" &&
-      (
-        combination.includes("art") ||
-        combination.includes("music")
-      )
-    ) {
-
-      setCombinationFeedback(
-        "This combination aligns strongly with creative and arts pathways."
-      );
-    }
-
-    else if (
-      pathway ===
-        "Social Sciences" &&
-      (
-        combination.includes("history") ||
-        combination.includes("business")
-      )
-    ) {
-
-      setCombinationFeedback(
-        "This combination supports Social Sciences progression."
-      );
-    }
-
-    else {
-
-      setCombinationFeedback(
-        "Your chosen combination may not strongly support your recommended pathway. Consider exploring alternative combinations or pathways."
-      );
-    }
-  };
-
-  const generateRecommendation = () => {
-
-    let stemScore = 0;
-    let artsScore = 0;
-    let socialScore = 0;
-
-    let reasons = [];
-
-    if (
-      answers[
-        "Do you enjoy solving complex problems?"
-      ] === "Yes"
-    ) {
-
-      stemScore += 3;
-
-      reasons.push(
-        "You enjoy analytical problem solving."
-      );
-    }
-
-    if (
-      answers[
-        "Do you enjoy creative activities?"
-      ] === "Yes"
-    ) {
-
-      artsScore += 3;
-
-      reasons.push(
-        "You show strong creative interests."
-      );
-    }
-
-    if (
-      performances["Mathematics"] === "EE1" ||
-      performances["Mathematics"] === "EE2"
-    ) {
-
-      stemScore += 4;
-
-      reasons.push(
-        "You performed strongly in Mathematics."
-      );
-    }
-
-    else if (
-      performances["Mathematics"] === "AE" ||
-      performances["Mathematics"] === "BE"
-    ) {
-
-      stemScore -= 2;
-
-      reasons.push(
-        "Your Mathematics performance may make advanced STEM pathways more challenging."
-      );
-    }
-
-    if (
-      performances["Integrated Science"] === "EE1" ||
-      performances["Integrated Science"] === "EE2"
-    ) {
-
-      stemScore += 4;
-
-      reasons.push(
-        "You demonstrated strength in Integrated Science."
-      );
-    }
-
-    if (
-      performances["Visual Arts"] === "EE1" ||
-      performances["Performing Arts"] === "EE1"
-    ) {
-
-      artsScore += 4;
-
-      reasons.push(
-        "Your artistic performance supports creative pathways."
-      );
-    }
-
-    if (
-      performances["Social Studies"] === "EE1" ||
-      performances["Social Studies"] === "EE2"
-    ) {
-
-      socialScore += 4;
-
-      reasons.push(
-        "You performed strongly in Social Studies."
-      );
-    }
-
-    const rankedScores = [
-
-      {
-        pathway: "STEM",
-        score: stemScore,
-      },
-
-      {
-        pathway:
-          "Arts & Sports Science",
-        score: artsScore,
-      },
-
-      {
-        pathway:
-          "Social Sciences",
-        score: socialScore,
-      },
-
+  if (selectedCategory === "C1") {
+    recommendedSchools = [
+      ...c1SchoolsKenya,
     ];
+  }
 
-    rankedScores.sort(
-      (a, b) => b.score - a.score
-    );
-
-    setPathwayScores(
-      rankedScores
-    );
-
-    const topPathway =
-      rankedScores[0].pathway;
-
-    setRecommendedPathway(
-      topPathway
-    );
-
-    setRecommendationReason(
-      reasons.join(" ")
-    );
-
-    analyzeCombination(
-      topPathway
-    );
-  };
-
-  const filteredSchools = schools.filter(
-    (school) =>
-      school.pathway ===
-        recommendedPathway &&
-
-      (
-        selectedCounty === "" ||
-        school.county ===
-          selectedCounty
-      ) &&
-
-      (
-        selectedSubcounty === "" ||
-        school.subcounty ===
-          selectedSubcounty
-      ) &&
-
-      (
-        selectedCategory === "" ||
-        school.category ===
-          selectedCategory
-      ) &&
-
-      (
-        selectedDisability === "" ||
-        selectedDisability ===
-          "None" ||
-
-        school.disabilitySupport ===
-          selectedDisability
-      )
-  );
+  if (selectedCategory === "C2") {
+    recommendedSchools = [
+      ...pathwayMatchedSchools,
+      ...mountKenyaC2Schools,
+    ];
+  }
 
   return (
-    <div className="container">
+    <div
+      style={{
+        padding: "30px",
+        fontFamily: "Arial",
+        backgroundColor: "#f4f7fb",
+        minHeight: "100vh",
+      }}
+    >
+      <h1
+        style={{
+          color: "#1e3a8a",
+          marginBottom: "30px",
+        }}
+      >
+        SwiftPath — Pathways to Success
+      </h1>
 
-      <section className="hero">
+      <div
+        style={{
+          backgroundColor: "white",
+          padding: "20px",
+          borderRadius: "12px",
+          marginBottom: "25px",
+          boxShadow:
+            "0 2px 8px rgba(0,0,0,0.1)",
+        }}
+      >
+        <h2>Select Pathway</h2>
 
-        <h1>SwiftPath</h1>
-
-        <p>
-          Pathways to Success
-        </p>
-
-        <button
-          className="primary"
-          onClick={generateRecommendation}
+        <select
+          value={selectedPathway}
+          onChange={(e) =>
+            setSelectedPathway(
+              e.target.value
+            )
+          }
+          style={{
+            width: "100%",
+            padding: "12px",
+            marginTop: "10px",
+            marginBottom: "20px",
+          }}
         >
-          Generate Recommendation
-        </button>
+          <option value="">
+            Choose pathway
+          </option>
 
-        {recommendedPathway && (
-          <div
-            style={{
-              background: "#0b63f6",
-              padding: "25px",
-              borderRadius: "18px",
-              marginTop: "40px",
-              width: "100%",
-              maxWidth: "700px",
-            }}
-          >
+          <option value="STEM">
+            STEM
+          </option>
 
-            <h2>
-              Recommended Pathway
-            </h2>
+          <option value="Social Sciences">
+            Social Sciences
+          </option>
 
-            <p
-              style={{
-                marginTop: "10px",
-                fontSize: "1.3rem",
-                fontWeight: "bold",
-              }}
-            >
-              {recommendedPathway}
-            </p>
+          <option value="Arts & Sports Science">
+            Arts & Sports Science
+          </option>
+        </select>
 
-            <p
-              style={{
-                marginTop: "15px",
-                lineHeight: "1.7",
-              }}
-            >
-              {recommendationReason}
-            </p>
+        <h2>Select Subcounty</h2>
 
-            <div
-              style={{
-                marginTop: "30px",
-              }}
-            >
+        <select
+          value={selectedSubcounty}
+          onChange={(e) =>
+            setSelectedSubcounty(
+              e.target.value
+            )
+          }
+          style={{
+            width: "100%",
+            padding: "12px",
+            marginTop: "10px",
+            marginBottom: "20px",
+          }}
+        >
+          <option value="">
+            Choose subcounty
+          </option>
 
-              <h3>
-                Alternative Pathways
-              </h3>
+          <option value="Kieni West">
+            Kieni West
+          </option>
 
-              {pathwayScores.map(
-                (item, index) => (
-                  <p
-                    key={index}
-                    style={{
-                      marginTop: "10px",
-                    }}
-                  >
-                    {index + 1}.
-                    {" "}
-                    {item.pathway}
-                    {" "}
-                    ({item.score} points)
-                  </p>
-                )
-              )}
+          <option value="Kieni East">
+            Kieni East
+          </option>
 
-            </div>
+          <option value="Mathira">
+            Mathira
+          </option>
 
-            <div
-              style={{
-                marginTop: "30px",
-              }}
-            >
+          <option value="Tetu">
+            Tetu
+          </option>
 
-              <h3>
-                Subject Combination Analysis
-              </h3>
+          <option value="Othaya">
+            Othaya
+          </option>
 
-              <p
+          <option value="Mukurwe-ini">
+            Mukurwe-ini
+          </option>
+
+          <option value="Nyeri Central">
+            Nyeri Central
+          </option>
+        </select>
+
+        <h2>Select School Category</h2>
+
+        <select
+          value={selectedCategory}
+          onChange={(e) =>
+            setSelectedCategory(
+              e.target.value
+            )
+          }
+          style={{
+            width: "100%",
+            padding: "12px",
+            marginTop: "10px",
+          }}
+        >
+          <option value="">
+            Choose category
+          </option>
+
+          <option value="C1">
+            C1 National Schools
+          </option>
+
+          <option value="C2">
+            C2 Extra County Schools
+          </option>
+
+          <option value="C3">
+            C3 County Schools
+          </option>
+
+          <option value="C4">
+            C4 Subcounty Schools
+          </option>
+        </select>
+      </div>
+
+      <div
+        style={{
+          backgroundColor: "white",
+          padding: "20px",
+          borderRadius: "12px",
+          boxShadow:
+            "0 2px 8px rgba(0,0,0,0.1)",
+        }}
+      >
+        <h2
+          style={{
+            marginBottom: "20px",
+          }}
+        >
+          Recommended Schools
+        </h2>
+
+        {recommendedSchools.length ===
+        0 ? (
+          <p>
+            Select pathway, subcounty,
+            and category to see school
+            recommendations.
+          </p>
+        ) : (
+          recommendedSchools.map(
+            (school, index) => (
+              <div
+                key={index}
                 style={{
-                  marginTop: "12px",
-                  lineHeight: "1.7",
+                  border:
+                    "1px solid #ccc",
+                  borderRadius: "10px",
+                  padding: "15px",
+                  marginBottom: "15px",
+                  backgroundColor:
+                    "#f9f9f9",
                 }}
               >
-                {combinationFeedback}
-              </p>
+                <h3>{school.name}</h3>
 
-            </div>
+                <p>
+                  <strong>
+                    County:
+                  </strong>{" "}
+                  {school.county}
+                </p>
 
-          </div>
+                <p>
+                  <strong>
+                    Category:
+                  </strong>{" "}
+                  {school.category}
+                </p>
+
+                <p>
+                  <strong>
+                    Gender:
+                  </strong>{" "}
+                  {school.gender}
+                </p>
+
+                <p>
+                  <strong>
+                    Accommodation:
+                  </strong>{" "}
+                  {
+                    school.accommodation
+                  }
+                </p>
+
+                <p>
+                  <strong>
+                    Pathways:
+                  </strong>{" "}
+                  {school.pathways?.join(
+                    ", "
+                  )}
+                </p>
+
+                {school.tracks && (
+                  <p>
+                    <strong>
+                      Tracks:
+                    </strong>{" "}
+                    {school.tracks.join(
+                      ", "
+                    )}
+                  </p>
+                )}
+              </div>
+            )
+          )
         )}
-
-        <div
-          style={{
-            marginTop: "60px",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-
-          {questions.map((item) => (
-            <QuestionCard
-              key={item.id}
-              question={item.question}
-              type={item.type}
-              options={item.options}
-              onAnswer={(answer) =>
-                handleAnswer(
-                  item.question,
-                  answer
-                )
-              }
-            />
-          ))}
-
-        </div>
-
-        <div
-          style={{
-            marginTop: "80px",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-
-          <h2>
-            Subject Performance
-          </h2>
-
-          {subjects.map((subject, index) => (
-            <PerformanceCard
-              key={index}
-              subject={subject}
-              onPerformanceChange={
-                handlePerformanceChange
-              }
-            />
-          ))}
-
-        </div>
-
-        <div
-          style={{
-            marginTop: "80px",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-
-          <h2>
-            Subject Combination
-          </h2>
-
-          <CombinationSelector
-            combinations={
-              subjectCombinations
-            }
-            onCombinationChange={
-              setSelectedCombination
-            }
-          />
-
-        </div>
-
-        <div
-          style={{
-            marginTop: "80px",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-
-          <SchoolFilter
-            counties={counties}
-            subcounties={subcounties}
-            onCountyChange={
-              setSelectedCounty
-            }
-            onSubcountyChange={
-              setSelectedSubcounty
-            }
-            onCategoryChange={
-              setSelectedCategory
-            }
-            onDisabilityChange={
-              setSelectedDisability
-            }
-          />
-
-        </div>
-
-        {recommendedPathway && (
-          <div
-            style={{
-              marginTop: "80px",
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-
-            <h2>
-              Recommended Schools
-            </h2>
-
-            <SchoolRecommendations
-              schools={filteredSchools}
-            />
-
-          </div>
-        )}
-
-      </section>
-
+      </div>
     </div>
   );
 }
+
+export default App;
