@@ -21,6 +21,7 @@ export default function SchoolRecommendations({
             marginTop: "15px",
           }}
         >
+
           <h3>{school.name}</h3>
 
           <p style={{ marginTop: "10px" }}>
@@ -28,8 +29,13 @@ export default function SchoolRecommendations({
           </p>
 
           <p style={{ marginTop: "6px" }}>
+            Category: {school.category}
+          </p>
+
+          <p style={{ marginTop: "6px" }}>
             Pathway: {school.pathway}
           </p>
+
         </div>
       ))}
 
