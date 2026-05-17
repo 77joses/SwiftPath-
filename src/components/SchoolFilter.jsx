@@ -1,7 +1,10 @@
 export default function SchoolFilter({
   counties,
+  subcounties,
   onCountyChange,
-  onCategoryChange
+  onSubcountyChange,
+  onCategoryChange,
+  onDisabilityChange
 }) {
 
   return (
@@ -66,6 +69,66 @@ export default function SchoolFilter({
             {county}
           </option>
         ))}
+
+      </select>
+
+      <h3 style={{ marginTop: "30px" }}>
+        Select Subcounty
+      </h3>
+
+      <select
+        onChange={(e) =>
+          onSubcountyChange(e.target.value)
+        }
+        style={{
+          marginTop: "15px",
+          width: "100%",
+          padding: "14px",
+          borderRadius: "12px",
+          border: "none",
+          fontSize: "1rem",
+        }}
+      >
+        <option>Select subcounty</option>
+
+        {subcounties.map(
+          (subcounty, index) => (
+            <option key={index}>
+              {subcounty}
+            </option>
+          )
+        )}
+
+      </select>
+
+      <h3 style={{ marginTop: "30px" }}>
+        Disability Support
+      </h3>
+
+      <select
+        onChange={(e) =>
+          onDisabilityChange(
+            e.target.value
+          )
+        }
+        style={{
+          marginTop: "15px",
+          width: "100%",
+          padding: "14px",
+          borderRadius: "12px",
+          border: "none",
+          fontSize: "1rem",
+        }}
+      >
+        <option>
+          Select support need
+        </option>
+
+        <option>None</option>
+        <option>Visual Impairment</option>
+        <option>Hearing Impairment</option>
+        <option>Physical Disability</option>
+        <option>Learning Support</option>
 
       </select>
 
