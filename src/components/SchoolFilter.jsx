@@ -1,6 +1,7 @@
 export default function SchoolFilter({
   counties,
-  onCountyChange
+  onCountyChange,
+  onCategoryChange
 }) {
 
   return (
@@ -14,7 +15,34 @@ export default function SchoolFilter({
         maxWidth: "700px",
       }}
     >
+
       <h3>
+        Select School Category
+      </h3>
+
+      <select
+        onChange={(e) =>
+          onCategoryChange(e.target.value)
+        }
+        style={{
+          marginTop: "15px",
+          width: "100%",
+          padding: "14px",
+          borderRadius: "12px",
+          border: "none",
+          fontSize: "1rem",
+        }}
+      >
+        <option>Select category</option>
+
+        <option>C1</option>
+        <option>C2</option>
+        <option>C3</option>
+        <option>C4</option>
+
+      </select>
+
+      <h3 style={{ marginTop: "30px" }}>
         Select County Preference
       </h3>
 
@@ -23,7 +51,7 @@ export default function SchoolFilter({
           onCountyChange(e.target.value)
         }
         style={{
-          marginTop: "20px",
+          marginTop: "15px",
           width: "100%",
           padding: "14px",
           borderRadius: "12px",
@@ -38,7 +66,9 @@ export default function SchoolFilter({
             {county}
           </option>
         ))}
+
       </select>
+
     </div>
   );
 }
