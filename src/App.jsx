@@ -33,6 +33,9 @@ export default function App() {
   const [selectedCounty, setSelectedCounty] =
     useState("");
 
+  const [selectedCategory, setSelectedCategory] =
+    useState("");
+
   const [pathwayScores, setPathwayScores] =
     useState([]);
 
@@ -193,6 +196,10 @@ export default function App() {
       (
         selectedCounty === "" ||
         school.county === selectedCounty
+      ) &&
+      (
+        selectedCategory === "" ||
+        school.category === selectedCategory
       )
   );
 
@@ -205,8 +212,6 @@ export default function App() {
 
         <p>
           Discover the pathway built for your future.
-          SwiftPath helps CBC learners explore pathways,
-          subjects, schools, and careers through intelligent guidance.
         </p>
 
         <div className="buttons">
@@ -216,10 +221,6 @@ export default function App() {
             onClick={generateRecommendation}
           >
             Generate Recommendation
-          </button>
-
-          <button className="secondary">
-            Explore Pathways
           </button>
 
         </div>
@@ -235,6 +236,7 @@ export default function App() {
               maxWidth: "700px",
             }}
           >
+
             <h2>
               Recommended Pathway:
             </h2>
@@ -258,61 +260,12 @@ export default function App() {
               {recommendationReason}
             </p>
 
-            <div
-              style={{
-                marginTop: "25px",
-              }}
-            >
-
-              <h3>
-                Alternative Pathways
-              </h3>
-
-              {pathwayScores.map(
-                (item, index) => (
-                  <p
-                    key={index}
-                    style={{
-                      marginTop: "10px",
-                    }}
-                  >
-                    {index + 1}.
-                    {" "}
-                    {item.pathway}
-                    {" "}
-                    ({item.score} points)
-                  </p>
-                )
-              )}
-
-            </div>
-
           </div>
         )}
 
         <div
           style={{
             marginTop: "60px",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-
-          {pathways.map((pathway) => (
-            <PathwayCard
-              key={pathway.id}
-              name={pathway.name}
-              description={pathway.description}
-            />
-          ))}
-
-        </div>
-
-        <div
-          style={{
-            marginTop: "80px",
             width: "100%",
             display: "flex",
             flexDirection: "column",
@@ -347,7 +300,7 @@ export default function App() {
           }}
         >
 
-          <h2 style={{ marginBottom: "20px" }}>
+          <h2>
             Subject Performance
           </h2>
 
@@ -373,54 +326,13 @@ export default function App() {
           }}
         >
 
-          <h2 style={{ marginBottom: "20px" }}>
-            Preferred Pathways
-          </h2>
-
-          <PathwaySelector
-            pathways={pathwayChoices}
-          />
-
-        </div>
-
-        <div
-          style={{
-            marginTop: "80px",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-
-          <h2 style={{ marginBottom: "20px" }}>
-            Subject Combinations
-          </h2>
-
-          <CombinationSelector
-            combinations={subjectCombinations}
-          />
-
-        </div>
-
-        <div
-          style={{
-            marginTop: "80px",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-
-          <h2 style={{ marginBottom: "20px" }}>
-            School Preferences
-          </h2>
-
           <SchoolFilter
             counties={counties}
             onCountyChange={
               setSelectedCounty
+            }
+            onCategoryChange={
+              setSelectedCategory
             }
           />
 
