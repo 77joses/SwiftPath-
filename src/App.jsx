@@ -96,9 +96,7 @@ const nyeriSubcountySchools = {
       selectedCombination === ""
     ) {
 
-      setCombinationFeedback(
-        "Please select a subject combination."
-      );
+      setCombinationFeedback("");
 
       return;
     }
@@ -165,30 +163,48 @@ const nyeriSubcountySchools = {
     let reasons = [];
 
     if (
-      answers[
-        "Do you enjoy solving complex problems?"
-      ] === "Yes"
-    ) {
+  answers[
+    "Do you enjoy solving complex problems?"
+  ] === "Yes"
+) {
 
-      stemScore += 3;
+  stemScore += 3;
 
-      reasons.push(
-        "You enjoy analytical problem solving."
-      );
-    }
+  reasons.push(
+    "You enjoy analytical problem solving."
+  );
+}
 
-    if (
-      answers[
-        "Do you enjoy creative activities?"
-      ] === "Yes"
-    ) {
+else if (
+  answers[
+    "Do you enjoy solving complex problems?"
+  ] === "No"
+) {
 
-      artsScore += 3;
+  stemScore -= 1;
+}
 
-      reasons.push(
-        "You show strong creative interests."
-      );
-    }
+if (
+  answers[
+    "Do you enjoy creative activities?"
+  ] === "Yes"
+) {
+
+  artsScore += 3;
+
+  reasons.push(
+    "You show strong creative interests."
+  );
+}
+
+else if (
+  answers[
+    "Do you enjoy creative activities?"
+  ] === "No"
+) {
+
+  artsScore -= 1;
+}
 
     if (
       performances["Mathematics"] === "EE1" ||
@@ -309,9 +325,9 @@ if (selectedCounty === "Nyeri") {
     selectedSubcountySchools.filter(
       (school) =>
 
-        school.pathways.includes(
-          recommendedPathway
-        ) &&
+       school.pathways?.includes(
+  recommendedPathway
+)  &&
 
         (
           selectedCategory === "" ||
@@ -327,10 +343,10 @@ if (selectedCategory === "C1") {
   filteredSchools =
     c1SchoolsKenya.filter(
       (school) =>
-        school.pathways.includes(
-          recommendedPathway
-        )
-    );
+      
+    );school.pathways?.includes(
+  recommendedPathway
+)
 }
 
 if (selectedCategory === "C2") {
@@ -341,9 +357,9 @@ if (selectedCategory === "C2") {
 
     ...mountKenyaC2Schools.filter(
       (school) =>
-        school.pathways.includes(
-          recommendedPathway
-        )
+     school.pathways?.includes(
+  recommendedPathway
+) 
     ),
   ];
 }
