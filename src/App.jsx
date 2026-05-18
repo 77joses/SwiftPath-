@@ -295,39 +295,58 @@ const nyeriSubcountySchools = {
     );
   };
 
-  const filteredSchools = schools.filter(
-    (school) =>
-      school.pathway ===
-        recommendedPathway &&
+  
+let filteredSchools = [];
 
-      (
-        selectedCounty === "" ||
-        school.county ===
-          selectedCounty
-      ) &&
+if (selectedCounty === "Nyeri") {
 
-      (
-        selectedSubcounty === "" ||
-        school.subcounty ===
-          selectedSubcounty
-      ) &&
+  const selectedSubcountySchools =
+    nyeriSubcountySchools[
+      selectedSubcounty
+    ] || [];
 
-      (
-        selectedCategory === "" ||
-        school.category ===
-          selectedCategory
-      ) &&
+  filteredSchools =
+    selectedSubcountySchools.filter(
+      (school) =>
 
-      (
-        selectedDisability === "" ||
-        selectedDisability ===
-          "None" ||
+        school.pathways.includes(
+          recommendedPathway
+        ) &&
 
-        school.disabilitySupport ===
-          selectedDisability
-      )
-  );
+        (
+          selectedCategory === "" ||
 
+          school.category ===
+            selectedCategory
+        )
+    );
+}
+
+if (selectedCategory === "C1") {
+
+  filteredSchools =
+    c1SchoolsKenya.filter(
+      (school) =>
+        school.pathways.includes(
+          recommendedPathway
+        )
+    );
+}
+
+if (selectedCategory === "C2") {
+
+  filteredSchools = [
+
+    ...filteredSchools,
+
+    ...mountKenyaC2Schools.filter(
+      (school) =>
+        school.pathways.includes(
+          recommendedPathway
+        )
+    ),
+  ];
+}
   return (
     <div className="container">
 
