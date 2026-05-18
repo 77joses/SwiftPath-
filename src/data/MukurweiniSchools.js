@@ -1,4 +1,4 @@
-const mukurweiniSchools = [
+const MukurweiniSchools = [
 
   // C2 EXTRA COUNTY
 
@@ -7,7 +7,7 @@ const mukurweiniSchools = [
 
     county: "Nyeri",
 
-    subcounty: "Mukurwe-ini",
+    subcounty: "Mukurweini",
 
     category: "C2",
 
@@ -39,7 +39,7 @@ const mukurweiniSchools = [
 
     county: "Nyeri",
 
-    subcounty: "Mukurwe-ini",
+    subcounty: "Mukurweini",
 
     category: "C3",
 
@@ -93,7 +93,7 @@ const mukurweiniSchools = [
 
     county: "Nyeri",
 
-    subcounty: "Mukurwe-ini",
+    subcounty: "Mukurweini",
 
     category: "C3",
 
@@ -120,7 +120,7 @@ const mukurweiniSchools = [
 
     county: "Nyeri",
 
-    subcounty: "Mukurwe-ini",
+    subcounty: "Mukurweini",
 
     category: "C4",
 
@@ -143,7 +143,7 @@ const mukurweiniSchools = [
 
     county: "Nyeri",
 
-    subcounty: "Mukurwe-ini",
+    subcounty: "Mukurweini",
 
     category: "C4",
 
@@ -166,7 +166,7 @@ const mukurweiniSchools = [
 
     county: "Nyeri",
 
-    subcounty: "Mukurwe-ini",
+    subcounty: "Mukurweini",
 
     category: "C4",
 
@@ -189,7 +189,7 @@ const mukurweiniSchools = [
 
     county: "Nyeri",
 
-    subcounty: "Mukurwe-ini",
+    subcounty: "Mukurweini",
 
     category: "C4",
 
@@ -212,7 +212,7 @@ const mukurweiniSchools = [
 
     county: "Nyeri",
 
-    subcounty: "Mukurwe-ini",
+    subcounty: "Mukurweini",
 
     category: "C4",
 
@@ -235,7 +235,7 @@ const mukurweiniSchools = [
 
     county: "Nyeri",
 
-    subcounty: "Mukurwe-ini",
+    subcounty: "Mukurweini",
 
     category: "C4",
 
@@ -258,7 +258,7 @@ const mukurweiniSchools = [
 
     county: "Nyeri",
 
-    subcounty: "Mukurwe-ini",
+    subcounty: "Mukurweini",
 
     category: "C4",
 
@@ -278,4 +278,4 @@ const mukurweiniSchools = [
 
 ];
 
-export default mukurweiniSchools;
+export default MukurweiniSchools;
