@@ -5,6 +5,7 @@ const subcounties = [
   "Kieni West",
   "Mukurweini",
   "Tetu"
+  "Nyeri Central"
 ];
 
 export default subcounties;
