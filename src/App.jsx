@@ -1,3 +1,13 @@
+import kieniWestSchools from "./data/kieniWestSchools";
+import kieniEastSchools from "./data/kieniEastSchools";
+import mathiraSchools from "./data/mathiraSchools";
+import tetuSchools from "./data/tetuSchools";
+import othayaSchools from "./data/othayaSchools";
+import mukurweiniSchools from "./data/mukurweiniSchools";
+import nyeriCentralSchools from "./data/nyeriCentralSchools";
+
+import mountKenyaC2Schools from "./data/mountKenyaC2Schools";
+import c1SchoolsKenya from "./data/c1SchoolsKenya";
 import { useState } from "react";
 
 import questions from "./data/questions";
