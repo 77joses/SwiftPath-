@@ -63,7 +63,7 @@ const nyeriSubcountySchools = {
   Mathira: mathiraSchools,
   Tetu: tetuSchools,
   Othaya: othayaSchools,
-  "Mukurwe-ini": mukurweiniSchools,
+  "Mukurweini": mukurweiniSchools,
   "Nyeri Central": nyeriCentralSchools,
 };
   const handlePerformanceChange = (
