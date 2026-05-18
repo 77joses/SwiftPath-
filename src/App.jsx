@@ -57,7 +57,15 @@ export default function App() {
 
   const [pathwayScores, setPathwayScores] =
     useState([]);
-
+const nyeriSubcountySchools = {
+  "Kieni West": kieniWestSchools,
+  "Kieni East": kieniEastSchools,
+  Mathira: mathiraSchools,
+  Tetu: tetuSchools,
+  Othaya: othayaSchools,
+  "Mukurwe-ini": mukurweiniSchools,
+  "Nyeri Central": nyeriCentralSchools,
+};
   const handlePerformanceChange = (
     subject,
     band
