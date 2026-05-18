@@ -351,15 +351,33 @@ if (selectedCategory === "C1") {
 
 if (selectedCategory === "C2") {
 
+  const safeC2Schools =
+    mountKenyaC2Schools.map(
+      (school) => ({
+
+        ...school,
+
+        pathways:
+          school.pathways || [
+            "STEM",
+            "Social Sciences",
+            "Arts & Sports Science",
+          ],
+
+        tracks:
+          school.tracks || [],
+      })
+    );
+
   filteredSchools = [
 
     ...filteredSchools,
 
-    ...mountKenyaC2Schools.filter(
+    ...safeC2Schools.filter(
       (school) =>
-     school.pathways?.includes(
-  recommendedPathway
-) 
+        school.pathways.includes(
+          recommendedPathway
+        )
     ),
   ];
 }
