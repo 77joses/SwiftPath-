@@ -3,7 +3,7 @@ import kieniEastSchools from "./data/kieniEastSchools";
 import mathiraSchools from "./data/mathiraSchools";
 import tetuSchools from "./data/tetuSchools";
 import othayaSchools from "./data/othayaSchools";
-import mukurweiniSchools from "./data/mukurweiniSchools";
+import MukurweiniSchools from "./data/MukurweiniSchools";
 import nyeriCentralSchools from "./data/nyeriCentralSchools";
 
 import mountKenyaC2Schools from "./data/mountKenyaC2Schools";
@@ -63,7 +63,7 @@ const nyeriSubcountySchools = {
   Mathira: mathiraSchools,
   Tetu: tetuSchools,
   Othaya: othayaSchools,
-  "Mukurweini": mukurweiniSchools,
+  "Mukurweini": MukurweiniSchools,
   "Nyeri Central": nyeriCentralSchools,
 };
   const handlePerformanceChange = (
