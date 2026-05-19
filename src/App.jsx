@@ -342,10 +342,10 @@ if (selectedCategory === "C1") {
   filteredSchools =
     c1SchoolsKenya.filter(
       (school) =>
-      
-    );school.pathways?.includes(
-  recommendedPathway
-)
+        school.pathways?.includes(
+          recommendedPathway
+        )
+    );
 }
 
   return (
