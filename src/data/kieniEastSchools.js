@@ -1,11 +1,11 @@
 const kieniEastSchools = [
 
-  // C2 EXTRA COUNTY
+  // C2 — EXTRA COUNTY
 
   {
     name: "Naromoru Boys Secondary School",
-    county: "Nyeri",
     subcounty: "Kieni East",
+    county: "Nyeri",
     category: "C2",
     gender: "Boys",
     accommodation: "Boarding",
@@ -13,7 +13,7 @@ const kieniEastSchools = [
     pathways: [
       "STEM",
       "Social Sciences",
-      "Arts & Sports Science"
+      "Arts & Sports Science",
     ],
 
     tracks: [
@@ -23,14 +23,25 @@ const kieniEastSchools = [
       "Humanities & Business Studies",
       "Languages & Literature",
       "Arts",
-      "Sports & Recreation"
-    ]
+      "Sports & Recreation",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+      "Fine Arts, Theatre & Film + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
     name: "Naromoru Girls Secondary School",
-    county: "Nyeri",
     subcounty: "Kieni East",
+    county: "Nyeri",
     category: "C2",
     gender: "Girls",
     accommodation: "Boarding",
@@ -38,7 +49,7 @@ const kieniEastSchools = [
     pathways: [
       "STEM",
       "Social Sciences",
-      "Arts & Sports Science"
+      "Arts & Sports Science",
     ],
 
     tracks: [
@@ -48,28 +59,33 @@ const kieniEastSchools = [
       "Humanities & Business Studies",
       "Languages & Literature",
       "Arts",
-      "Sports & Recreation"
-    ]
+      "Sports & Recreation",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+      "Fine Arts, Theatre & Film + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
-    name:
-      "St. Teresa Moi Equator Girls' Secondary",
-
-    county: "Nyeri",
-
+    name: "St. Teresa Moi Equator Girls' Secondary",
     subcounty: "Kieni East",
-
+    county: "Nyeri",
     category: "C2",
-
     gender: "Girls",
-
     accommodation: "Boarding",
 
     pathways: [
       "STEM",
       "Social Sciences",
-      "Arts & Sports Science"
+      "Arts & Sports Science",
     ],
 
     tracks: [
@@ -79,28 +95,34 @@ const kieniEastSchools = [
       "Humanities & Business Studies",
       "Languages & Literature",
       "Arts",
-      "Sports & Recreation"
-    ]
+      "Sports & Recreation",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+      "Fine Arts, Theatre & Film + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
-  // C3 COUNTY
+  // C3 — COUNTY
 
   {
     name: "Ndathi Secondary School",
-
-    county: "Nyeri",
-
     subcounty: "Kieni East",
-
+    county: "Nyeri",
     category: "C3",
-
     gender: "Boys",
-
     accommodation: "Boarding",
 
     pathways: [
       "STEM",
-      "Social Sciences"
+      "Social Sciences",
     ],
 
     tracks: [
@@ -108,27 +130,31 @@ const kieniEastSchools = [
       "Applied Sciences",
       "Technical Studies",
       "Humanities & Business Studies",
-      "Languages & Literature"
-    ]
+      "Languages & Literature",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
-    name:
-      "St. Monica Munyaka Girls Secondary",
-
-    county: "Nyeri",
-
+    name: "St. Monica Munyaka Girls Secondary",
     subcounty: "Kieni East",
-
+    county: "Nyeri",
     category: "C3",
-
     gender: "Girls",
-
     accommodation: "Boarding",
 
     pathways: [
       "STEM",
-      "Social Sciences"
+      "Social Sciences",
     ],
 
     tracks: [
@@ -136,267 +162,183 @@ const kieniEastSchools = [
       "Applied Sciences",
       "Technical Studies",
       "Humanities & Business Studies",
-      "Languages & Literature"
-    ]
+      "Languages & Literature",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
-  // C4 SUBCOUNTY
+  // C4 — SUB COUNTY
 
   {
     name: "Burguret Secondary School",
-    county: "Nyeri",
     subcounty: "Kieni East",
+    county: "Nyeri",
     category: "C4",
     gender: "Mixed",
     accommodation: "Day",
 
-    pathways: ["STEM"],
+    pathways: [
+      "STEM",
+    ],
 
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
-      "Technical Studies"
-    ]
+      "Technical Studies",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
-    name:
-      "Chrismorrone Kiamathaga Mixed Secondary",
-
-    county: "Nyeri",
-
+    name: "Chrismorrone Kiamathaga Mixed Secondary",
     subcounty: "Kieni East",
-
+    county: "Nyeri",
     category: "C4",
-
     gender: "Mixed",
-
     accommodation: "Day",
 
-    pathways: ["STEM"],
+    pathways: [
+      "STEM",
+    ],
 
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
-      "Technical Studies"
-    ]
+      "Technical Studies",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
     name: "Gakawa Secondary School",
-    county: "Nyeri",
     subcounty: "Kieni East",
+    county: "Nyeri",
     category: "C4",
     gender: "Mixed",
     accommodation: "Day",
 
-    pathways: ["STEM"],
+    pathways: [
+      "STEM",
+    ],
 
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
-      "Technical Studies"
-    ]
+      "Technical Studies",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
     name: "Gatuamba Secondary School",
-    county: "Nyeri",
     subcounty: "Kieni East",
+    county: "Nyeri",
     category: "C4",
     gender: "Mixed",
     accommodation: "Day",
 
-    pathways: ["STEM"],
+    pathways: [
+      "STEM",
+    ],
 
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
-      "Technical Studies"
-    ]
+      "Technical Studies",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
     name: "Gatuanyaga Secondary School",
-    county: "Nyeri",
     subcounty: "Kieni East",
+    county: "Nyeri",
     category: "C4",
     gender: "Mixed",
     accommodation: "Day",
 
-    pathways: ["STEM"],
+    pathways: [
+      "STEM",
+    ],
 
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
-      "Technical Studies"
-    ]
+      "Technical Studies",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
-    name:
-      "Irigithathi Mixed Secondary School",
-
-    county: "Nyeri",
-
+    name: "Irigithathi Mixed Secondary School",
     subcounty: "Kieni East",
-
+    county: "Nyeri",
     category: "C4",
-
     gender: "Mixed",
-
     accommodation: "Day",
 
-    pathways: ["STEM"],
+    pathways: [
+      "STEM",
+    ],
 
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
-      "Technical Studies"
-    ]
+      "Technical Studies",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
-
-  {
-    name:
-      "Joseph Allamano Secondary School",
-
-    county: "Nyeri",
-
-    subcounty: "Kieni East",
-
-    category: "C4",
-
-    gender: "Mixed",
-
-    accommodation: "Day",
-
-    pathways: ["STEM"],
-
-    tracks: [
-      "Pure Sciences",
-      "Applied Sciences",
-      "Technical Studies"
-    ]
-  },
-
-  {
-    name: "Kamburaini Secondary School",
-    county: "Nyeri",
-    subcounty: "Kieni East",
-    category: "C4",
-    gender: "Mixed",
-    accommodation: "Day",
-
-    pathways: ["STEM"],
-
-    tracks: [
-      "Pure Sciences",
-      "Applied Sciences",
-      "Technical Studies"
-    ]
-  },
-
-  {
-    name: "Kimahuri Secondary School",
-    county: "Nyeri",
-    subcounty: "Kieni East",
-    category: "C4",
-    gender: "Mixed",
-    accommodation: "Day",
-
-    pathways: ["STEM"],
-
-    tracks: [
-      "Pure Sciences",
-      "Applied Sciences",
-      "Technical Studies"
-    ]
-  },
-
-  {
-    name: "Lusoi Secondary School",
-    county: "Nyeri",
-    subcounty: "Kieni East",
-    category: "C4",
-    gender: "Mixed",
-    accommodation: "Day",
-
-    pathways: ["STEM"],
-
-    tracks: [
-      "Pure Sciences",
-      "Applied Sciences",
-      "Technical Studies"
-    ]
-  },
-
-  {
-    name: "Maragima Secondary School",
-    county: "Nyeri",
-    subcounty: "Kieni East",
-    category: "C4",
-    gender: "Mixed",
-    accommodation: "Day",
-
-    pathways: ["STEM"],
-
-    tracks: [
-      "Pure Sciences",
-      "Applied Sciences",
-      "Technical Studies"
-    ]
-  },
-
-  {
-    name: "Mere Secondary School",
-    county: "Nyeri",
-    subcounty: "Kieni East",
-    category: "C4",
-    gender: "Mixed",
-    accommodation: "Day",
-
-    pathways: ["STEM"],
-
-    tracks: [
-      "Pure Sciences",
-      "Applied Sciences",
-      "Technical Studies"
-    ]
-  },
-
-  {
-    name: "Mlima Kenya Secondary School",
-    county: "Nyeri",
-    subcounty: "Kieni East",
-    category: "C4",
-    gender: "Mixed",
-    accommodation: "Day",
-
-    pathways: ["STEM"],
-
-    tracks: [
-      "Pure Sciences",
-      "Applied Sciences",
-      "Technical Studies"
-    ]
-  },
-
-  {
-    name: "Munyu High School",
-    county: "Nyeri",
-    subcounty: "Kieni East",
-    category: "C4",
-    gender: "Mixed",
-    accommodation: "Day",
-
-    pathways: ["STEM"],
-
-    tracks: [
-      "Pure Sciences",
-      "Applied Sciences",
-      "Technical Studies"
-    ]
-  }
 
 ];
 
