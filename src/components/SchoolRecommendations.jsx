@@ -33,9 +33,8 @@ export default function SchoolRecommendations({
           </p>
 
           <p style={{ marginTop: "6px" }}>
-            Pathway: {school.pathway}
-          </p>
-
+  Pathways: {school.pathways?.join(", ")}
+</p>
         </div>
       ))}
 
