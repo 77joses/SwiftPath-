@@ -1,9 +1,11 @@
 const kieniWestSchools = [
 
+  // C2 — EXTRA COUNTY
+
   {
     name: "Endarasha High School",
-    county: "Nyeri",
     subcounty: "Kieni West",
+    county: "Nyeri",
     category: "C2",
     gender: "Boys",
     accommodation: "Boarding",
@@ -11,7 +13,7 @@ const kieniWestSchools = [
     pathways: [
       "STEM",
       "Social Sciences",
-      "Arts & Sports Science"
+      "Arts & Sports Science",
     ],
 
     tracks: [
@@ -21,41 +23,33 @@ const kieniWestSchools = [
       "Humanities & Business Studies",
       "Languages & Literature",
       "Arts",
-      "Sports & Recreation"
+      "Sports & Recreation",
     ],
 
-    combinations: [
-      "Advanced Mathematics, Biology, Chemistry",
-      "Advanced Mathematics, Physics, Chemistry",
-      "Biology, Chemistry, Agriculture",
-      "Agriculture, Computer Studies",
-      "Computer Studies, Physics",
-      "Business Studies, Economics",
-      "Business Studies, History & Citizenship",
-      "French, Literature",
-      "Arabic, French",
-      "Fine Arts, Theatre & Film",
-      "Music & Dance"
-    ]
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+      "Fine Arts, Theatre & Film + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
     name: "St. Bakhita Gataragwa Girls High School",
-
-    county: "Nyeri",
-
     subcounty: "Kieni West",
-
+    county: "Nyeri",
     category: "C2",
-
     gender: "Girls",
-
     accommodation: "Boarding",
 
     pathways: [
       "STEM",
       "Social Sciences",
-      "Arts & Sports Science"
+      "Arts & Sports Science",
     ],
 
     tracks: [
@@ -65,39 +59,34 @@ const kieniWestSchools = [
       "Humanities & Business Studies",
       "Languages & Literature",
       "Arts",
-      "Sports & Recreation"
+      "Sports & Recreation",
     ],
 
-    combinations: [
-      "Advanced Mathematics, Biology, Chemistry",
-      "Advanced Mathematics, Physics, Chemistry",
-      "Biology, Chemistry, Agriculture",
-      "Agriculture, Computer Studies",
-      "Business Studies, Economics",
-      "Business Studies, History & Citizenship",
-      "French, Literature",
-      "Arabic, French",
-      "Fine Arts, Theatre & Film",
-      "Music & Dance"
-    ]
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+      "Fine Arts, Theatre & Film + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
+  // C3 — COUNTY
+
   {
-    name: "Mugunda Secondary School",
-
-    county: "Nyeri",
-
+    name: "Mugunda Sec. School",
     subcounty: "Kieni West",
-
+    county: "Nyeri",
     category: "C3",
-
     gender: "Girls",
-
     accommodation: "Boarding",
 
     pathways: [
       "STEM",
-      "Social Sciences"
+      "Social Sciences",
     ],
 
     tracks: [
@@ -105,169 +94,274 @@ const kieniWestSchools = [
       "Applied Sciences",
       "Technical Studies",
       "Humanities & Business Studies",
-      "Languages & Literature"
+      "Languages & Literature",
     ],
 
-    combinations: [
-      "Advanced Mathematics, Biology, Chemistry",
-      "Biology, Chemistry, Agriculture",
-      "Agriculture, Computer Studies",
-      "Business Studies, Economics",
-      "Business Studies, History & Citizenship",
-      "French, Literature"
-    ]
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
-    name: "Naromoru Girls Secondary School",
-
-    county: "Nyeri",
-
+    name: "Mwiyogo Sec. School",
     subcounty: "Kieni West",
-
+    county: "Nyeri",
     category: "C3",
-
-    gender: "Girls",
-
+    gender: "Boys",
     accommodation: "Boarding",
 
     pathways: [
       "STEM",
-      "Social Sciences"
+      "Social Sciences",
     ],
 
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
       "Technical Studies",
-      "Humanities & Business Studies"
+      "Humanities & Business Studies",
+      "Languages & Literature",
     ],
 
-    combinations: [
-      "Advanced Mathematics, Biology, Chemistry",
-      "Biology, Chemistry, Agriculture",
-      "Business Studies, Economics",
-      "Business Studies, History & Citizenship"
-    ]
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
-    name: "Kagumo Secondary School",
-
-    county: "Nyeri",
-
+    name: "Watuka Sec. School",
     subcounty: "Kieni West",
-
+    county: "Nyeri",
     category: "C3",
+    gender: "Boys",
+    accommodation: "Boarding",
 
+    pathways: [
+      "STEM",
+      "Social Sciences",
+    ],
+
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+      "Humanities & Business Studies",
+      "Languages & Literature",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+    ],
+
+    disabilitySupport: false,
+  },
+
+  // C4 — SUB COUNTY
+
+  {
+    name: "Amboni Sec. School",
+    subcounty: "Kieni West",
+    county: "Nyeri",
+    category: "C4",
     gender: "Mixed",
-
     accommodation: "Day",
 
     pathways: [
       "STEM",
-      "Social Sciences"
     ],
 
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
-      "Humanities & Business Studies"
+      "Technical Studies",
     ],
 
-    combinations: [
-      "Biology, Chemistry, Agriculture",
-      "Agriculture, Computer Studies",
-      "Business Studies, Economics",
-      "Business Studies, History & Citizenship"
-    ]
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
-    name: "Amboni Secondary School",
-
-    county: "Nyeri",
-
+    name: "Bellevue Sec. School",
     subcounty: "Kieni West",
-
+    county: "Nyeri",
     category: "C4",
-
     gender: "Mixed",
-
     accommodation: "Day",
 
     pathways: [
-      "STEM"
+      "STEM",
     ],
 
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
-      "Technical Studies"
+      "Technical Studies",
     ],
 
-    combinations: [
-      "Biology, Chemistry, Agriculture",
-      "Agriculture, Computer Studies",
-      "Computer Studies, Physics"
-    ]
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
-    name: "Mwiyogo Secondary School",
-
-    county: "Nyeri",
-
+    name: "Charity Sec. School",
     subcounty: "Kieni West",
-
+    county: "Nyeri",
     category: "C4",
-
     gender: "Mixed",
-
     accommodation: "Day",
 
     pathways: [
-      "STEM"
+      "STEM",
     ],
 
     tracks: [
+      "Pure Sciences",
       "Applied Sciences",
-      "Technical Studies"
+      "Technical Studies",
     ],
 
-    combinations: [
-      "Agriculture, Computer Studies",
-      "Computer Studies, Physics"
-    ]
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
-    name: "Mweiga Secondary School",
-
-    county: "Nyeri",
-
+    name: "Endarasha DM Sec. School",
     subcounty: "Kieni West",
-
+    county: "Nyeri",
     category: "C4",
-
     gender: "Mixed",
-
     accommodation: "Day",
 
     pathways: [
-      "STEM"
+      "STEM",
     ],
 
     tracks: [
+      "Pure Sciences",
       "Applied Sciences",
-      "Technical Studies"
+      "Technical Studies",
     ],
 
-    combinations: [
-      "Agriculture, Computer Studies",
-      "Computer Studies, Physics"
-    ]
-  }
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Gakanga Sec. School",
+    subcounty: "Kieni West",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+
+    pathways: [
+      "STEM",
+    ],
+
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Karimeno Mixed Sec. School",
+    subcounty: "Kieni West",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+
+    pathways: [
+      "STEM",
+    ],
+
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Kiaragana Mixed Day Sec. School",
+    subcounty: "Kieni West",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+
+    pathways: [
+      "STEM",
+    ],
+
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+
+    disabilitySupport: false,
+  },
 
 ];
 
