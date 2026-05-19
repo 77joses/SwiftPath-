@@ -6,7 +6,6 @@ import othayaSchools from "./data/othayaSchools";
 import MukurweiniSchools from "./data/MukurweiniSchools";
 import nyeriCentralSchools from "./data/nyeriCentralSchools";
 
-import mountKenyaC2Schools from "./data/mountKenyaC2Schools";
 import c1SchoolsKenya from "./data/c1SchoolsKenya";
 import { useState } from "react";
 
