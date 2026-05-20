@@ -1,14 +1,15 @@
 const counties = [
   "Nairobi",
-  "Kiambu",
   "Nakuru",
-  "Mombasa",
-  "Kisumu",
+  "Laikipia",
+  "Nyandarua",
   "Nyeri",
+  "Kirinyaga",
+  "Murang'a",
+  "Embu",
   "Meru",
-  "Machakos",
-  "Uasin Gishu",
-  "Kakamega"
+  "Tharaka Nithi",
+  "Kiambu",
 ];
 
 export default counties;
