@@ -21,6 +21,7 @@ import PerformanceCard from "./components/PerformanceCard";
 import SchoolFilter from "./components/SchoolFilter";
 import SchoolRecommendations from "./components/SchoolRecommendations";
 import CombinationSelector from "./components/CombinationSelector";
+
 const nyeriSubcountySchools = {
   "Kieni West": kieniWestSchools,
   "Kieni East": kieniEastSchools,
@@ -31,6 +32,7 @@ const nyeriSubcountySchools = {
   "Mukurwe-ini": MukurweiniSchools,
   "Nyeri Central": nyeriCentralSchools,
 };
+
 export default function App() {
 
   const [recommendedPathway, setRecommendedPathway] =
@@ -66,11 +68,13 @@ export default function App() {
   const [pathwayScores, setPathwayScores] =
     useState([]);
 
+  const [selectedGender, setSelectedGender] =
+    useState("");
+
   const handlePerformanceChange = (
     subject,
     band
   ) => {
-
     setPerformances((prev) => ({
       ...prev,
       [subject]: band,
@@ -81,7 +85,6 @@ export default function App() {
     question,
     answer
   ) => {
-
     setAnswers((prev) => ({
       ...prev,
       [question]: answer,
@@ -91,13 +94,8 @@ export default function App() {
   const analyzeCombination = (
     pathway
   ) => {
-
-    if (
-      selectedCombination === ""
-    ) {
-
+    if (selectedCombination === "") {
       setCombinationFeedback("");
-
       return;
     }
 
@@ -112,42 +110,36 @@ export default function App() {
         combination.includes("biology")
       )
     ) {
-
       setCombinationFeedback(
         "Excellent combination alignment for STEM pathways."
       );
     }
 
     else if (
-      pathway ===
-        "Arts & Sports Science" &&
+      pathway === "Arts & Sports Science" &&
       (
         combination.includes("art") ||
         combination.includes("music")
       )
     ) {
-
       setCombinationFeedback(
         "This combination aligns strongly with creative and arts pathways."
       );
     }
 
     else if (
-      pathway ===
-        "Social Sciences" &&
+      pathway === "Social Sciences" &&
       (
         combination.includes("history") ||
         combination.includes("business")
       )
     ) {
-
       setCombinationFeedback(
         "This combination supports Social Sciences progression."
       );
     }
 
     else {
-
       setCombinationFeedback(
         "Your chosen combination may not strongly support your recommended pathway. Consider exploring alternative combinations or pathways."
       );
@@ -159,72 +151,47 @@ export default function App() {
     let stemScore = 0;
     let artsScore = 0;
     let socialScore = 0;
-
     let reasons = [];
 
     if (
-  answers[
-    "Do you enjoy solving complex problems?"
-  ] === "Yes"
-) {
+      answers["Do you enjoy solving complex problems?"] === "Yes"
+    ) {
+      stemScore += 3;
+      reasons.push("You enjoy analytical problem solving.");
+    }
 
-  stemScore += 3;
+    else if (
+      answers["Do you enjoy solving complex problems?"] === "No"
+    ) {
+      stemScore -= 1;
+    }
 
-  reasons.push(
-    "You enjoy analytical problem solving."
-  );
-}
+    if (
+      answers["Do you enjoy creative activities?"] === "Yes"
+    ) {
+      artsScore += 3;
+      reasons.push("You show strong creative interests.");
+    }
 
-else if (
-  answers[
-    "Do you enjoy solving complex problems?"
-  ] === "No"
-) {
-
-  stemScore -= 1;
-}
-
-if (
-  answers[
-    "Do you enjoy creative activities?"
-  ] === "Yes"
-) {
-
-  artsScore += 3;
-
-  reasons.push(
-    "You show strong creative interests."
-  );
-}
-
-else if (
-  answers[
-    "Do you enjoy creative activities?"
-  ] === "No"
-) {
-
-  artsScore -= 1;
-}
+    else if (
+      answers["Do you enjoy creative activities?"] === "No"
+    ) {
+      artsScore -= 1;
+    }
 
     if (
       performances["Mathematics"] === "EE1" ||
       performances["Mathematics"] === "EE2"
     ) {
-
       stemScore += 4;
-
-      reasons.push(
-        "You performed strongly in Mathematics."
-      );
+      reasons.push("You performed strongly in Mathematics.");
     }
 
     else if (
       performances["Mathematics"] === "AE" ||
       performances["Mathematics"] === "BE"
     ) {
-
       stemScore -= 2;
-
       reasons.push(
         "Your Mathematics performance may make advanced STEM pathways more challenging."
       );
@@ -234,120 +201,72 @@ else if (
       performances["Integrated Science"] === "EE1" ||
       performances["Integrated Science"] === "EE2"
     ) {
-
       stemScore += 4;
-
-      reasons.push(
-        "You demonstrated strength in Integrated Science."
-      );
+      reasons.push("You demonstrated strength in Integrated Science.");
     }
 
     if (
       performances["Visual Arts"] === "EE1" ||
       performances["Performing Arts"] === "EE1"
     ) {
-
       artsScore += 4;
-
-      reasons.push(
-        "Your artistic performance supports creative pathways."
-      );
+      reasons.push("Your artistic performance supports creative pathways.");
     }
 
     if (
       performances["Social Studies"] === "EE1" ||
       performances["Social Studies"] === "EE2"
     ) {
-
       socialScore += 4;
-
-      reasons.push(
-        "You performed strongly in Social Studies."
-      );
+      reasons.push("You performed strongly in Social Studies.");
     }
 
     const rankedScores = [
-
-      {
-        pathway: "STEM",
-        score: stemScore,
-      },
-
-      {
-        pathway:
-          "Arts & Sports Science",
-        score: artsScore,
-      },
-
-      {
-        pathway:
-          "Social Sciences",
-        score: socialScore,
-      },
-
+      { pathway: "STEM", score: stemScore },
+      { pathway: "Arts & Sports Science", score: artsScore },
+      { pathway: "Social Sciences", score: socialScore },
     ];
 
-    rankedScores.sort(
-      (a, b) => b.score - a.score
-    );
+    rankedScores.sort((a, b) => b.score - a.score);
 
-    setPathwayScores(
-      rankedScores
-    );
+    setPathwayScores(rankedScores);
 
-    const topPathway =
-      rankedScores[0].pathway;
+    const topPathway = rankedScores[0].pathway;
 
-    setRecommendedPathway(
-      topPathway
-    );
-
-    setRecommendationReason(
-      reasons.join(" ")
-    );
-
-    analyzeCombination(
-      topPathway
-    );
+    setRecommendedPathway(topPathway);
+    setRecommendationReason(reasons.join(" "));
+    analyzeCombination(topPathway);
   };
 
-  
-let filteredSchools = [];
+  let filteredSchools = [];
 
-if (selectedCounty === "Nyeri") {
+  if (selectedCounty === "Nyeri") {
 
-  const selectedSubcountySchools =
-    nyeriSubcountySchools[
-      selectedSubcounty
-    ] || [];
+    const selectedSubcountySchools =
+      nyeriSubcountySchools[selectedSubcounty] || [];
 
-  filteredSchools =
-    selectedSubcountySchools.filter(
+    filteredSchools = selectedSubcountySchools.filter(
       (school) =>
-
-       school.pathways?.includes(
-  recommendedPathway
-)  &&
-
-        (
-          selectedCategory === "" ||
-
-          school.category ===
-            selectedCategory
-        )
+        school.pathways?.includes(recommendedPathway) &&
+        (selectedCategory === "" ||
+          school.category === selectedCategory) &&
+        (selectedGender === "" ||
+          school.gender === selectedGender ||
+          school.gender === "Mixed")
     );
-}
+  }
 
-if (selectedCategory === "C1") {
+  if (selectedCategory === "C1") {
 
-  filteredSchools =
-    c1SchoolsKenya.filter(
+    filteredSchools = c1SchoolsKenya.filter(
       (school) =>
-        school.pathways?.includes(
-          recommendedPathway
-        )
+        school.pathways?.includes(recommendedPathway) &&
+        school.county === selectedCounty &&
+        (selectedGender === "" ||
+          school.gender === selectedGender ||
+          school.gender === "Mixed")
     );
-}
+  }
 
   return (
     <div className="container">
@@ -356,9 +275,7 @@ if (selectedCategory === "C1") {
 
         <h1>SwiftPath</h1>
 
-        <p>
-          Pathways to Success
-        </p>
+        <p>Pathways to Success</p>
 
         <button
           className="primary"
@@ -378,10 +295,7 @@ if (selectedCategory === "C1") {
               maxWidth: "700px",
             }}
           >
-
-            <h2>
-              Recommended Pathway
-            </h2>
+            <h2>Recommended Pathway</h2>
 
             <p
               style={{
@@ -402,44 +316,21 @@ if (selectedCategory === "C1") {
               {recommendationReason}
             </p>
 
-            <div
-              style={{
-                marginTop: "30px",
-              }}
-            >
+            <div style={{ marginTop: "30px" }}>
 
-              <h3>
-                Alternative Pathways
-              </h3>
+              <h3>Alternative Pathways</h3>
 
-              {pathwayScores.map(
-                (item, index) => (
-                  <p
-                    key={index}
-                    style={{
-                      marginTop: "10px",
-                    }}
-                  >
-                    {index + 1}.
-                    {" "}
-                    {item.pathway}
-                    {" "}
-                    ({item.score} points)
-                  </p>
-                )
-              )}
+              {pathwayScores.map((item, index) => (
+                <p key={index} style={{ marginTop: "10px" }}>
+                  {index + 1}. {item.pathway} ({item.score} points)
+                </p>
+              ))}
 
             </div>
 
-            <div
-              style={{
-                marginTop: "30px",
-              }}
-            >
+            <div style={{ marginTop: "30px" }}>
 
-              <h3>
-                Subject Combination Analysis
-              </h3>
+              <h3>Subject Combination Analysis</h3>
 
               <p
                 style={{
@@ -464,7 +355,6 @@ if (selectedCategory === "C1") {
             alignItems: "center",
           }}
         >
-
           {questions.map((item) => (
             <QuestionCard
               key={item.id}
@@ -472,14 +362,10 @@ if (selectedCategory === "C1") {
               type={item.type}
               options={item.options}
               onAnswer={(answer) =>
-                handleAnswer(
-                  item.question,
-                  answer
-                )
+                handleAnswer(item.question, answer)
               }
             />
           ))}
-
         </div>
 
         <div
@@ -491,21 +377,15 @@ if (selectedCategory === "C1") {
             alignItems: "center",
           }}
         >
-
-          <h2>
-            Subject Performance
-          </h2>
+          <h2>Subject Performance</h2>
 
           {subjects.map((subject, index) => (
             <PerformanceCard
               key={index}
               subject={subject}
-              onPerformanceChange={
-                handlePerformanceChange
-              }
+              onPerformanceChange={handlePerformanceChange}
             />
           ))}
-
         </div>
 
         <div
@@ -517,20 +397,12 @@ if (selectedCategory === "C1") {
             alignItems: "center",
           }}
         >
-
-          <h2>
-            Subject Combination
-          </h2>
+          <h2>Subject Combination</h2>
 
           <CombinationSelector
-            combinations={
-              subjectCombinations
-            }
-            onCombinationChange={
-              setSelectedCombination
-            }
+            combinations={subjectCombinations}
+            onCombinationChange={setSelectedCombination}
           />
-
         </div>
 
         <div
@@ -542,24 +414,15 @@ if (selectedCategory === "C1") {
             alignItems: "center",
           }}
         >
-
           <SchoolFilter
             counties={counties}
             subcounties={subcounties}
-            onCountyChange={
-              setSelectedCounty
-            }
-            onSubcountyChange={
-              setSelectedSubcounty
-            }
-            onCategoryChange={
-              setSelectedCategory
-            }
-            onDisabilityChange={
-              setSelectedDisability
-            }
+            onCountyChange={setSelectedCounty}
+            onSubcountyChange={setSelectedSubcounty}
+            onCategoryChange={setSelectedCategory}
+            onDisabilityChange={setSelectedDisability}
+            onGenderChange={setSelectedGender}
           />
-
         </div>
 
         {recommendedPathway && (
@@ -572,15 +435,12 @@ if (selectedCategory === "C1") {
               alignItems: "center",
             }}
           >
+            <h2>Recommended Schools</h2>
 
-            <h2>
-              Recommended Schools
-            </h2>
-
-          <SchoolRecommendations
-  schools={filteredSchools}
-  selectedCategory={selectedCategory}
-/>
+            <SchoolRecommendations
+              schools={filteredSchools}
+              selectedCategory={selectedCategory}
+            />
 
           </div>
         )}
