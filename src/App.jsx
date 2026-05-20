@@ -577,9 +577,10 @@ if (selectedCategory === "C1") {
               Recommended Schools
             </h2>
 
-            <SchoolRecommendations
-              schools={filteredSchools}
-            />
+          <SchoolRecommendations
+  schools={filteredSchools}
+  selectedCategory={selectedCategory}
+/>
 
           </div>
         )}
