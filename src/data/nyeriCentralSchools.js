@@ -1,56 +1,19 @@
 const nyeriCentralSchools = [
 
-  // C1 NATIONAL
+  // C2 — EXTRA COUNTY
 
   {
-    name: "Nyeri High School",
-
-    county: "Nyeri",
-
+    name: "Giakanja Sec. School",
     subcounty: "Nyeri Central",
-
-    category: "C1",
-
-    gender: "Boys",
-
-    accommodation: "Boarding",
-
-    pathways: [
-      "STEM",
-      "Social Sciences",
-      "Arts & Sports Science"
-    ],
-
-    tracks: [
-      "Pure Sciences",
-      "Applied Sciences",
-      "Technical Studies",
-      "Humanities & Business Studies",
-      "Languages & Literature",
-      "Arts",
-      "Sports & Recreation"
-    ]
-  },
-
-  // C2 EXTRA COUNTY
-
-  {
-    name: "Nyeri Baptist High School",
-
     county: "Nyeri",
-
-    subcounty: "Nyeri Central",
-
     category: "C2",
-
-    gender: "Girls",
-
+    gender: "Boys",
     accommodation: "Boarding",
 
     pathways: [
       "STEM",
       "Social Sciences",
-      "Arts & Sports Science"
+      "Arts & Sports Science",
     ],
 
     tracks: [
@@ -60,27 +23,33 @@ const nyeriCentralSchools = [
       "Humanities & Business Studies",
       "Languages & Literature",
       "Arts",
-      "Sports & Recreation"
-    ]
+      "Sports & Recreation",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+      "Fine Arts, Theatre & Film + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
   {
-    name: "Giakanja Boys High School",
-
-    county: "Nyeri",
-
+    name: "Muruguru Sec. School",
     subcounty: "Nyeri Central",
-
+    county: "Nyeri",
     category: "C2",
-
-    gender: "Boys",
-
+    gender: "Girls",
     accommodation: "Boarding",
 
     pathways: [
       "STEM",
       "Social Sciences",
-      "Arts & Sports Science"
+      "Arts & Sports Science",
     ],
 
     tracks: [
@@ -90,28 +59,34 @@ const nyeriCentralSchools = [
       "Humanities & Business Studies",
       "Languages & Literature",
       "Arts",
-      "Sports & Recreation"
-    ]
+      "Sports & Recreation",
+    ],
+
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+      "Fine Arts, Theatre & Film + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
-  // C3 COUNTY
+  // C3 — COUNTY
 
   {
-    name: "Kirimara High School",
-
-    county: "Nyeri",
-
+    name: "Gachika Sec. School (Integrated/PH)",
     subcounty: "Nyeri Central",
-
+    county: "Nyeri",
     category: "C3",
-
-    gender: "Boys",
-
+    gender: "Mixed",
     accommodation: "Boarding",
 
     pathways: [
       "STEM",
-      "Social Sciences"
+      "Social Sciences",
     ],
 
     tracks: [
@@ -119,177 +94,368 @@ const nyeriCentralSchools = [
       "Applied Sciences",
       "Technical Studies",
       "Humanities & Business Studies",
-      "Languages & Literature"
-    ]
-  },
-
-  {
-    name: "Nyeri Secondary School",
-
-    county: "Nyeri",
-
-    subcounty: "Nyeri Central",
-
-    category: "C3",
-
-    gender: "Mixed",
-
-    accommodation: "Day",
-
-    pathways: [
-      "STEM",
-      "Social Sciences"
+      "Languages & Literature",
     ],
 
-    tracks: [
-      "Pure Sciences",
-      "Applied Sciences",
-      "Humanities & Business Studies"
-    ]
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+    ],
+
+    disabilitySupport: true,
   },
 
   {
-    name: "St. Mary's Girls Secondary School",
-
-    county: "Nyeri",
-
+    name: "Muthuaini Sec. School",
     subcounty: "Nyeri Central",
-
+    county: "Nyeri",
     category: "C3",
-
     gender: "Girls",
-
     accommodation: "Boarding",
 
     pathways: [
       "STEM",
-      "Social Sciences"
+      "Social Sciences",
     ],
 
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
+      "Technical Studies",
       "Humanities & Business Studies",
-      "Languages & Literature"
-    ]
-  },
-
-  // C4 SUBCOUNTY
-
-  {
-    name: "Chania Boys Secondary School",
-
-    county: "Nyeri",
-
-    subcounty: "Nyeri Central",
-
-    category: "C4",
-
-    gender: "Boys",
-
-    accommodation: "Day",
-
-    pathways: [
-      "STEM"
+      "Languages & Literature",
     ],
 
-    tracks: [
-      "Applied Sciences",
-      "Technical Studies"
-    ]
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+      "Business Studies, History & Citizenship + 1 elective",
+      "Arabic, French + 1 elective",
+    ],
+
+    disabilitySupport: false,
   },
 
+  // C4 — SUB COUNTY
+
   {
-    name: "Kiawara Secondary School",
-
-    county: "Nyeri",
-
+    name: "ACK Senior Chief Mukira Sec. Sch.",
     subcounty: "Nyeri Central",
-
+    county: "Nyeri",
     category: "C4",
-
     gender: "Mixed",
-
     accommodation: "Day",
-
-    pathways: [
-      "STEM"
-    ],
-
+    pathways: ["STEM"],
     tracks: [
+      "Pure Sciences",
       "Applied Sciences",
-      "Technical Studies"
-    ]
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
   },
 
   {
-    name: "Majengo Secondary School",
-
-    county: "Nyeri",
-
+    name: "Duncan Ndegwa Sec. School",
     subcounty: "Nyeri Central",
-
+    county: "Nyeri",
     category: "C4",
-
     gender: "Mixed",
-
     accommodation: "Day",
-
-    pathways: [
-      "STEM"
-    ],
-
+    pathways: ["STEM"],
     tracks: [
+      "Pure Sciences",
       "Applied Sciences",
-      "Technical Studies"
-    ]
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
   },
 
   {
-    name: "Ruring'u Secondary School",
-
-    county: "Nyeri",
-
+    name: "Gitathiini Sec. School",
     subcounty: "Nyeri Central",
-
+    county: "Nyeri",
     category: "C4",
-
     gender: "Mixed",
-
     accommodation: "Day",
-
-    pathways: [
-      "STEM"
-    ],
-
+    pathways: ["STEM"],
     tracks: [
+      "Pure Sciences",
       "Applied Sciences",
-      "Technical Studies"
-    ]
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
   },
 
   {
-    name: "Witemere Secondary School",
-
-    county: "Nyeri",
-
+    name: "Ihwa Sec. School",
     subcounty: "Nyeri Central",
-
+    county: "Nyeri",
     category: "C4",
-
     gender: "Mixed",
-
     accommodation: "Day",
-
-    pathways: [
-      "STEM"
-    ],
-
+    pathways: ["STEM"],
     tracks: [
+      "Pure Sciences",
       "Applied Sciences",
-      "Technical Studies"
-    ]
-  }
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Ithenguri Mixed Sec. School",
+    subcounty: "Nyeri Central",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Kahiga Sec. School",
+    subcounty: "Nyeri Central",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Kiandere Mixed Day Sec. School",
+    subcounty: "Nyeri Central",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Kihatha Sec. School",
+    subcounty: "Nyeri Central",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Kihuyo Sec. School",
+    subcounty: "Nyeri Central",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Marua Mixed Day Sec. School",
+    subcounty: "Nyeri Central",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Nyaribo Sec. School",
+    subcounty: "Nyeri Central",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Riamukurwe Sec. School",
+    subcounty: "Nyeri Central",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Rware High School",
+    subcounty: "Nyeri Central",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "St. Peter's Thunguma Sec. School",
+    subcounty: "Nyeri Central",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "St. Vincent Kiamuiru",
+    subcounty: "Nyeri Central",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
 
 ];
 
