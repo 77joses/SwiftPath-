@@ -1,8 +1,9 @@
 import kieniWestSchools from "./data/kieniWestSchools";
 import kieniEastSchools from "./data/kieniEastSchools";
-import mathiraSchools from "./data/mathiraSchools";
+import mathiraEastSchools from "./data/mathiraEastSchools";
+import mathiraWestSchools from "./data/mathiraWestSchools";
 import tetuSchools from "./data/tetuSchools";
-import othayaSchools from "./data/othayaSchools";
+import nyeriSouthSchools from "./data/nyeriSouthSchools";
 import MukurweiniSchools from "./data/MukurweiniSchools";
 import nyeriCentralSchools from "./data/nyeriCentralSchools";
 
@@ -13,7 +14,6 @@ import questions from "./data/questions";
 import subjects from "./data/subjects";
 import counties from "./data/counties";
 import subcounties from "./data/subcounties";
-import schools from "./data/schools";
 import subjectCombinations from "./data/subjectCombinations";
 
 import QuestionCard from "./components/QuestionCard";
@@ -21,7 +21,16 @@ import PerformanceCard from "./components/PerformanceCard";
 import SchoolFilter from "./components/SchoolFilter";
 import SchoolRecommendations from "./components/SchoolRecommendations";
 import CombinationSelector from "./components/CombinationSelector";
-
+const nyeriSubcountySchools = {
+  "Kieni West": kieniWestSchools,
+  "Kieni East": kieniEastSchools,
+  "Mathira East": mathiraEastSchools,
+  "Mathira West": mathiraWestSchools,
+  Tetu: tetuSchools,
+  "Nyeri South": nyeriSouthSchools,
+  "Mukurwe-ini": MukurweiniSchools,
+  "Nyeri Central": nyeriCentralSchools,
+};
 export default function App() {
 
   const [recommendedPathway, setRecommendedPathway] =
@@ -56,15 +65,7 @@ export default function App() {
 
   const [pathwayScores, setPathwayScores] =
     useState([]);
-const nyeriSubcountySchools = {
-  "Kieni West": kieniWestSchools,
-  "Kieni East": kieniEastSchools,
-  Mathira: mathiraSchools,
-  Tetu: tetuSchools,
-  Othaya: othayaSchools,
-  "Mukurweini": MukurweiniSchools,
-  "Nyeri Central": nyeriCentralSchools,
-};
+
   const handlePerformanceChange = (
     subject,
     band
