@@ -1,11 +1,12 @@
 const subcounties = [
-  "Mathira",
-  "Othaya",
+  "Mukurwe-ini",
   "Kieni East",
   "Kieni West",
-  "Mukurweini",
+  "Mathira East",
+  "Mathira West",
+  "Nyeri Central",
+  "Nyeri South",
   "Tetu"
-  "Nyeri Central"
 ];
 
 export default subcounties;
