@@ -4,7 +4,8 @@ export default function SchoolFilter({
   onCountyChange,
   onSubcountyChange,
   onCategoryChange,
-  onDisabilityChange
+  onDisabilityChange,
+  onGenderChange,
 }) {
 
   return (
@@ -19,7 +20,27 @@ export default function SchoolFilter({
       }}
     >
 
-      <h3>Select School Category</h3>
+      <h3>Select Your Gender</h3>
+
+      <select
+        onChange={(e) => onGenderChange(e.target.value)}
+        style={{
+          marginTop: "15px",
+          width: "100%",
+          padding: "14px",
+          borderRadius: "12px",
+          border: "none",
+          fontSize: "1rem",
+        }}
+      >
+        <option value="">Select gender</option>
+        <option value="Boys">Boy</option>
+        <option value="Girls">Girl</option>
+      </select>
+
+      <h3 style={{ marginTop: "30px" }}>
+        Select School Category
+      </h3>
 
       <select
         onChange={(e) => onCategoryChange(e.target.value)}
