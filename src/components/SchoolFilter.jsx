@@ -19,14 +19,10 @@ export default function SchoolFilter({
       }}
     >
 
-      <h3>
-        Select School Category
-      </h3>
+      <h3>Select School Category</h3>
 
       <select
-        onChange={(e) =>
-          onCategoryChange(e.target.value)
-        }
+        onChange={(e) => onCategoryChange(e.target.value)}
         style={{
           marginTop: "15px",
           width: "100%",
@@ -36,13 +32,11 @@ export default function SchoolFilter({
           fontSize: "1rem",
         }}
       >
-        <option>Select category</option>
-
-        <option>C1</option>
-        <option>C2</option>
-        <option>C3</option>
-        <option>C4</option>
-
+        <option value="">Select category</option>
+        <option value="C1">C1</option>
+        <option value="C2">C2</option>
+        <option value="C3">C3</option>
+        <option value="C4">C4</option>
       </select>
 
       <h3 style={{ marginTop: "30px" }}>
@@ -50,9 +44,7 @@ export default function SchoolFilter({
       </h3>
 
       <select
-        onChange={(e) =>
-          onCountyChange(e.target.value)
-        }
+        onChange={(e) => onCountyChange(e.target.value)}
         style={{
           marginTop: "15px",
           width: "100%",
@@ -62,14 +54,12 @@ export default function SchoolFilter({
           fontSize: "1rem",
         }}
       >
-        <option>Select county</option>
-
+        <option value="">Select county</option>
         {counties.map((county, index) => (
-          <option key={index}>
+          <option key={index} value={county}>
             {county}
           </option>
         ))}
-
       </select>
 
       <h3 style={{ marginTop: "30px" }}>
@@ -77,9 +67,7 @@ export default function SchoolFilter({
       </h3>
 
       <select
-        onChange={(e) =>
-          onSubcountyChange(e.target.value)
-        }
+        onChange={(e) => onSubcountyChange(e.target.value)}
         style={{
           marginTop: "15px",
           width: "100%",
@@ -89,16 +77,12 @@ export default function SchoolFilter({
           fontSize: "1rem",
         }}
       >
-        <option>Select subcounty</option>
-
-        {subcounties.map(
-          (subcounty, index) => (
-            <option key={index}>
-              {subcounty}
-            </option>
-          )
-        )}
-
+        <option value="">Select subcounty</option>
+        {subcounties.map((subcounty, index) => (
+          <option key={index} value={subcounty}>
+            {subcounty}
+          </option>
+        ))}
       </select>
 
       <h3 style={{ marginTop: "30px" }}>
@@ -106,11 +90,7 @@ export default function SchoolFilter({
       </h3>
 
       <select
-        onChange={(e) =>
-          onDisabilityChange(
-            e.target.value
-          )
-        }
+        onChange={(e) => onDisabilityChange(e.target.value)}
         style={{
           marginTop: "15px",
           width: "100%",
@@ -120,16 +100,12 @@ export default function SchoolFilter({
           fontSize: "1rem",
         }}
       >
-        <option>
-          Select support need
-        </option>
-
-        <option>None</option>
-        <option>Visual Impairment</option>
-        <option>Hearing Impairment</option>
-        <option>Physical Disability</option>
-        <option>Learning Support</option>
-
+        <option value="">Select support need</option>
+        <option value="None">None</option>
+        <option value="Visual Impairment">Visual Impairment</option>
+        <option value="Hearing Impairment">Hearing Impairment</option>
+        <option value="Physical Disability">Physical Disability</option>
+        <option value="Learning Support">Learning Support</option>
       </select>
 
     </div>
