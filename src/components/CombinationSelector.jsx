@@ -1,5 +1,6 @@
 export default function CombinationSelector({
-  combinations
+  combinations,
+  onCombinationChange
 }) {
   return (
     <div
@@ -17,6 +18,9 @@ export default function CombinationSelector({
       </h3>
 
       <select
+        onChange={(e) =>
+          onCombinationChange(e.target.value)
+        }
         style={{
           marginTop: "20px",
           width: "100%",
@@ -26,10 +30,10 @@ export default function CombinationSelector({
           fontSize: "1rem",
         }}
       >
-        <option>Select combination</option>
+        <option value="">Select combination</option>
 
         {combinations.map((combination, index) => (
-          <option key={index}>
+          <option key={index} value={combination}>
             {combination}
           </option>
         ))}
