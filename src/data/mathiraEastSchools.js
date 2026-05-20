@@ -9,13 +9,11 @@ const mathiraEastSchools = [
     category: "C2",
     gender: "Boys",
     accommodation: "Boarding",
-
     pathways: [
       "STEM",
       "Social Sciences",
       "Arts & Sports Science",
     ],
-
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
@@ -25,7 +23,6 @@ const mathiraEastSchools = [
       "Arts",
       "Sports & Recreation",
     ],
-
     subjectCombinations: [
       "Advanced Mathematics, Biology, Chemistry + 1 elective",
       "Agriculture, Computer Studies + 1 elective",
@@ -34,7 +31,6 @@ const mathiraEastSchools = [
       "Arabic, French + 1 elective",
       "Fine Arts, Theatre & Film + 1 elective",
     ],
-
     disabilitySupport: false,
   },
 
@@ -45,13 +41,11 @@ const mathiraEastSchools = [
     category: "C2",
     gender: "Boys",
     accommodation: "Boarding",
-
     pathways: [
       "STEM",
       "Social Sciences",
       "Arts & Sports Science",
     ],
-
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
@@ -61,7 +55,6 @@ const mathiraEastSchools = [
       "Arts",
       "Sports & Recreation",
     ],
-
     subjectCombinations: [
       "Advanced Mathematics, Biology, Chemistry + 1 elective",
       "Agriculture, Computer Studies + 1 elective",
@@ -70,7 +63,6 @@ const mathiraEastSchools = [
       "Arabic, French + 1 elective",
       "Fine Arts, Theatre & Film + 1 elective",
     ],
-
     disabilitySupport: false,
   },
 
@@ -81,13 +73,11 @@ const mathiraEastSchools = [
     category: "C2",
     gender: "Boys",
     accommodation: "Boarding",
-
     pathways: [
       "STEM",
       "Social Sciences",
       "Arts & Sports Science",
     ],
-
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
@@ -97,7 +87,6 @@ const mathiraEastSchools = [
       "Arts",
       "Sports & Recreation",
     ],
-
     subjectCombinations: [
       "Advanced Mathematics, Biology, Chemistry + 1 elective",
       "Agriculture, Computer Studies + 1 elective",
@@ -106,7 +95,6 @@ const mathiraEastSchools = [
       "Arabic, French + 1 elective",
       "Fine Arts, Theatre & Film + 1 elective",
     ],
-
     disabilitySupport: false,
   },
 
@@ -117,13 +105,11 @@ const mathiraEastSchools = [
     category: "C2",
     gender: "Girls",
     accommodation: "Boarding",
-
     pathways: [
       "STEM",
       "Social Sciences",
       "Arts & Sports Science",
     ],
-
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
@@ -133,7 +119,6 @@ const mathiraEastSchools = [
       "Arts",
       "Sports & Recreation",
     ],
-
     subjectCombinations: [
       "Advanced Mathematics, Biology, Chemistry + 1 elective",
       "Agriculture, Computer Studies + 1 elective",
@@ -142,7 +127,6 @@ const mathiraEastSchools = [
       "Arabic, French + 1 elective",
       "Fine Arts, Theatre & Film + 1 elective",
     ],
-
     disabilitySupport: false,
   },
 
@@ -155,12 +139,10 @@ const mathiraEastSchools = [
     category: "C3",
     gender: "Girls",
     accommodation: "Boarding",
-
     pathways: [
       "STEM",
       "Social Sciences",
     ],
-
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
@@ -168,7 +150,6 @@ const mathiraEastSchools = [
       "Humanities & Business Studies",
       "Languages & Literature",
     ],
-
     subjectCombinations: [
       "Advanced Mathematics, Biology, Chemistry + 1 elective",
       "Agriculture, Computer Studies + 1 elective",
@@ -176,7 +157,6 @@ const mathiraEastSchools = [
       "Business Studies, History & Citizenship + 1 elective",
       "Arabic, French + 1 elective",
     ],
-
     disabilitySupport: false,
   },
 
@@ -187,12 +167,10 @@ const mathiraEastSchools = [
     category: "C3",
     gender: "Boys",
     accommodation: "Boarding",
-
     pathways: [
       "STEM",
       "Social Sciences",
     ],
-
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
@@ -200,7 +178,6 @@ const mathiraEastSchools = [
       "Humanities & Business Studies",
       "Languages & Literature",
     ],
-
     subjectCombinations: [
       "Advanced Mathematics, Biology, Chemistry + 1 elective",
       "Agriculture, Computer Studies + 1 elective",
@@ -208,7 +185,6 @@ const mathiraEastSchools = [
       "Business Studies, History & Citizenship + 1 elective",
       "Arabic, French + 1 elective",
     ],
-
     disabilitySupport: false,
   },
 
@@ -219,12 +195,10 @@ const mathiraEastSchools = [
     category: "C3",
     gender: "Girls",
     accommodation: "Boarding",
-
     pathways: [
       "STEM",
       "Social Sciences",
     ],
-
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
@@ -232,7 +206,6 @@ const mathiraEastSchools = [
       "Humanities & Business Studies",
       "Languages & Literature",
     ],
-
     subjectCombinations: [
       "Advanced Mathematics, Biology, Chemistry + 1 elective",
       "Agriculture, Computer Studies + 1 elective",
@@ -240,7 +213,6 @@ const mathiraEastSchools = [
       "Business Studies, History & Citizenship + 1 elective",
       "Arabic, French + 1 elective",
     ],
-
     disabilitySupport: false,
   },
 
@@ -251,12 +223,10 @@ const mathiraEastSchools = [
     category: "C3",
     gender: "Girls",
     accommodation: "Boarding",
-
     pathways: [
       "STEM",
       "Social Sciences",
     ],
-
     tracks: [
       "Pure Sciences",
       "Applied Sciences",
@@ -264,7 +234,6 @@ const mathiraEastSchools = [
       "Humanities & Business Studies",
       "Languages & Literature",
     ],
-
     subjectCombinations: [
       "Advanced Mathematics, Biology, Chemistry + 1 elective",
       "Agriculture, Computer Studies + 1 elective",
@@ -272,7 +241,6 @@ const mathiraEastSchools = [
       "Business Studies, History & Citizenship + 1 elective",
       "Arabic, French + 1 elective",
     ],
-
     disabilitySupport: false,
   },
 
@@ -554,3 +522,87 @@ const mathiraEastSchools = [
   {
     name: "Muthea Sec. School",
     subcounty: "Mathira East",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Ndimaini Mixed Sec. School",
+    subcounty: "Mathira East",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "Ragati Sec. School",
+    subcounty: "Mathira East",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+  {
+    name: "St. Augustine Kieni Sec. School",
+    subcounty: "Mathira East",
+    county: "Nyeri",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+    tracks: [
+      "Pure Sciences",
+      "Applied Sciences",
+      "Technical Studies",
+    ],
+    subjectCombinations: [
+      "Advanced Mathematics, Biology, Chemistry + 1 elective",
+      "Agriculture, Computer Studies + 1 elective",
+      "Aviation, Business Studies + 1 elective",
+    ],
+    disabilitySupport: false,
+  },
+
+];
+
+export default mathiraEastSchools;
