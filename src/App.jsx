@@ -96,52 +96,33 @@ export default function App() {
 
   const [recommendedPathway, setRecommendedPathway] =
     useState("");
-
   const [recommendationReason, setRecommendationReason] =
     useState("");
+  const [answers, setAnswers] = useState({});
+  const [performances, setPerformances] = useState({});
+  const [selectedCounties, setSelectedCounties] = useState([]);
+  const [selectedSubcounty, setSelectedSubcounty] = useState("");
+  const [selectedDisability, setSelectedDisability] = useState("");
+  const [selectedCombination, setSelectedCombination] = useState("");
+  const [combinationFeedback, setCombinationFeedback] = useState("");
+  const [pathwayScores, setPathwayScores] = useState([]);
+  const [selectedGender, setSelectedGender] = useState("");
+  const [selectedAccommodation, setSelectedAccommodation] = useState("");
 
-  const [answers, setAnswers] =
-    useState({});
-
-  const [performances, setPerformances] =
-    useState({});
-
-  const [selectedCounties, setSelectedCounties] =
-    useState([]);
-
-  const [selectedSubcounty, setSelectedSubcounty] =
-    useState("");
-
-  const [selectedDisability, setSelectedDisability] =
-    useState("");
-
-  const [selectedCombination, setSelectedCombination] =
-    useState("");
-
-  const [combinationFeedback, setCombinationFeedback] =
-    useState("");
-
-  const [pathwayScores, setPathwayScores] =
-    useState([]);
-
-  const [selectedGender, setSelectedGender] =
-    useState("");
-
-  const [selectedAccommodation, setSelectedAccommodation] =
-    useState("");
+  // Payment states
+  const [phone, setPhone] = useState("");
+  const [unlocked, setUnlocked] = useState(false);
+  const [generationsLeft, setGenerationsLeft] = useState(0);
+  const [paymentError, setPaymentError] = useState("");
+  const [checkingPayment, setCheckingPayment] = useState(false);
+  const [showSchools, setShowSchools] = useState(false);
 
   const handlePerformanceChange = (subject, band) => {
-    setPerformances((prev) => ({
-      ...prev,
-      [subject]: band,
-    }));
+    setPerformances((prev) => ({ ...prev, [subject]: band }));
   };
 
   const handleAnswer = (question, answer) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [question]: answer,
-    }));
+    setAnswers((prev) => ({ ...prev, [question]: answer }));
   };
 
   const handleAddCounty = (county) => {
@@ -162,36 +143,28 @@ export default function App() {
       setCombinationFeedback("");
       return;
     }
-
     const combination = selectedCombination.toLowerCase();
-
     if (
       pathway === "STEM" &&
-      (
-        combination.includes("physics") ||
+      (combination.includes("physics") ||
         combination.includes("chemistry") ||
-        combination.includes("biology")
-      )
+        combination.includes("biology"))
     ) {
       setCombinationFeedback(
         "Excellent combination alignment for STEM pathways."
       );
     } else if (
       pathway === "Arts & Sports Science" &&
-      (
-        combination.includes("art") ||
-        combination.includes("music")
-      )
+      (combination.includes("art") ||
+        combination.includes("music"))
     ) {
       setCombinationFeedback(
         "This combination aligns strongly with creative and arts pathways."
       );
     } else if (
       pathway === "Social Sciences" &&
-      (
-        combination.includes("history") ||
-        combination.includes("business")
-      )
+      (combination.includes("history") ||
+        combination.includes("business"))
     ) {
       setCombinationFeedback(
         "This combination supports Social Sciences progression."
@@ -204,7 +177,6 @@ export default function App() {
   };
 
   const generateRecommendation = () => {
-
     let stemScore = 0;
     let artsScore = 0;
     let socialScore = 0;
@@ -253,9 +225,7 @@ export default function App() {
       performances["Integrated Science"] === "EE2"
     ) {
       stemScore += 4;
-      reasons.push(
-        "You demonstrated strength in Integrated Science."
-      );
+      reasons.push("You demonstrated strength in Integrated Science.");
     }
 
     if (
@@ -273,9 +243,7 @@ export default function App() {
       performances["Social Studies"] === "EE2"
     ) {
       socialScore += 4;
-      reasons.push(
-        "You performed strongly in Social Studies."
-      );
+      reasons.push("You performed strongly in Social Studies.");
     }
 
     const ranked = [
@@ -286,14 +254,43 @@ export default function App() {
 
     ranked.sort((a, b) => b.score - a.score);
     setPathwayScores(ranked);
-
     const topPathway = ranked[0].pathway;
     setRecommendedPathway(topPathway);
     setRecommendationReason(reasons.join(" "));
     analyzeCombination(topPathway);
+    setShowSchools(false);
   };
 
-  // Build school groups by category
+  const handleUnlock = async () => {
+    if (!phone || phone.length < 9) {
+      setPaymentError("Please enter a valid Safaricom number.");
+      return;
+    }
+    setCheckingPayment(true);
+    setPaymentError("");
+    try {
+      const res = await fetch("/api/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone }),
+      });
+      const data = await res.json();
+      if (data.unlocked) {
+        setUnlocked(true);
+        setGenerationsLeft(data.generations_remaining);
+        setShowSchools(true);
+      } else {
+        setPaymentError(
+          "No active unlock found for this number. Please pay KSH 20 to unlock."
+        );
+      }
+    } catch (err) {
+      setPaymentError("Something went wrong. Please try again.");
+    }
+    setCheckingPayment(false);
+  };
+
+  // Build school groups
   const subcountySchools =
     nyeriSubcountySchools[selectedSubcounty] || [];
 
@@ -313,137 +310,125 @@ export default function App() {
 
   const c2Candidates = recommendedPathway
     ? subcountySchools.filter(
-        (school) =>
-          baseFilter(school) && school.category === "C2"
+        (school) => baseFilter(school) && school.category === "C2"
       )
     : [];
 
   const c3Candidates = recommendedPathway
     ? subcountySchools.filter(
-        (school) =>
-          baseFilter(school) && school.category === "C3"
+        (school) => baseFilter(school) && school.category === "C3"
       )
     : [];
 
   const c4Candidates = recommendedPathway
     ? subcountySchools.filter(
-        (school) =>
-          baseFilter(school) && school.category === "C4"
+        (school) => baseFilter(school) && school.category === "C4"
       )
     : [];
 
   const c1Schools = rankAndSlice(
-    c1Candidates,
-    selectedCounties,
-    selectedGender,
-    pathwayScores,
-    selectedAccommodation,
-    3
+    c1Candidates, selectedCounties, selectedGender,
+    pathwayScores, selectedAccommodation, 3
   );
-
   const c2Schools = rankAndSlice(
-    c2Candidates,
-    selectedCounties,
-    selectedGender,
-    pathwayScores,
-    selectedAccommodation,
-    3
+    c2Candidates, selectedCounties, selectedGender,
+    pathwayScores, selectedAccommodation, 3
   );
-
   const c3Schools = rankAndSlice(
-    c3Candidates,
-    selectedCounties,
-    selectedGender,
-    pathwayScores,
-    selectedAccommodation,
-    3
+    c3Candidates, selectedCounties, selectedGender,
+    pathwayScores, selectedAccommodation, 3
   );
-
   const c4Schools = rankAndSlice(
-    c4Candidates,
-    selectedCounties,
-    selectedGender,
-    pathwayScores,
-    selectedAccommodation,
-    3
+    c4Candidates, selectedCounties, selectedGender,
+    pathwayScores, selectedAccommodation, 3
   );
 
   return (
     <div className="container">
-
       <section className="hero">
 
-        <h1>SwiftPath</h1>
+        {/* LOGO */}
+        <img
+          src="/file_00000000d5d071fb9329dd2c6c6ce7fe.png"
+          alt="SwiftPath Logo"
+          style={{
+            width: "220px",
+            marginTop: "30px",
+            borderRadius: "20px",
+          }}
+        />
 
-        <p>Pathways to Success</p>
-
-        <button
-          className="primary"
-          onClick={generateRecommendation}
+        {/* WELCOME */}
+        <div
+          style={{
+            marginTop: "30px",
+            width: "100%",
+            maxWidth: "700px",
+            textAlign: "center",
+          }}
         >
-          Generate Recommendation
-        </button>
-
-        {recommendedPathway && (
-          <div
+          <p
             style={{
-              background: "#0b63f6",
-              padding: "25px",
-              borderRadius: "18px",
-              marginTop: "40px",
-              width: "100%",
-              maxWidth: "700px",
+              fontSize: "1.1rem",
+              fontStyle: "italic",
+              opacity: 0.85,
+              lineHeight: "1.7",
             }}
           >
-            <h2>Recommended Pathway</h2>
+            Your future starts with one decision.
+          </p>
+          <h1 style={{ marginTop: "10px" }}>
+            Welcome to SwiftPath
+          </h1>
+          <p
+            style={{
+              marginTop: "6px",
+              opacity: 0.7,
+              fontSize: "0.95rem",
+            }}
+          >
+            Kenya's smartest CBC pathway guide, built for the
+            student who refuses to leave their future to chance.
+          </p>
+        </div>
 
-            <p
-              style={{
-                marginTop: "10px",
-                fontSize: "1.3rem",
-                fontWeight: "bold",
-              }}
-            >
-              {recommendedPathway}
-            </p>
+        {/* DESCRIPTION */}
+        <div
+          style={{
+            marginTop: "30px",
+            width: "100%",
+            maxWidth: "700px",
+            background: "#10213d",
+            padding: "25px",
+            borderRadius: "18px",
+            lineHeight: "1.8",
+          }}
+        >
+          <p>
+            The CBC system opens three powerful doors:{" "}
+            <strong>STEM</strong>,{" "}
+            <strong>Social Sciences</strong>, and{" "}
+            <strong>Arts & Sports Science</strong>. But which
+            one is truly yours?
+          </p>
+          <p style={{ marginTop: "15px" }}>
+            SwiftPath analyses your strengths, your grades, and
+            your ambitions — then points you to the exact
+            pathway, subject combination, and schools where you
+            will thrive.
+          </p>
+          <p
+            style={{
+              marginTop: "15px",
+              fontStyle: "italic",
+              opacity: 0.8,
+            }}
+          >
+            Answer honestly. The results might surprise you.
+          </p>
+        </div>
 
-            <p
-              style={{
-                marginTop: "15px",
-                lineHeight: "1.7",
-              }}
-            >
-              {recommendationReason}
-            </p>
-
-            <div style={{ marginTop: "30px" }}>
-              <h3>Alternative Pathways</h3>
-              {pathwayScores.map((item, index) => (
-                <p
-                  key={index}
-                  style={{ marginTop: "10px" }}
-                >
-                  {index + 1}. {item.pathway} (
-                  {item.score} points)
-                </p>
-              ))}
-            </div>
-
-            <div style={{ marginTop: "30px" }}>
-              <h3>Subject Combination Analysis</h3>
-              <p
-                style={{
-                  marginTop: "12px",
-                  lineHeight: "1.7",
-                }}
-              >
-                {combinationFeedback}
-              </p>
-            </div>
-
-          </div>
-        )}
-
+        {/* QUESTIONS */}
         <div
           style={{
             marginTop: "60px",
@@ -466,6 +451,7 @@ export default function App() {
           ))}
         </div>
 
+        {/* SUBJECT PERFORMANCE */}
         <div
           style={{
             marginTop: "80px",
@@ -485,6 +471,7 @@ export default function App() {
           ))}
         </div>
 
+        {/* SUBJECT COMBINATION */}
         <div
           style={{
             marginTop: "80px",
@@ -501,6 +488,7 @@ export default function App() {
           />
         </div>
 
+        {/* SCHOOL FILTERS */}
         <div
           style={{
             marginTop: "80px",
@@ -523,10 +511,172 @@ export default function App() {
           />
         </div>
 
+        {/* GENERATE BUTTON */}
+        <button
+          className="primary"
+          onClick={generateRecommendation}
+          style={{ marginTop: "40px" }}
+        >
+          Generate My Pathway
+        </button>
+
+        {/* PATHWAY RECOMMENDATION */}
         {recommendedPathway && (
           <div
             style={{
-              marginTop: "80px",
+              background: "#0b63f6",
+              padding: "25px",
+              borderRadius: "18px",
+              marginTop: "40px",
+              width: "100%",
+              maxWidth: "700px",
+            }}
+          >
+            <h2>Your Recommended Pathway</h2>
+            <p
+              style={{
+                marginTop: "10px",
+                fontSize: "1.3rem",
+                fontWeight: "bold",
+              }}
+            >
+              {recommendedPathway}
+            </p>
+            <p
+              style={{
+                marginTop: "15px",
+                lineHeight: "1.7",
+              }}
+            >
+              {recommendationReason}
+            </p>
+            <div style={{ marginTop: "30px" }}>
+              <h3>Alternative Pathways</h3>
+              {pathwayScores.map((item, index) => (
+                <p key={index} style={{ marginTop: "10px" }}>
+                  {index + 1}. {item.pathway} ({item.score} points)
+                </p>
+              ))}
+            </div>
+            <div style={{ marginTop: "30px" }}>
+              <h3>Subject Combination Analysis</h3>
+              <p style={{ marginTop: "12px", lineHeight: "1.7" }}>
+                {combinationFeedback}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* PAYMENT PROMPT */}
+        {recommendedPathway && !showSchools && (
+          <div
+            style={{
+              marginTop: "40px",
+              width: "100%",
+              maxWidth: "700px",
+              background: "#10213d",
+              padding: "25px",
+              borderRadius: "18px",
+              textAlign: "center",
+            }}
+          >
+            <h2>Your pathway is ready.</h2>
+            <h2>Your schools are waiting.</h2>
+
+            <p
+              style={{
+                marginTop: "15px",
+                lineHeight: "1.7",
+                opacity: 0.9,
+              }}
+            >
+              Unlock your personalised school recommendations
+              for just <strong>KSH 20</strong>.
+            </p>
+            <p
+              style={{
+                marginTop: "8px",
+                fontStyle: "italic",
+                opacity: 0.7,
+              }}
+            >
+              Pay once. Use five times.
+            </p>
+
+            <p
+              style={{
+                marginTop: "20px",
+                fontWeight: "bold",
+                fontSize: "1.1rem",
+              }}
+            >
+              Pay KSH 20 to Till: <strong>YOUR 5425894</strong>
+            </p>
+
+            <p style={{ marginTop: "20px", opacity: 0.8 }}>
+              Then enter your M-Pesa number below:
+            </p>
+
+            <input
+              type="tel"
+              placeholder="e.g. 0712345678"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              style={{
+                marginTop: "15px",
+                width: "100%",
+                padding: "14px",
+                borderRadius: "12px",
+                border: "none",
+                fontSize: "1rem",
+                background: "#1a2f55",
+                color: "white",
+              }}
+            />
+
+            {paymentError && (
+              <p
+                style={{
+                  marginTop: "10px",
+                  color: "#ff6b6b",
+                  fontSize: "0.9rem",
+                }}
+              >
+                {paymentError}
+              </p>
+            )}
+
+            <button
+              className="primary"
+              onClick={handleUnlock}
+              style={{ marginTop: "20px", width: "100%" }}
+              disabled={checkingPayment}
+            >
+              {checkingPayment
+                ? "Checking..."
+                : "Unlock My Schools"}
+            </button>
+          </div>
+        )}
+
+        {/* GENERATIONS COUNTER */}
+        {unlocked && (
+          <p
+            style={{
+              marginTop: "15px",
+              opacity: 0.7,
+              fontSize: "0.9rem",
+            }}
+          >
+            Generations remaining: {generationsLeft}
+          </p>
+        )}
+
+        {/* SCHOOL RECOMMENDATIONS */}
+        {showSchools && (
+          <div
+            style={{
+              marginTop: "40px",
               width: "100%",
               display: "flex",
               flexDirection: "column",
@@ -534,19 +684,16 @@ export default function App() {
             }}
           >
             <h2>Recommended Schools</h2>
-
             <SchoolRecommendations
               c1Schools={c1Schools}
               c2Schools={c2Schools}
               c3Schools={c3Schools}
               c4Schools={c4Schools}
             />
-
           </div>
         )}
 
       </section>
-
     </div>
   );
 }
