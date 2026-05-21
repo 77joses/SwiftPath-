@@ -5,7 +5,6 @@ export default function SchoolFilter({
   onAddCounty,
   onRemoveCounty,
   onSubcountyChange,
-  onCategoryChange,
   onDisabilityChange,
   onGenderChange,
   onAccommodationChange,
@@ -62,28 +61,6 @@ export default function SchoolFilter({
       </select>
 
       <h3 style={{ marginTop: "30px" }}>
-        Select School Category
-      </h3>
-
-      <select
-        onChange={(e) => onCategoryChange(e.target.value)}
-        style={{
-          marginTop: "15px",
-          width: "100%",
-          padding: "14px",
-          borderRadius: "12px",
-          border: "none",
-          fontSize: "1rem",
-        }}
-      >
-        <option value="">Select category</option>
-        <option value="C1">C1</option>
-        <option value="C2">C2</option>
-        <option value="C3">C3</option>
-        <option value="C4">C4</option>
-      </select>
-
-      <h3 style={{ marginTop: "30px" }}>
         Select County Preference
       </h3>
 
@@ -98,7 +75,6 @@ export default function SchoolFilter({
         First added = highest priority.
       </p>
 
-      {/* Selected counties display */}
       {selectedCounties.length > 0 && (
         <div style={{ marginTop: "15px" }}>
           {selectedCounties.map((county, index) => (
@@ -136,7 +112,6 @@ export default function SchoolFilter({
         </div>
       )}
 
-      {/* County selector — hidden when 3 already selected */}
       {selectedCounties.length < 3 && (
         <select
           onChange={(e) => {
@@ -209,10 +184,18 @@ export default function SchoolFilter({
       >
         <option value="">Select support need</option>
         <option value="None">None</option>
-        <option value="Visual Impairment">Visual Impairment</option>
-        <option value="Hearing Impairment">Hearing Impairment</option>
-        <option value="Physical Disability">Physical Disability</option>
-        <option value="Learning Support">Learning Support</option>
+        <option value="Visual Impairment">
+          Visual Impairment
+        </option>
+        <option value="Hearing Impairment">
+          Hearing Impairment
+        </option>
+        <option value="Physical Disability">
+          Physical Disability
+        </option>
+        <option value="Learning Support">
+          Learning Support
+        </option>
       </select>
 
     </div>
