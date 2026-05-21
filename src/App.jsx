@@ -33,7 +33,6 @@ const nyeriSubcountySchools = {
   "Nyeri Central": nyeriCentralSchools,
 };
 
-// County priority scores based on selection order
 const getCountyScore = (schoolCounty, selectedCounties) => {
   const index = selectedCounties.indexOf(schoolCounty);
   if (index === 0) return 10;
@@ -42,7 +41,6 @@ const getCountyScore = (schoolCounty, selectedCounties) => {
   return 0;
 };
 
-// Gender score
 const getGenderScore = (schoolGender, selectedGender) => {
   if (selectedGender === "") return 0;
   if (schoolGender === selectedGender) return 4;
@@ -50,7 +48,6 @@ const getGenderScore = (schoolGender, selectedGender) => {
   return 0;
 };
 
-// Pathway score based on quiz ranking
 const getPathwayScore = (schoolPathways, pathwayScores) => {
   if (!pathwayScores.length) return 0;
   let best = 0;
@@ -63,20 +60,22 @@ const getPathwayScore = (schoolPathways, pathwayScores) => {
   return best;
 };
 
-// Accommodation score
-const getAccommodationScore = (schoolAccommodation, selectedAccommodation) => {
+const getAccommodationScore = (
+  schoolAccommodation,
+  selectedAccommodation
+) => {
   if (selectedAccommodation === "") return 0;
   if (schoolAccommodation === selectedAccommodation) return 3;
   return 0;
 };
 
-// Rank and slice schools
-const rankSchools = (
+const rankAndSlice = (
   schools,
   selectedCounties,
   selectedGender,
   pathwayScores,
-  selectedAccommodation
+  selectedAccommodation,
+  max
 ) => {
   const scored = schools.map((school) => ({
     ...school,
@@ -84,12 +83,13 @@ const rankSchools = (
       getCountyScore(school.county, selectedCounties) +
       getGenderScore(school.gender, selectedGender) +
       getPathwayScore(school.pathways, pathwayScores) +
-      getAccommodationScore(school.accommodation, selectedAccommodation),
+      getAccommodationScore(
+        school.accommodation,
+        selectedAccommodation
+      ),
   }));
-
   scored.sort((a, b) => b._score - a._score);
-
-  return scored.slice(0, 7);
+  return scored.slice(0, max);
 };
 
 export default function App() {
@@ -110,9 +110,6 @@ export default function App() {
     useState([]);
 
   const [selectedSubcounty, setSelectedSubcounty] =
-    useState("");
-
-  const [selectedCategory, setSelectedCategory] =
     useState("");
 
   const [selectedDisability, setSelectedDisability] =
@@ -179,9 +176,7 @@ export default function App() {
       setCombinationFeedback(
         "Excellent combination alignment for STEM pathways."
       );
-    }
-
-    else if (
+    } else if (
       pathway === "Arts & Sports Science" &&
       (
         combination.includes("art") ||
@@ -191,9 +186,7 @@ export default function App() {
       setCombinationFeedback(
         "This combination aligns strongly with creative and arts pathways."
       );
-    }
-
-    else if (
+    } else if (
       pathway === "Social Sciences" &&
       (
         combination.includes("history") ||
@@ -203,9 +196,7 @@ export default function App() {
       setCombinationFeedback(
         "This combination supports Social Sciences progression."
       );
-    }
-
-    else {
+    } else {
       setCombinationFeedback(
         "Your chosen combination may not strongly support your recommended pathway. Consider exploring alternative combinations or pathways."
       );
@@ -262,7 +253,9 @@ export default function App() {
       performances["Integrated Science"] === "EE2"
     ) {
       stemScore += 4;
-      reasons.push("You demonstrated strength in Integrated Science.");
+      reasons.push(
+        "You demonstrated strength in Integrated Science."
+      );
     }
 
     if (
@@ -270,7 +263,9 @@ export default function App() {
       performances["Performing Arts"] === "EE1"
     ) {
       artsScore += 4;
-      reasons.push("Your artistic performance supports creative pathways.");
+      reasons.push(
+        "Your artistic performance supports creative pathways."
+      );
     }
 
     if (
@@ -278,7 +273,9 @@ export default function App() {
       performances["Social Studies"] === "EE2"
     ) {
       socialScore += 4;
-      reasons.push("You performed strongly in Social Studies.");
+      reasons.push(
+        "You performed strongly in Social Studies."
+      );
     }
 
     const ranked = [
@@ -288,7 +285,6 @@ export default function App() {
     ];
 
     ranked.sort((a, b) => b.score - a.score);
-
     setPathwayScores(ranked);
 
     const topPathway = ranked[0].pathway;
@@ -297,44 +293,80 @@ export default function App() {
     analyzeCombination(topPathway);
   };
 
-  // Build candidate schools
-  let candidateSchools = [];
+  // Build school groups by category
+  const subcountySchools =
+    nyeriSubcountySchools[selectedSubcounty] || [];
 
-  if (selectedCategory === "C1") {
+  const baseFilter = (school) =>
+    school.pathways?.includes(recommendedPathway) &&
+    (selectedGender === "" ||
+      school.gender === selectedGender ||
+      school.gender === "Mixed");
 
-    candidateSchools = c1SchoolsKenya.filter((school) =>
-      school.pathways?.includes(recommendedPathway) &&
-      selectedCounties.includes(school.county) &&
-      (selectedGender === "" ||
-        school.gender === selectedGender ||
-        school.gender === "Mixed")
-    );
-
-  } else if (selectedCounties.some((c) => c === "Nyeri")) {
-
-    const selectedSubcountySchools =
-      nyeriSubcountySchools[selectedSubcounty] || [];
-
-    candidateSchools = selectedSubcountySchools.filter((school) =>
-      school.pathways?.includes(recommendedPathway) &&
-      (selectedCategory === "" ||
-        school.category === selectedCategory) &&
-      (selectedGender === "" ||
-        school.gender === selectedGender ||
-        school.gender === "Mixed")
-    );
-  }
-
-  // Rank and limit to 7
-  const filteredSchools = recommendedPathway
-    ? rankSchools(
-        candidateSchools,
-        selectedCounties,
-        selectedGender,
-        pathwayScores,
-        selectedAccommodation
+  const c1Candidates = recommendedPathway
+    ? c1SchoolsKenya.filter(
+        (school) =>
+          baseFilter(school) &&
+          selectedCounties.includes(school.county)
       )
     : [];
+
+  const c2Candidates = recommendedPathway
+    ? subcountySchools.filter(
+        (school) =>
+          baseFilter(school) && school.category === "C2"
+      )
+    : [];
+
+  const c3Candidates = recommendedPathway
+    ? subcountySchools.filter(
+        (school) =>
+          baseFilter(school) && school.category === "C3"
+      )
+    : [];
+
+  const c4Candidates = recommendedPathway
+    ? subcountySchools.filter(
+        (school) =>
+          baseFilter(school) && school.category === "C4"
+      )
+    : [];
+
+  const c1Schools = rankAndSlice(
+    c1Candidates,
+    selectedCounties,
+    selectedGender,
+    pathwayScores,
+    selectedAccommodation,
+    3
+  );
+
+  const c2Schools = rankAndSlice(
+    c2Candidates,
+    selectedCounties,
+    selectedGender,
+    pathwayScores,
+    selectedAccommodation,
+    3
+  );
+
+  const c3Schools = rankAndSlice(
+    c3Candidates,
+    selectedCounties,
+    selectedGender,
+    pathwayScores,
+    selectedAccommodation,
+    3
+  );
+
+  const c4Schools = rankAndSlice(
+    c4Candidates,
+    selectedCounties,
+    selectedGender,
+    pathwayScores,
+    selectedAccommodation,
+    3
+  );
 
   return (
     <div className="container">
@@ -387,15 +419,24 @@ export default function App() {
             <div style={{ marginTop: "30px" }}>
               <h3>Alternative Pathways</h3>
               {pathwayScores.map((item, index) => (
-                <p key={index} style={{ marginTop: "10px" }}>
-                  {index + 1}. {item.pathway} ({item.score} points)
+                <p
+                  key={index}
+                  style={{ marginTop: "10px" }}
+                >
+                  {index + 1}. {item.pathway} (
+                  {item.score} points)
                 </p>
               ))}
             </div>
 
             <div style={{ marginTop: "30px" }}>
               <h3>Subject Combination Analysis</h3>
-              <p style={{ marginTop: "12px", lineHeight: "1.7" }}>
+              <p
+                style={{
+                  marginTop: "12px",
+                  lineHeight: "1.7",
+                }}
+              >
                 {combinationFeedback}
               </p>
             </div>
@@ -476,7 +517,6 @@ export default function App() {
             onAddCounty={handleAddCounty}
             onRemoveCounty={handleRemoveCounty}
             onSubcountyChange={setSelectedSubcounty}
-            onCategoryChange={setSelectedCategory}
             onDisabilityChange={setSelectedDisability}
             onGenderChange={setSelectedGender}
             onAccommodationChange={setSelectedAccommodation}
@@ -494,10 +534,14 @@ export default function App() {
             }}
           >
             <h2>Recommended Schools</h2>
+
             <SchoolRecommendations
-              schools={filteredSchools}
-              selectedCategory={selectedCategory}
+              c1Schools={c1Schools}
+              c2Schools={c2Schools}
+              c3Schools={c3Schools}
+              c4Schools={c4Schools}
             />
+
           </div>
         )}
 
