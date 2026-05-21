@@ -1,14 +1,26 @@
 export default function SchoolFilter({
-  counties,
   subcounties,
   selectedCounties,
+  selectedSubcounty,
   onAddCounty,
   onRemoveCounty,
   onSubcountyChange,
   onDisabilityChange,
   onGenderChange,
   onAccommodationChange,
+  counties,
 }) {
+
+  // Build subcounty list from selected counties only
+  const availableSubcounties = selectedCounties.flatMap(
+    (county) =>
+      (subcounties[county] || []).map((sub) => ({
+        county,
+        subcounty: sub,
+        label: `${county} — ${sub}`,
+        value: `${county}::${sub}`,
+      }))
+  );
 
   return (
     <div
@@ -144,28 +156,52 @@ export default function SchoolFilter({
         </select>
       )}
 
-      <h3 style={{ marginTop: "30px" }}>
-        Select Subcounty
-      </h3>
+      {/* Subcounty — only shown when counties selected */}
+      {availableSubcounties.length > 0 && (
+        <>
+          <h3 style={{ marginTop: "30px" }}>
+            Select Subcounty
+          </h3>
 
-      <select
-        onChange={(e) => onSubcountyChange(e.target.value)}
-        style={{
-          marginTop: "15px",
-          width: "100%",
-          padding: "14px",
-          borderRadius: "12px",
-          border: "none",
-          fontSize: "1rem",
-        }}
-      >
-        <option value="">Select subcounty</option>
-        {subcounties.map((subcounty, index) => (
-          <option key={index} value={subcounty}>
-            {subcounty}
-          </option>
-        ))}
-      </select>
+          <p
+            style={{
+              marginTop: "8px",
+              opacity: 0.7,
+              fontSize: "0.9rem",
+            }}
+          >
+            Subcounty affects C3 and C4 school results only.
+          </p>
+
+          <select
+            onChange={(e) => onSubcountyChange(e.target.value)}
+            style={{
+              marginTop: "15px",
+              width: "100%",
+              padding: "14px",
+              borderRadius: "12px",
+              border: "none",
+              fontSize: "1rem",
+            }}
+          >
+            <option value="">Select subcounty</option>
+            {selectedCounties.map((county) => (
+              <optgroup key={county} label={county}>
+                {(subcounties[county] || []).map(
+                  (sub, index) => (
+                    <option
+                      key={index}
+                      value={`${county}::${sub}`}
+                    >
+                      {sub}
+                    </option>
+                  )
+                )}
+              </optgroup>
+            ))}
+          </select>
+        </>
+      )}
 
       <h3 style={{ marginTop: "30px" }}>
         Disability Support
