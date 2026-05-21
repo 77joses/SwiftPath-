@@ -1,60 +1,157 @@
-export default function SchoolRecommendations({
-  schools,
-  selectedCategory,
-}) {
+const categoryLabels = {
+  C1: "C1 — National Schools",
+  C2: "C2 — Extra County Schools",
+  C3: "C3 — County Schools",
+  C4: "C4 — Sub-County Schools",
+};
 
-  if (schools.length === 0 && selectedCategory === "C4") {
-    return (
+const categoryColors = {
+  C1: "#0b63f6",
+  C2: "#4a9d6f",
+  C3: "#c47f17",
+  C4: "#7b4fa6",
+};
+
+function SchoolCard({ school, index }) {
+  return (
+    <div
+      style={{
+        background: "#10213d",
+        padding: "20px",
+        borderRadius: "16px",
+        marginTop: "12px",
+        borderLeft: `4px solid ${
+          index === 0 ? "#ffffff" : "#334"
+        }`,
+      }}
+    >
       <div
         style={{
-          width: "100%",
-          maxWidth: "700px",
-          marginTop: "30px",
-          background: "#10213d",
-          padding: "20px",
-          borderRadius: "16px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        <p style={{ lineHeight: "1.7", opacity: 0.9 }}>
-          C4 sub-county schools offer the{" "}
-          <strong>STEM pathway only</strong>. Your current
-          recommendation does not match STEM. To see C4 schools,
-          please answer questions that lead to a STEM
-          recommendation, or select a different school category.
-        </p>
+        <h3 style={{ fontSize: "1rem" }}>
+          {school.name}
+        </h3>
+        <span
+          style={{
+            background: index === 0 ? "#0b63f6" : "#223",
+            padding: "3px 9px",
+            borderRadius: "8px",
+            fontSize: "0.78rem",
+          }}
+        >
+          #{index + 1}
+        </span>
       </div>
-    );
-  }
 
-  if (schools.length === 0) {
-    return (
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "700px",
-          marginTop: "30px",
-          background: "#10213d",
-          padding: "20px",
-          borderRadius: "16px",
-        }}
-      >
-        <p style={{ lineHeight: "1.7", opacity: 0.9 }}>
-          No schools found matching your selections.
-          Try adjusting your county, category, or gender filters.
-        </p>
-      </div>
-    );
-  }
+      <p style={{ marginTop: "8px", fontSize: "0.9rem" }}>
+        County: {school.county}
+      </p>
+
+      <p style={{ marginTop: "4px", fontSize: "0.9rem" }}>
+        Gender: {school.gender}
+      </p>
+
+      <p style={{ marginTop: "4px", fontSize: "0.9rem" }}>
+        Accommodation: {school.accommodation}
+      </p>
+
+      <p style={{ marginTop: "4px", fontSize: "0.9rem" }}>
+        Pathways: {school.pathways?.join(", ")}
+      </p>
+    </div>
+  );
+}
+
+function CategoryGroup({ category, schools }) {
+  const color = categoryColors[category];
+  const label = categoryLabels[category];
 
   return (
     <div
       style={{
         width: "100%",
         maxWidth: "700px",
-        marginTop: "30px",
+        marginTop: "40px",
       }}
     >
+      <div
+        style={{
+          background: color,
+          padding: "14px 20px",
+          borderRadius: "12px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <h3 style={{ margin: 0 }}>{label}</h3>
+        <span
+          style={{
+            background: "rgba(0,0,0,0.2)",
+            padding: "3px 10px",
+            borderRadius: "8px",
+            fontSize: "0.85rem",
+          }}
+        >
+          {schools.length}{" "}
+          {schools.length === 1 ? "school" : "schools"}
+        </span>
+      </div>
 
+      {schools.length === 0 ? (
+        <div
+          style={{
+            background: "#10213d",
+            padding: "16px 20px",
+            borderRadius: "12px",
+            marginTop: "12px",
+            opacity: 0.7,
+            fontSize: "0.9rem",
+          }}
+        >
+          {category === "C4"
+            ? "C4 schools offer STEM only. No match for your current recommendation."
+            : "No schools found for your current filters in this category."}
+        </div>
+      ) : (
+        schools.map((school, index) => (
+          <SchoolCard
+            key={index}
+            school={school}
+            index={index}
+          />
+        ))
+      )}
+    </div>
+  );
+}
+
+export default function SchoolRecommendations({
+  c1Schools,
+  c2Schools,
+  c3Schools,
+  c4Schools,
+}) {
+
+  const total =
+    c1Schools.length +
+    c2Schools.length +
+    c3Schools.length +
+    c4Schools.length;
+
+  return (
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <p
         style={{
           opacity: 0.7,
@@ -62,72 +159,15 @@ export default function SchoolRecommendations({
           marginBottom: "10px",
         }}
       >
-        Showing {schools.length} best matching{" "}
-        {schools.length === 1 ? "school" : "schools"} for you.
+        {total > 0
+          ? `Showing ${total} best matching schools across all categories.`
+          : "No schools found. Try adjusting your filters."}
       </p>
 
-      {schools.map((school, index) => (
-        <div
-          key={index}
-          style={{
-            background: "#10213d",
-            padding: "20px",
-            borderRadius: "16px",
-            marginTop: "15px",
-            borderLeft: index === 0
-              ? "4px solid #0b63f6"
-              : index === 1
-              ? "4px solid #4a9d6f"
-              : "4px solid #555",
-          }}
-        >
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <h3>{school.name}</h3>
-            <span
-              style={{
-                background: index === 0
-                  ? "#0b63f6"
-                  : index === 1
-                  ? "#4a9d6f"
-                  : "#333",
-                padding: "4px 10px",
-                borderRadius: "8px",
-                fontSize: "0.8rem",
-              }}
-            >
-              #{index + 1}
-            </span>
-          </div>
-
-          <p style={{ marginTop: "10px" }}>
-            County: {school.county}
-          </p>
-
-          <p style={{ marginTop: "6px" }}>
-            Category: {school.category}
-          </p>
-
-          <p style={{ marginTop: "6px" }}>
-            Gender: {school.gender}
-          </p>
-
-          <p style={{ marginTop: "6px" }}>
-            Accommodation: {school.accommodation}
-          </p>
-
-          <p style={{ marginTop: "6px" }}>
-            Pathways: {school.pathways?.join(", ")}
-          </p>
-
-        </div>
-      ))}
+      <CategoryGroup category="C1" schools={c1Schools} />
+      <CategoryGroup category="C2" schools={c2Schools} />
+      <CategoryGroup category="C3" schools={c3Schools} />
+      <CategoryGroup category="C4" schools={c4Schools} />
 
     </div>
   );
