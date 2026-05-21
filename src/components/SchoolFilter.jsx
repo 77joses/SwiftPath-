@@ -1,11 +1,14 @@
 export default function SchoolFilter({
   counties,
   subcounties,
-  onCountyChange,
+  selectedCounties,
+  onAddCounty,
+  onRemoveCounty,
   onSubcountyChange,
   onCategoryChange,
   onDisabilityChange,
   onGenderChange,
+  onAccommodationChange,
 }) {
 
   return (
@@ -39,6 +42,26 @@ export default function SchoolFilter({
       </select>
 
       <h3 style={{ marginTop: "30px" }}>
+        Accommodation Preference
+      </h3>
+
+      <select
+        onChange={(e) => onAccommodationChange(e.target.value)}
+        style={{
+          marginTop: "15px",
+          width: "100%",
+          padding: "14px",
+          borderRadius: "12px",
+          border: "none",
+          fontSize: "1rem",
+        }}
+      >
+        <option value="">Select accommodation</option>
+        <option value="Boarding">Boarding</option>
+        <option value="Day">Day</option>
+      </select>
+
+      <h3 style={{ marginTop: "30px" }}>
         Select School Category
       </h3>
 
@@ -64,24 +87,87 @@ export default function SchoolFilter({
         Select County Preference
       </h3>
 
-      <select
-        onChange={(e) => onCountyChange(e.target.value)}
+      <p
         style={{
-          marginTop: "15px",
-          width: "100%",
-          padding: "14px",
-          borderRadius: "12px",
-          border: "none",
-          fontSize: "1rem",
+          marginTop: "8px",
+          opacity: 0.7,
+          fontSize: "0.9rem",
         }}
       >
-        <option value="">Select county</option>
-        {counties.map((county, index) => (
-          <option key={index} value={county}>
-            {county}
+        Add up to 3 counties in order of preference.
+        First added = highest priority.
+      </p>
+
+      {/* Selected counties display */}
+      {selectedCounties.length > 0 && (
+        <div style={{ marginTop: "15px" }}>
+          {selectedCounties.map((county, index) => (
+            <div
+              key={county}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                background: "#0b63f6",
+                padding: "10px 16px",
+                borderRadius: "10px",
+                marginTop: "8px",
+              }}
+            >
+              <span>
+                {index + 1}. {county}
+              </span>
+              <button
+                onClick={() => onRemoveCounty(county)}
+                style={{
+                  background: "transparent",
+                  border: "1px solid white",
+                  color: "white",
+                  borderRadius: "8px",
+                  padding: "4px 10px",
+                  cursor: "pointer",
+                  fontSize: "0.85rem",
+                }}
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* County selector — hidden when 3 already selected */}
+      {selectedCounties.length < 3 && (
+        <select
+          onChange={(e) => {
+            onAddCounty(e.target.value);
+            e.target.value = "";
+          }}
+          style={{
+            marginTop: "15px",
+            width: "100%",
+            padding: "14px",
+            borderRadius: "12px",
+            border: "none",
+            fontSize: "1rem",
+          }}
+        >
+          <option value="">
+            {selectedCounties.length === 0
+              ? "Select 1st county"
+              : selectedCounties.length === 1
+              ? "Select 2nd county (optional)"
+              : "Select 3rd county (optional)"}
           </option>
-        ))}
-      </select>
+          {counties
+            .filter((c) => !selectedCounties.includes(c))
+            .map((county, index) => (
+              <option key={index} value={county}>
+                {county}
+              </option>
+            ))}
+        </select>
+      )}
 
       <h3 style={{ marginTop: "30px" }}>
         Select Subcounty
