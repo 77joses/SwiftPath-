@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const categoryLabels = {
   C1: "C1 — National Schools",
   C2: "C2 — Extra County Schools",
@@ -51,6 +53,12 @@ function SchoolCard({ school, index }) {
         County: {school.county}
       </p>
 
+      {school.subcounty && (
+        <p style={{ marginTop: "4px", fontSize: "0.9rem" }}>
+          Subcounty: {school.subcounty}
+        </p>
+      )}
+
       <p style={{ marginTop: "4px", fontSize: "0.9rem" }}>
         Gender: {school.gender}
       </p>
@@ -67,8 +75,16 @@ function SchoolCard({ school, index }) {
 }
 
 function CategoryGroup({ category, schools }) {
+  const [showAll, setShowAll] = useState(false);
   const color = categoryColors[category];
   const label = categoryLabels[category];
+  const LIMIT = 7;
+
+  const displayed = showAll
+    ? schools
+    : schools.slice(0, LIMIT);
+
+  const hasMore = schools.length > LIMIT;
 
   return (
     <div
@@ -78,6 +94,7 @@ function CategoryGroup({ category, schools }) {
         marginTop: "40px",
       }}
     >
+      {/* Category header */}
       <div
         style={{
           background: color,
@@ -102,6 +119,7 @@ function CategoryGroup({ category, schools }) {
         </span>
       </div>
 
+      {/* Empty state */}
       {schools.length === 0 ? (
         <div
           style={{
@@ -115,16 +133,42 @@ function CategoryGroup({ category, schools }) {
         >
           {category === "C4"
             ? "C4 schools offer STEM only. No match for your current recommendation."
+            : category === "C3" || category === "C4"
+            ? "Select a subcounty to see schools in this category."
             : "No schools found for your current filters in this category."}
         </div>
       ) : (
-        schools.map((school, index) => (
-          <SchoolCard
-            key={index}
-            school={school}
-            index={index}
-          />
-        ))
+        <>
+          {displayed.map((school, index) => (
+            <SchoolCard
+              key={index}
+              school={school}
+              index={index}
+            />
+          ))}
+
+          {/* Show more / show less */}
+          {hasMore && (
+            <button
+              onClick={() => setShowAll(!showAll)}
+              style={{
+                marginTop: "15px",
+                width: "100%",
+                padding: "12px",
+                borderRadius: "12px",
+                border: `1px solid ${color}`,
+                background: "transparent",
+                color: "white",
+                fontSize: "0.95rem",
+                cursor: "pointer",
+              }}
+            >
+              {showAll
+                ? "Show less"
+                : `Show ${schools.length - LIMIT} more schools`}
+            </button>
+          )}
+        </>
       )}
     </div>
   );
