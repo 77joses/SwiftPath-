@@ -23,14 +23,19 @@ import SchoolRecommendations from "./components/SchoolRecommendations";
 import CombinationSelector from "./components/CombinationSelector";
 
 const nyeriSubcountySchools = {
-  "Kieni West": kieniWestSchools,
+  "Mukurwe-ini": MukurweiniSchools,
   "Kieni East": kieniEastSchools,
+  "Kieni West": kieniWestSchools,
   "Mathira East": mathiraEastSchools,
   "Mathira West": mathiraWestSchools,
-  Tetu: tetuSchools,
-  "Nyeri South": nyeriSouthSchools,
-  "Mukurwe-ini": MukurweiniSchools,
   "Nyeri Central": nyeriCentralSchools,
+  "Nyeri South": nyeriSouthSchools,
+  "Tetu": tetuSchools,
+};
+
+// All subcounty school maps by county
+const allSubcountySchools = {
+  "Nyeri": nyeriSubcountySchools,
 };
 
 const getCountyScore = (schoolCounty, selectedCounties) => {
@@ -69,13 +74,12 @@ const getAccommodationScore = (
   return 0;
 };
 
-const rankAndSlice = (
+const rankSchools = (
   schools,
   selectedCounties,
   selectedGender,
   pathwayScores,
-  selectedAccommodation,
-  max
+  selectedAccommodation
 ) => {
   const scored = schools.map((school) => ({
     ...school,
@@ -89,7 +93,7 @@ const rankAndSlice = (
       ),
   }));
   scored.sort((a, b) => b._score - a._score);
-  return scored.slice(0, max);
+  return scored;
 };
 
 export default function App() {
@@ -102,14 +106,15 @@ export default function App() {
   const [performances, setPerformances] = useState({});
   const [selectedCounties, setSelectedCounties] = useState([]);
   const [selectedSubcounty, setSelectedSubcounty] = useState("");
+  const [selectedSubcountyCounty, setSelectedSubcountyCounty] =
+    useState("");
   const [selectedDisability, setSelectedDisability] = useState("");
   const [selectedCombination, setSelectedCombination] = useState("");
   const [combinationFeedback, setCombinationFeedback] = useState("");
   const [pathwayScores, setPathwayScores] = useState([]);
   const [selectedGender, setSelectedGender] = useState("");
-  const [selectedAccommodation, setSelectedAccommodation] = useState("");
-
-  // Payment states
+  const [selectedAccommodation, setSelectedAccommodation] =
+    useState("");
   const [phone, setPhone] = useState("");
   const [unlocked, setUnlocked] = useState(false);
   const [generationsLeft, setGenerationsLeft] = useState(0);
@@ -136,6 +141,23 @@ export default function App() {
     setSelectedCounties((prev) =>
       prev.filter((c) => c !== county)
     );
+    // Clear subcounty if it belonged to removed county
+    if (selectedSubcountyCounty === county) {
+      setSelectedSubcounty("");
+      setSelectedSubcountyCounty("");
+    }
+  };
+
+  const handleSubcountyChange = (value) => {
+    if (!value) {
+      setSelectedSubcounty("");
+      setSelectedSubcountyCounty("");
+      return;
+    }
+    // value format: "County::Subcounty"
+    const [county, subcounty] = value.split("::");
+    setSelectedSubcounty(subcounty);
+    setSelectedSubcountyCounty(county);
   };
 
   const analyzeCombination = (pathway) => {
@@ -225,7 +247,9 @@ export default function App() {
       performances["Integrated Science"] === "EE2"
     ) {
       stemScore += 4;
-      reasons.push("You demonstrated strength in Integrated Science.");
+      reasons.push(
+        "You demonstrated strength in Integrated Science."
+      );
     }
 
     if (
@@ -243,7 +267,9 @@ export default function App() {
       performances["Social Studies"] === "EE2"
     ) {
       socialScore += 4;
-      reasons.push("You performed strongly in Social Studies.");
+      reasons.push(
+        "You performed strongly in Social Studies."
+      );
     }
 
     const ranked = [
@@ -263,7 +289,9 @@ export default function App() {
 
   const handleUnlock = async () => {
     if (!phone || phone.length < 9) {
-      setPaymentError("Please enter a valid Safaricom number.");
+      setPaymentError(
+        "Please enter a valid Safaricom number."
+      );
       return;
     }
     setCheckingPayment(true);
@@ -285,14 +313,23 @@ export default function App() {
         );
       }
     } catch (err) {
-      setPaymentError("Something went wrong. Please try again.");
+      setPaymentError(
+        "Something went wrong. Please try again."
+      );
     }
     setCheckingPayment(false);
   };
 
-  // Build school groups
-  const subcountySchools =
-    nyeriSubcountySchools[selectedSubcounty] || [];
+  // Get subcounty schools for selected subcounty
+  const getSubcountySchools = () => {
+    if (!selectedSubcounty || !selectedSubcountyCounty)
+      return [];
+    const countyMap =
+      allSubcountySchools[selectedSubcountyCounty] || {};
+    return countyMap[selectedSubcounty] || [];
+  };
+
+  const subcountySchools = getSubcountySchools();
 
   const baseFilter = (school) =>
     school.pathways?.includes(recommendedPathway) &&
@@ -300,6 +337,7 @@ export default function App() {
       school.gender === selectedGender ||
       school.gender === "Mixed");
 
+  // C1 — filter by selected counties only
   const c1Candidates = recommendedPathway
     ? c1SchoolsKenya.filter(
         (school) =>
@@ -308,39 +346,66 @@ export default function App() {
       )
     : [];
 
+  // C2 — filter by selected counties
+  // Pull C2 schools from all subcounties of selected counties
   const c2Candidates = recommendedPathway
-    ? subcountySchools.filter(
-        (school) => baseFilter(school) && school.category === "C2"
-      )
+    ? selectedCounties.flatMap((county) => {
+        const countyMap = allSubcountySchools[county] || {};
+        return Object.values(countyMap)
+          .flat()
+          .filter(
+            (school) =>
+              school.category === "C2" && baseFilter(school)
+          );
+      })
     : [];
 
+  // C3 — filter by selected subcounty only
   const c3Candidates = recommendedPathway
     ? subcountySchools.filter(
-        (school) => baseFilter(school) && school.category === "C3"
+        (school) =>
+          school.category === "C3" && baseFilter(school)
       )
     : [];
 
+  // C4 — filter by selected subcounty only
   const c4Candidates = recommendedPathway
     ? subcountySchools.filter(
-        (school) => baseFilter(school) && school.category === "C4"
+        (school) =>
+          school.category === "C4" && baseFilter(school)
       )
     : [];
 
-  const c1Schools = rankAndSlice(
-    c1Candidates, selectedCounties, selectedGender,
-    pathwayScores, selectedAccommodation, 3
+  const c1Schools = rankSchools(
+    c1Candidates,
+    selectedCounties,
+    selectedGender,
+    pathwayScores,
+    selectedAccommodation
   );
-  const c2Schools = rankAndSlice(
-    c2Candidates, selectedCounties, selectedGender,
-    pathwayScores, selectedAccommodation, 3
+
+  const c2Schools = rankSchools(
+    c2Candidates,
+    selectedCounties,
+    selectedGender,
+    pathwayScores,
+    selectedAccommodation
   );
-  const c3Schools = rankAndSlice(
-    c3Candidates, selectedCounties, selectedGender,
-    pathwayScores, selectedAccommodation, 3
+
+  const c3Schools = rankSchools(
+    c3Candidates,
+    selectedCounties,
+    selectedGender,
+    pathwayScores,
+    selectedAccommodation
   );
-  const c4Schools = rankAndSlice(
-    c4Candidates, selectedCounties, selectedGender,
-    pathwayScores, selectedAccommodation, 3
+
+  const c4Schools = rankSchools(
+    c4Candidates,
+    selectedCounties,
+    selectedGender,
+    pathwayScores,
+    selectedAccommodation
   );
 
   return (
@@ -378,8 +443,8 @@ export default function App() {
             Your future starts with one decision.
           </p>
           <h2 style={{ marginTop: "10px" }}>
-  Welcome to SwiftPath
-</h2>
+            Welcome to SwiftPath
+          </h2>
           <p
             style={{
               marginTop: "6px",
@@ -412,10 +477,10 @@ export default function App() {
             one is truly yours?
           </p>
           <p style={{ marginTop: "15px" }}>
-            SwiftPath analyses your strengths, your grades, and
-            your ambitions — then points you to the exact
-            pathway, subject combination, and schools where you
-            will thrive.
+            SwiftPath analyses your strengths, your grades,
+            and your ambitions — then points you to the exact
+            pathway, subject combination, and schools where
+            you will thrive.
           </p>
           <p
             style={{
@@ -502,9 +567,10 @@ export default function App() {
             counties={counties}
             subcounties={subcounties}
             selectedCounties={selectedCounties}
+            selectedSubcounty={selectedSubcounty}
             onAddCounty={handleAddCounty}
             onRemoveCounty={handleRemoveCounty}
-            onSubcountyChange={setSelectedSubcounty}
+            onSubcountyChange={handleSubcountyChange}
             onDisabilityChange={setSelectedDisability}
             onGenderChange={setSelectedGender}
             onAccommodationChange={setSelectedAccommodation}
@@ -553,14 +619,23 @@ export default function App() {
             <div style={{ marginTop: "30px" }}>
               <h3>Alternative Pathways</h3>
               {pathwayScores.map((item, index) => (
-                <p key={index} style={{ marginTop: "10px" }}>
-                  {index + 1}. {item.pathway} ({item.score} points)
+                <p
+                  key={index}
+                  style={{ marginTop: "10px" }}
+                >
+                  {index + 1}. {item.pathway} (
+                  {item.score} points)
                 </p>
               ))}
             </div>
             <div style={{ marginTop: "30px" }}>
               <h3>Subject Combination Analysis</h3>
-              <p style={{ marginTop: "12px", lineHeight: "1.7" }}>
+              <p
+                style={{
+                  marginTop: "12px",
+                  lineHeight: "1.7",
+                }}
+              >
                 {combinationFeedback}
               </p>
             </div>
@@ -610,7 +685,8 @@ export default function App() {
                 fontSize: "1.1rem",
               }}
             >
-              Pay KSH 20 to Till: <strong> 5425894</strong>
+              Pay KSH 20 to Till:{" "}
+              <strong>YOUR TILL NUMBER</strong>
             </p>
 
             <p style={{ marginTop: "20px", opacity: 0.8 }}>
@@ -649,7 +725,10 @@ export default function App() {
             <button
               className="primary"
               onClick={handleUnlock}
-              style={{ marginTop: "20px", width: "100%" }}
+              style={{
+                marginTop: "20px",
+                width: "100%",
+              }}
               disabled={checkingPayment}
             >
               {checkingPayment
