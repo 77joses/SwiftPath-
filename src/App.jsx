@@ -610,7 +610,7 @@ export default function App() {
                 fontSize: "1.1rem",
               }}
             >
-              Pay KSH 20 to Till: <strong>YOUR 5425894</strong>
+              Pay KSH 20 to Till: <strong> 5425894</strong>
             </p>
 
             <p style={{ marginTop: "20px", opacity: 0.8 }}>
