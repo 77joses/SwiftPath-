@@ -33,6 +33,65 @@ const nyeriSubcountySchools = {
   "Nyeri Central": nyeriCentralSchools,
 };
 
+// County priority scores based on selection order
+const getCountyScore = (schoolCounty, selectedCounties) => {
+  const index = selectedCounties.indexOf(schoolCounty);
+  if (index === 0) return 10;
+  if (index === 1) return 6;
+  if (index === 2) return 3;
+  return 0;
+};
+
+// Gender score
+const getGenderScore = (schoolGender, selectedGender) => {
+  if (selectedGender === "") return 0;
+  if (schoolGender === selectedGender) return 4;
+  if (schoolGender === "Mixed") return 2;
+  return 0;
+};
+
+// Pathway score based on quiz ranking
+const getPathwayScore = (schoolPathways, pathwayScores) => {
+  if (!pathwayScores.length) return 0;
+  let best = 0;
+  pathwayScores.forEach((item, index) => {
+    if (schoolPathways?.includes(item.pathway)) {
+      const score = index === 0 ? 4 : index === 1 ? 2 : 1;
+      if (score > best) best = score;
+    }
+  });
+  return best;
+};
+
+// Accommodation score
+const getAccommodationScore = (schoolAccommodation, selectedAccommodation) => {
+  if (selectedAccommodation === "") return 0;
+  if (schoolAccommodation === selectedAccommodation) return 3;
+  return 0;
+};
+
+// Rank and slice schools
+const rankSchools = (
+  schools,
+  selectedCounties,
+  selectedGender,
+  pathwayScores,
+  selectedAccommodation
+) => {
+  const scored = schools.map((school) => ({
+    ...school,
+    _score:
+      getCountyScore(school.county, selectedCounties) +
+      getGenderScore(school.gender, selectedGender) +
+      getPathwayScore(school.pathways, pathwayScores) +
+      getAccommodationScore(school.accommodation, selectedAccommodation),
+  }));
+
+  scored.sort((a, b) => b._score - a._score);
+
+  return scored.slice(0, 7);
+};
+
 export default function App() {
 
   const [recommendedPathway, setRecommendedPathway] =
@@ -47,8 +106,8 @@ export default function App() {
   const [performances, setPerformances] =
     useState({});
 
-  const [selectedCounty, setSelectedCounty] =
-    useState("");
+  const [selectedCounties, setSelectedCounties] =
+    useState([]);
 
   const [selectedSubcounty, setSelectedSubcounty] =
     useState("");
@@ -71,36 +130,43 @@ export default function App() {
   const [selectedGender, setSelectedGender] =
     useState("");
 
-  const handlePerformanceChange = (
-    subject,
-    band
-  ) => {
+  const [selectedAccommodation, setSelectedAccommodation] =
+    useState("");
+
+  const handlePerformanceChange = (subject, band) => {
     setPerformances((prev) => ({
       ...prev,
       [subject]: band,
     }));
   };
 
-  const handleAnswer = (
-    question,
-    answer
-  ) => {
+  const handleAnswer = (question, answer) => {
     setAnswers((prev) => ({
       ...prev,
       [question]: answer,
     }));
   };
 
-  const analyzeCombination = (
-    pathway
-  ) => {
+  const handleAddCounty = (county) => {
+    if (county === "") return;
+    if (selectedCounties.includes(county)) return;
+    if (selectedCounties.length >= 3) return;
+    setSelectedCounties((prev) => [...prev, county]);
+  };
+
+  const handleRemoveCounty = (county) => {
+    setSelectedCounties((prev) =>
+      prev.filter((c) => c !== county)
+    );
+  };
+
+  const analyzeCombination = (pathway) => {
     if (selectedCombination === "") {
       setCombinationFeedback("");
       return;
     }
 
-    const combination =
-      selectedCombination.toLowerCase();
+    const combination = selectedCombination.toLowerCase();
 
     if (
       pathway === "STEM" &&
@@ -158,9 +224,7 @@ export default function App() {
     ) {
       stemScore += 3;
       reasons.push("You enjoy analytical problem solving.");
-    }
-
-    else if (
+    } else if (
       answers["Do you enjoy solving complex problems?"] === "No"
     ) {
       stemScore -= 1;
@@ -171,9 +235,7 @@ export default function App() {
     ) {
       artsScore += 3;
       reasons.push("You show strong creative interests.");
-    }
-
-    else if (
+    } else if (
       answers["Do you enjoy creative activities?"] === "No"
     ) {
       artsScore -= 1;
@@ -185,9 +247,7 @@ export default function App() {
     ) {
       stemScore += 4;
       reasons.push("You performed strongly in Mathematics.");
-    }
-
-    else if (
+    } else if (
       performances["Mathematics"] === "AE" ||
       performances["Mathematics"] === "BE"
     ) {
@@ -221,52 +281,60 @@ export default function App() {
       reasons.push("You performed strongly in Social Studies.");
     }
 
-    const rankedScores = [
+    const ranked = [
       { pathway: "STEM", score: stemScore },
       { pathway: "Arts & Sports Science", score: artsScore },
       { pathway: "Social Sciences", score: socialScore },
     ];
 
-    rankedScores.sort((a, b) => b.score - a.score);
+    ranked.sort((a, b) => b.score - a.score);
 
-    setPathwayScores(rankedScores);
+    setPathwayScores(ranked);
 
-    const topPathway = rankedScores[0].pathway;
-
+    const topPathway = ranked[0].pathway;
     setRecommendedPathway(topPathway);
     setRecommendationReason(reasons.join(" "));
     analyzeCombination(topPathway);
   };
 
-  let filteredSchools = [];
+  // Build candidate schools
+  let candidateSchools = [];
 
-  if (selectedCounty === "Nyeri") {
+  if (selectedCategory === "C1") {
+
+    candidateSchools = c1SchoolsKenya.filter((school) =>
+      school.pathways?.includes(recommendedPathway) &&
+      selectedCounties.includes(school.county) &&
+      (selectedGender === "" ||
+        school.gender === selectedGender ||
+        school.gender === "Mixed")
+    );
+
+  } else if (selectedCounties.some((c) => c === "Nyeri")) {
 
     const selectedSubcountySchools =
       nyeriSubcountySchools[selectedSubcounty] || [];
 
-    filteredSchools = selectedSubcountySchools.filter(
-      (school) =>
-        school.pathways?.includes(recommendedPathway) &&
-        (selectedCategory === "" ||
-          school.category === selectedCategory) &&
-        (selectedGender === "" ||
-          school.gender === selectedGender ||
-          school.gender === "Mixed")
+    candidateSchools = selectedSubcountySchools.filter((school) =>
+      school.pathways?.includes(recommendedPathway) &&
+      (selectedCategory === "" ||
+        school.category === selectedCategory) &&
+      (selectedGender === "" ||
+        school.gender === selectedGender ||
+        school.gender === "Mixed")
     );
   }
 
-  if (selectedCategory === "C1") {
-
-    filteredSchools = c1SchoolsKenya.filter(
-      (school) =>
-        school.pathways?.includes(recommendedPathway) &&
-        school.county === selectedCounty &&
-        (selectedGender === "" ||
-          school.gender === selectedGender ||
-          school.gender === "Mixed")
-    );
-  }
+  // Rank and limit to 7
+  const filteredSchools = recommendedPathway
+    ? rankSchools(
+        candidateSchools,
+        selectedCounties,
+        selectedGender,
+        pathwayScores,
+        selectedAccommodation
+      )
+    : [];
 
   return (
     <div className="container">
@@ -317,30 +385,19 @@ export default function App() {
             </p>
 
             <div style={{ marginTop: "30px" }}>
-
               <h3>Alternative Pathways</h3>
-
               {pathwayScores.map((item, index) => (
                 <p key={index} style={{ marginTop: "10px" }}>
                   {index + 1}. {item.pathway} ({item.score} points)
                 </p>
               ))}
-
             </div>
 
             <div style={{ marginTop: "30px" }}>
-
               <h3>Subject Combination Analysis</h3>
-
-              <p
-                style={{
-                  marginTop: "12px",
-                  lineHeight: "1.7",
-                }}
-              >
+              <p style={{ marginTop: "12px", lineHeight: "1.7" }}>
                 {combinationFeedback}
               </p>
-
             </div>
 
           </div>
@@ -378,7 +435,6 @@ export default function App() {
           }}
         >
           <h2>Subject Performance</h2>
-
           {subjects.map((subject, index) => (
             <PerformanceCard
               key={index}
@@ -398,7 +454,6 @@ export default function App() {
           }}
         >
           <h2>Subject Combination</h2>
-
           <CombinationSelector
             combinations={subjectCombinations}
             onCombinationChange={setSelectedCombination}
@@ -417,11 +472,14 @@ export default function App() {
           <SchoolFilter
             counties={counties}
             subcounties={subcounties}
-            onCountyChange={setSelectedCounty}
+            selectedCounties={selectedCounties}
+            onAddCounty={handleAddCounty}
+            onRemoveCounty={handleRemoveCounty}
             onSubcountyChange={setSelectedSubcounty}
             onCategoryChange={setSelectedCategory}
             onDisabilityChange={setSelectedDisability}
             onGenderChange={setSelectedGender}
+            onAccommodationChange={setSelectedAccommodation}
           />
         </div>
 
@@ -436,12 +494,10 @@ export default function App() {
             }}
           >
             <h2>Recommended Schools</h2>
-
             <SchoolRecommendations
               schools={filteredSchools}
               selectedCategory={selectedCategory}
             />
-
           </div>
         )}
 
