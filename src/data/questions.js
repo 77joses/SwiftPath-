@@ -1,8 +1,8 @@
 const questions = [
   {
     id: 1,
-    type: "select",
-    question: "Which subjects do you enjoy most?",
+    type: "multiselect",
+    question: "Which subjects do you enjoy most? (Select all that apply)",
     options: [
       "Mathematics",
       "English",
@@ -12,27 +12,23 @@ const questions = [
       "CRE",
       "Agriculture & Nutrition",
       "Pre-Technical Studies",
-      "Business Studies",
-      "Computer Science",
-      "Visual Arts",
-      "Performing Arts",
-      "Home Science",
+      "Creative Arts and Sports",
       "French",
       "German",
-      "Arabic"
-    ]
+      "Arabic",
+    ],
   },
 
   {
     id: 2,
     type: "yesno",
-    question: "Do you enjoy solving complex problems?"
+    question: "Do you enjoy solving complex problems?",
   },
 
   {
     id: 3,
     type: "yesno",
-    question: "Do you enjoy creative activities?"
+    question: "Do you enjoy creative activities?",
   },
 
   {
@@ -42,8 +38,8 @@ const questions = [
     options: [
       "Practical",
       "Theoretical",
-      "Both"
-    ]
+      "Both",
+    ],
   },
 
   {
@@ -65,9 +61,9 @@ const questions = [
       "Entrepreneur",
       "Scientist",
       "Accountant",
-      "Nurse"
-    ]
-  }
+      "Nurse",
+    ],
+  },
 ];
 
 export default questions;
