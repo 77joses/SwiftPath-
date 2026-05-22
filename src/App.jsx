@@ -33,7 +33,6 @@ const nyeriSubcountySchools = {
   "Tetu": tetuSchools,
 };
 
-// All subcounty school maps by county
 const allSubcountySchools = {
   "Nyeri": nyeriSubcountySchools,
 };
@@ -108,9 +107,12 @@ export default function App() {
   const [selectedSubcounty, setSelectedSubcounty] = useState("");
   const [selectedSubcountyCounty, setSelectedSubcountyCounty] =
     useState("");
-  const [selectedDisability, setSelectedDisability] = useState("");
-  const [selectedCombination, setSelectedCombination] = useState("");
-  const [combinationFeedback, setCombinationFeedback] = useState("");
+  const [selectedDisability, setSelectedDisability] =
+    useState("");
+  const [selectedCombination, setSelectedCombination] =
+    useState("");
+  const [combinationFeedback, setCombinationFeedback] =
+    useState("");
   const [pathwayScores, setPathwayScores] = useState([]);
   const [selectedGender, setSelectedGender] = useState("");
   const [selectedAccommodation, setSelectedAccommodation] =
@@ -141,7 +143,6 @@ export default function App() {
     setSelectedCounties((prev) =>
       prev.filter((c) => c !== county)
     );
-    // Clear subcounty if it belonged to removed county
     if (selectedSubcountyCounty === county) {
       setSelectedSubcounty("");
       setSelectedSubcountyCounty("");
@@ -154,7 +155,6 @@ export default function App() {
       setSelectedSubcountyCounty("");
       return;
     }
-    // value format: "County::Subcounty"
     const [county, subcounty] = value.split("::");
     setSelectedSubcounty(subcounty);
     setSelectedSubcountyCounty(county);
@@ -320,7 +320,6 @@ export default function App() {
     setCheckingPayment(false);
   };
 
-  // Get subcounty schools for selected subcounty
   const getSubcountySchools = () => {
     if (!selectedSubcounty || !selectedSubcountyCounty)
       return [];
@@ -337,7 +336,6 @@ export default function App() {
       school.gender === selectedGender ||
       school.gender === "Mixed");
 
-  // C1 — filter by selected counties only
   const c1Candidates = recommendedPathway
     ? c1SchoolsKenya.filter(
         (school) =>
@@ -346,8 +344,6 @@ export default function App() {
       )
     : [];
 
-  // C2 — filter by selected counties
-  // Pull C2 schools from all subcounties of selected counties
   const c2Candidates = recommendedPathway
     ? selectedCounties.flatMap((county) => {
         const countyMap = allSubcountySchools[county] || {};
@@ -360,7 +356,6 @@ export default function App() {
       })
     : [];
 
-  // C3 — filter by selected subcounty only
   const c3Candidates = recommendedPathway
     ? subcountySchools.filter(
         (school) =>
@@ -368,7 +363,6 @@ export default function App() {
       )
     : [];
 
-  // C4 — filter by selected subcounty only
   const c4Candidates = recommendedPathway
     ? subcountySchools.filter(
         (school) =>
@@ -377,35 +371,20 @@ export default function App() {
     : [];
 
   const c1Schools = rankSchools(
-    c1Candidates,
-    selectedCounties,
-    selectedGender,
-    pathwayScores,
-    selectedAccommodation
+    c1Candidates, selectedCounties, selectedGender,
+    pathwayScores, selectedAccommodation
   );
-
   const c2Schools = rankSchools(
-    c2Candidates,
-    selectedCounties,
-    selectedGender,
-    pathwayScores,
-    selectedAccommodation
+    c2Candidates, selectedCounties, selectedGender,
+    pathwayScores, selectedAccommodation
   );
-
   const c3Schools = rankSchools(
-    c3Candidates,
-    selectedCounties,
-    selectedGender,
-    pathwayScores,
-    selectedAccommodation
+    c3Candidates, selectedCounties, selectedGender,
+    pathwayScores, selectedAccommodation
   );
-
   const c4Schools = rankSchools(
-    c4Candidates,
-    selectedCounties,
-    selectedGender,
-    pathwayScores,
-    selectedAccommodation
+    c4Candidates, selectedCounties, selectedGender,
+    pathwayScores, selectedAccommodation
   );
 
   return (
