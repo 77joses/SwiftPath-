@@ -11,6 +11,15 @@ import kirinyagaEastSchools from "./data/kirinyagaEastSchools";
 import kirinyagaWestSchools from "./data/kirinyagaWestSchools";
 import mweaEastSchools from "./data/mweaEastSchools";
 import mweaWestSchools from "./data/mweaWestSchools";
+import gatangaSchools from "./data/gatangaSchools";
+import ithangaKakuziSchools from "./data/ithangaKakuziSchools";
+import kahuroSchools from "./data/kahuroSchools";
+import kandaraSchools from "./data/kandaraSchools";
+import kangemaSchools from "./data/kangemaSchools";
+import kigumoSchools from "./data/kigumoSchools";
+import kiharuSchools from "./data/kiharuSchools";
+import mathioyaSchools from "./data/mathioyaSchools";
+import murangaSouthSchools from "./data/murangaSouthSchools";
 import c1SchoolsKenya from "./data/c1SchoolsKenya";
 import { useState } from "react";
 
@@ -37,8 +46,6 @@ const nyeriSubcountySchools = {
   "Nyeri Central": nyeriCentralSchools,
 };
 
-// Expandable as new counties are added
-
 const kirinyagaSubcountySchools = {
   "Kirinyaga Central": kirinyagaCentralSchools,
   "Kirinyaga East": kirinyagaEastSchools,
@@ -47,10 +54,24 @@ const kirinyagaSubcountySchools = {
   "Mwea West": mweaWestSchools,
 };
 
+const murangaSubcountySchools = {
+  "Gatanga": gatangaSchools,
+  "Ithanga/Kakuzi": ithangaKakuziSchools,
+  "Kahuro": kahuroSchools,
+  "Kandara": kandaraSchools,
+  "Kangema": kangemaSchools,
+  "Kigumo": kigumoSchools,
+  "Kiharu": kiharuSchools,
+  "Mathioya": mathioyaSchools,
+  "Murang'a South": murangaSouthSchools,
+};
+
 const allSubcountySchools = {
   "Nyeri": nyeriSubcountySchools,
   "Kirinyaga": kirinyagaSubcountySchools,
+  "Murang'a": murangaSubcountySchools,
 };
+
 const getCountyScore = (schoolCounty, selectedCounties) => {
   const index = selectedCounties.indexOf(schoolCounty);
   if (index === 0) return 10;
@@ -87,7 +108,6 @@ const getAccommodationScore = (
   return 0;
 };
 
-// Full rank — no slice here; SchoolRecommendations handles Show More
 const rankSchools = (
   schools,
   selectedCounties,
@@ -108,6 +128,52 @@ const rankSchools = (
   }));
   scored.sort((a, b) => b._score - a._score);
   return scored;
+};
+
+// Subject to pathway mapping for multi-select scoring
+const subjectPathwayMap = {
+  "Mathematics": { stem: 4 },
+  "Integrated Science": { stem: 4 },
+  "Pre-Technical Studies": { stem: 3 },
+  "Agriculture & Nutrition": { stem: 2 },
+  "English": { social: 2 },
+  "Kiswahili": { social: 2 },
+  "Social Studies": { social: 4 },
+  "CRE": { social: 3 },
+  "French": { social: 2 },
+  "German": { social: 2 },
+  "Arabic": { social: 2 },
+  "Creative Arts and Sports": { arts: 4 },
+};
+
+const careerPathwayMap = {
+  "Doctor": { stem: 4 },
+  "Engineer": { stem: 4 },
+  "Software Developer": { stem: 4 },
+  "Scientist": { stem: 4 },
+  "Pilot": { stem: 3 },
+  "Architect": { stem: 3 },
+  "Nurse": { stem: 2 },
+  "Lawyer": { social: 4 },
+  "Journalist": { social: 3 },
+  "Teacher": { social: 3 },
+  "Entrepreneur": { social: 2 },
+  "Accountant": { social: 3 },
+  "Graphic Designer": { arts: 4 },
+  "Musician": { arts: 4 },
+  "Athlete": { arts: 4 },
+};
+
+const bandScore = (band) => {
+  if (band.startsWith("EE1")) return 8;
+  if (band.startsWith("EE2")) return 7;
+  if (band.startsWith("ME1")) return 6;
+  if (band.startsWith("ME2")) return 5;
+  if (band.startsWith("AE1")) return 4;
+  if (band.startsWith("AE2")) return 3;
+  if (band.startsWith("BE1")) return 2;
+  if (band.startsWith("BE2")) return 1;
+  return 0;
 };
 
 export default function App() {
@@ -132,8 +198,6 @@ export default function App() {
   const [selectedGender, setSelectedGender] = useState("");
   const [selectedAccommodation, setSelectedAccommodation] =
     useState("");
-
-  // Payment states
   const [phone, setPhone] = useState("");
   const [unlocked, setUnlocked] = useState(false);
   const [generationsLeft, setGenerationsLeft] = useState(0);
@@ -160,14 +224,12 @@ export default function App() {
     setSelectedCounties((prev) =>
       prev.filter((c) => c !== county)
     );
-    // Clear subcounty if it belonged to the removed county
     if (selectedSubcountyCounty === county) {
       setSelectedSubcounty("");
       setSelectedSubcountyCounty("");
     }
   };
 
-  // value format from SchoolFilter: "County::Subcounty"
   const handleSubcountyChange = (value) => {
     if (!value) {
       setSelectedSubcounty("");
@@ -197,7 +259,8 @@ export default function App() {
     } else if (
       pathway === "Arts & Sports Science" &&
       (combination.includes("art") ||
-        combination.includes("music"))
+        combination.includes("music") ||
+        combination.includes("sport"))
     ) {
       setCombinationFeedback(
         "This combination aligns strongly with creative and arts pathways."
@@ -223,6 +286,27 @@ export default function App() {
     let socialScore = 0;
     let reasons = [];
 
+    // Multi-subject selection scoring
+    const likedSubjects =
+      answers["Which subjects do you enjoy most? (Select all that apply)"] || [];
+
+    if (Array.isArray(likedSubjects)) {
+      likedSubjects.forEach((subject) => {
+        const mapping = subjectPathwayMap[subject];
+        if (mapping) {
+          if (mapping.stem) stemScore += mapping.stem;
+          if (mapping.arts) artsScore += mapping.arts;
+          if (mapping.social) socialScore += mapping.social;
+        }
+      });
+      if (likedSubjects.length > 0) {
+        reasons.push(
+          `Your subject interests include: ${likedSubjects.join(", ")}.`
+        );
+      }
+    }
+
+    // Yes/No questions
     if (
       answers["Do you enjoy solving complex problems?"] === "Yes"
     ) {
@@ -245,51 +329,60 @@ export default function App() {
       artsScore -= 1;
     }
 
+    // Practical vs theoretical
     if (
-      performances["Mathematics"] === "EE1" ||
-      performances["Mathematics"] === "EE2"
+      answers["Do you prefer practical or theoretical learning?"] === "Practical"
     ) {
-      stemScore += 4;
-      reasons.push("You performed strongly in Mathematics.");
+      stemScore += 2;
+      artsScore += 2;
     } else if (
-      performances["Mathematics"] === "AE" ||
-      performances["Mathematics"] === "BE"
+      answers["Do you prefer practical or theoretical learning?"] === "Theoretical"
     ) {
-      stemScore -= 2;
+      socialScore += 2;
+    }
+
+    // Career interests
+    const career =
+      answers["Which careers interest you most?"];
+    if (career && careerPathwayMap[career]) {
+      const mapping = careerPathwayMap[career];
+      if (mapping.stem) stemScore += mapping.stem;
+      if (mapping.arts) artsScore += mapping.arts;
+      if (mapping.social) socialScore += mapping.social;
       reasons.push(
-        "Your Mathematics performance may make advanced STEM pathways more challenging."
+        `Your interest in ${career} aligns with your recommended pathway.`
       );
     }
 
-    if (
-      performances["Integrated Science"] === "EE1" ||
-      performances["Integrated Science"] === "EE2"
-    ) {
-      stemScore += 4;
-      reasons.push(
-        "You demonstrated strength in Integrated Science."
-      );
-    }
-
-    if (
-      performances["Visual Arts"] === "EE1" ||
-      performances["Performing Arts"] === "EE1"
-    ) {
-      artsScore += 4;
-      reasons.push(
-        "Your artistic performance supports creative pathways."
-      );
-    }
-
-    if (
-      performances["Social Studies"] === "EE1" ||
-      performances["Social Studies"] === "EE2"
-    ) {
-      socialScore += 4;
-      reasons.push(
-        "You performed strongly in Social Studies."
-      );
-    }
+    // Subject performance scoring
+    Object.entries(performances).forEach(([subject, band]) => {
+      const score = bandScore(band);
+      const mapping = subjectPathwayMap[subject];
+      if (mapping && score >= 6) {
+        if (mapping.stem) {
+          stemScore += score;
+          reasons.push(
+            `Strong performance in ${subject} supports STEM.`
+          );
+        }
+        if (mapping.arts) {
+          artsScore += score;
+          reasons.push(
+            `Strong performance in ${subject} supports Arts & Sports Science.`
+          );
+        }
+        if (mapping.social) {
+          socialScore += score;
+          reasons.push(
+            `Strong performance in ${subject} supports Social Sciences.`
+          );
+        }
+      } else if (mapping && score <= 3) {
+        if (mapping.stem) stemScore -= 2;
+        if (mapping.arts) artsScore -= 1;
+        if (mapping.social) socialScore -= 1;
+      }
+    });
 
     const ranked = [
       { pathway: "STEM", score: stemScore },
@@ -339,7 +432,6 @@ export default function App() {
     setCheckingPayment(false);
   };
 
-  // Get schools for selected subcounty from correct county map
   const getSubcountySchools = () => {
     if (!selectedSubcounty || !selectedSubcountyCounty)
       return [];
@@ -356,7 +448,6 @@ export default function App() {
       school.gender === selectedGender ||
       school.gender === "Mixed");
 
-  // C1 — county filter only, ignores subcounty
   const c1Candidates = recommendedPathway
     ? c1SchoolsKenya.filter(
         (school) =>
@@ -365,7 +456,6 @@ export default function App() {
       )
     : [];
 
-  // C2 — all subcounties of selected counties, ignores subcounty selection
   const c2Candidates = recommendedPathway
     ? selectedCounties.flatMap((county) => {
         const countyMap = allSubcountySchools[county] || {};
@@ -378,7 +468,6 @@ export default function App() {
       })
     : [];
 
-  // C3 — selected subcounty only
   const c3Candidates = recommendedPathway
     ? subcountySchools.filter(
         (school) =>
@@ -386,7 +475,6 @@ export default function App() {
       )
     : [];
 
-  // C4 — selected subcounty only
   const c4Candidates = recommendedPathway
     ? subcountySchools.filter(
         (school) =>
@@ -394,7 +482,6 @@ export default function App() {
       )
     : [];
 
-  // Full rank — Show More handled in SchoolRecommendations
   const c1Schools = rankSchools(
     c1Candidates, selectedCounties, selectedGender,
     pathwayScores, selectedAccommodation
@@ -418,7 +505,7 @@ export default function App() {
 
         {/* LOGO */}
         <img
-          src="https://raw.githubusercontent.com/77joses/SwiftPath-/main/file_00000000d5d071fb9329dd2c6c6ce7fe.png"
+          src="/file_00000000d5d071fb9329dd2c6c6ce7fe.png"
           alt="SwiftPath Logo"
           style={{
             width: "220px",
@@ -446,9 +533,9 @@ export default function App() {
           >
             Your future starts with one decision.
           </p>
-        <h2 style={{ marginTop: "10px" }}>
-  Welcome to SwiftPath
-</h2>  
+          <h2 style={{ marginTop: "10px" }}>
+            Welcome to SwiftPath
+          </h2>
           <p
             style={{
               marginTop: "6px",
@@ -623,7 +710,10 @@ export default function App() {
             <div style={{ marginTop: "30px" }}>
               <h3>Alternative Pathways</h3>
               {pathwayScores.map((item, index) => (
-                <p key={index} style={{ marginTop: "10px" }}>
+                <p
+                  key={index}
+                  style={{ marginTop: "10px" }}
+                >
                   {index + 1}. {item.pathway} (
                   {item.score} points)
                 </p>
