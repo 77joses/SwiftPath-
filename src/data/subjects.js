@@ -7,11 +7,7 @@ const subjects = [
   "CRE",
   "Agriculture & Nutrition",
   "Pre-Technical Studies",
-  "Business Studies",
-  "Computer Science",
-  "Visual Arts",
-  "Performing Arts",
-  "Home Science"
+  "Creative Arts and Sports",
 ];
 
 export default subjects;
