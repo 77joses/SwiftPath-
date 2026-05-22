@@ -405,7 +405,7 @@ export default function App() {
 
         {/* LOGO */}
         <img
-          src="/file_00000000d5d071fb9329dd2c6c6ce7fe.png"
+          src="https://raw.githubusercontent.com/77joses/SwiftPath-/main/file_00000000d5d071fb9329dd2c6c6ce7fe.png"
           alt="SwiftPath Logo"
           style={{
             width: "220px",
