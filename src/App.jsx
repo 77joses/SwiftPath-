@@ -23,16 +23,17 @@ import SchoolRecommendations from "./components/SchoolRecommendations";
 import CombinationSelector from "./components/CombinationSelector";
 
 const nyeriSubcountySchools = {
-  "Mukurwe-ini": MukurweiniSchools,
-  "Kieni East": kieniEastSchools,
   "Kieni West": kieniWestSchools,
+  "Kieni East": kieniEastSchools,
   "Mathira East": mathiraEastSchools,
   "Mathira West": mathiraWestSchools,
-  "Nyeri Central": nyeriCentralSchools,
-  "Nyeri South": nyeriSouthSchools,
   "Tetu": tetuSchools,
+  "Nyeri South": nyeriSouthSchools,
+  "Mukurwe-ini": MukurweiniSchools,
+  "Nyeri Central": nyeriCentralSchools,
 };
 
+// Expandable as new counties are added
 const allSubcountySchools = {
   "Nyeri": nyeriSubcountySchools,
 };
@@ -73,6 +74,7 @@ const getAccommodationScore = (
   return 0;
 };
 
+// Full rank — no slice here; SchoolRecommendations handles Show More
 const rankSchools = (
   schools,
   selectedCounties,
@@ -117,6 +119,8 @@ export default function App() {
   const [selectedGender, setSelectedGender] = useState("");
   const [selectedAccommodation, setSelectedAccommodation] =
     useState("");
+
+  // Payment states
   const [phone, setPhone] = useState("");
   const [unlocked, setUnlocked] = useState(false);
   const [generationsLeft, setGenerationsLeft] = useState(0);
@@ -143,12 +147,14 @@ export default function App() {
     setSelectedCounties((prev) =>
       prev.filter((c) => c !== county)
     );
+    // Clear subcounty if it belonged to the removed county
     if (selectedSubcountyCounty === county) {
       setSelectedSubcounty("");
       setSelectedSubcountyCounty("");
     }
   };
 
+  // value format from SchoolFilter: "County::Subcounty"
   const handleSubcountyChange = (value) => {
     if (!value) {
       setSelectedSubcounty("");
@@ -320,6 +326,7 @@ export default function App() {
     setCheckingPayment(false);
   };
 
+  // Get schools for selected subcounty from correct county map
   const getSubcountySchools = () => {
     if (!selectedSubcounty || !selectedSubcountyCounty)
       return [];
@@ -336,6 +343,7 @@ export default function App() {
       school.gender === selectedGender ||
       school.gender === "Mixed");
 
+  // C1 — county filter only, ignores subcounty
   const c1Candidates = recommendedPathway
     ? c1SchoolsKenya.filter(
         (school) =>
@@ -344,6 +352,7 @@ export default function App() {
       )
     : [];
 
+  // C2 — all subcounties of selected counties, ignores subcounty selection
   const c2Candidates = recommendedPathway
     ? selectedCounties.flatMap((county) => {
         const countyMap = allSubcountySchools[county] || {};
@@ -356,6 +365,7 @@ export default function App() {
       })
     : [];
 
+  // C3 — selected subcounty only
   const c3Candidates = recommendedPathway
     ? subcountySchools.filter(
         (school) =>
@@ -363,6 +373,7 @@ export default function App() {
       )
     : [];
 
+  // C4 — selected subcounty only
   const c4Candidates = recommendedPathway
     ? subcountySchools.filter(
         (school) =>
@@ -370,6 +381,7 @@ export default function App() {
       )
     : [];
 
+  // Full rank — Show More handled in SchoolRecommendations
   const c1Schools = rankSchools(
     c1Candidates, selectedCounties, selectedGender,
     pathwayScores, selectedAccommodation
@@ -393,7 +405,7 @@ export default function App() {
 
         {/* LOGO */}
         <img
-          src="https://raw.githubusercontent.com/77joses/SwiftPath-/main/file_00000000d5d071fb9329dd2c6c6ce7fe.png"
+          src="/file_00000000d5d071fb9329dd2c6c6ce7fe.png"
           alt="SwiftPath Logo"
           style={{
             width: "220px",
@@ -456,10 +468,10 @@ export default function App() {
             one is truly yours?
           </p>
           <p style={{ marginTop: "15px" }}>
-            SwiftPath analyses your strengths, your grades,
-            and your ambitions — then points you to the exact
-            pathway, subject combination, and schools where
-            you will thrive.
+            SwiftPath analyses your strengths, your grades, and
+            your ambitions — then points you to the exact
+            pathway, subject combination, and schools where you
+            will thrive.
           </p>
           <p
             style={{
@@ -598,10 +610,7 @@ export default function App() {
             <div style={{ marginTop: "30px" }}>
               <h3>Alternative Pathways</h3>
               {pathwayScores.map((item, index) => (
-                <p
-                  key={index}
-                  style={{ marginTop: "10px" }}
-                >
+                <p key={index} style={{ marginTop: "10px" }}>
                   {index + 1}. {item.pathway} (
                   {item.score} points)
                 </p>
@@ -665,7 +674,7 @@ export default function App() {
               }}
             >
               Pay KSH 20 to Till:{" "}
-              <strong>YOUR TILL NUMBER</strong>
+              <strong>5425894</strong>
             </p>
 
             <p style={{ marginTop: "20px", opacity: 0.8 }}>
@@ -704,10 +713,7 @@ export default function App() {
             <button
               className="primary"
               onClick={handleUnlock}
-              style={{
-                marginTop: "20px",
-                width: "100%",
-              }}
+              style={{ marginTop: "20px", width: "100%" }}
               disabled={checkingPayment}
             >
               {checkingPayment
