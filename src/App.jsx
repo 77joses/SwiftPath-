@@ -433,9 +433,9 @@ export default function App() {
           >
             Your future starts with one decision.
           </p>
-          <h2 style={{ marginTop: "10px" }}>
-            Welcome to SwiftPath
-          </h2>
+        <h2 style={{ marginTop: "10px" }}>
+  Welcome to SwiftPath
+</h2>  
           <p
             style={{
               marginTop: "6px",
