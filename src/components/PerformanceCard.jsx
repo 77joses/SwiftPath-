@@ -2,7 +2,7 @@ import performanceBands from "../data/performanceBands";
 
 export default function PerformanceCard({
   subject,
-  onPerformanceChange
+  onPerformanceChange,
 }) {
 
   return (
@@ -20,10 +20,7 @@ export default function PerformanceCard({
 
       <select
         onChange={(e) =>
-          onPerformanceChange(
-            subject,
-            e.target.value
-          )
+          onPerformanceChange(subject, e.target.value)
         }
         style={{
           marginTop: "15px",
@@ -34,12 +31,12 @@ export default function PerformanceCard({
           fontSize: "1rem",
         }}
       >
-        <option>
+        <option value="">
           Select performance band
         </option>
 
         {performanceBands.map((band, index) => (
-          <option key={index}>
+          <option key={index} value={band}>
             {band}
           </option>
         ))}
