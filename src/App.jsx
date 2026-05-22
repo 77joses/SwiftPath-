@@ -6,7 +6,11 @@ import tetuSchools from "./data/tetuSchools";
 import nyeriSouthSchools from "./data/nyeriSouthSchools";
 import MukurweiniSchools from "./data/MukurweiniSchools";
 import nyeriCentralSchools from "./data/nyeriCentralSchools";
-
+import kirinyagaCentralSchools from "./data/kirinyagaCentralSchools";
+import kirinyagaEastSchools from "./data/kirinyagaEastSchools";
+import kirinyagaWestSchools from "./data/kirinyagaWestSchools";
+import mweaEastSchools from "./data/mweaEastSchools";
+import mweaWestSchools from "./data/mweaWestSchools";
 import c1SchoolsKenya from "./data/c1SchoolsKenya";
 import { useState } from "react";
 
@@ -34,10 +38,19 @@ const nyeriSubcountySchools = {
 };
 
 // Expandable as new counties are added
-const allSubcountySchools = {
-  "Nyeri": nyeriSubcountySchools,
+
+const kirinyagaSubcountySchools = {
+  "Kirinyaga Central": kirinyagaCentralSchools,
+  "Kirinyaga East": kirinyagaEastSchools,
+  "Kirinyaga West": kirinyagaWestSchools,
+  "Mwea East": mweaEastSchools,
+  "Mwea West": mweaWestSchools,
 };
 
+const allSubcountySchools = {
+  "Nyeri": nyeriSubcountySchools,
+  "Kirinyaga": kirinyagaSubcountySchools,
+};
 const getCountyScore = (schoolCounty, selectedCounties) => {
   const index = selectedCounties.indexOf(schoolCounty);
   if (index === 0) return 10;
