@@ -20,6 +20,10 @@ import kigumoSchools from "./data/kigumoSchools";
 import kiharuSchools from "./data/kiharuSchools";
 import mathioyaSchools from "./data/mathioyaSchools";
 import murangaSouthSchools from "./data/murangaSouthSchools";
+import manyattaSchools from "./data/manyattaSchools";
+import runyenjesSchools from "./data/runyenjesSchools";
+import mbeereNorthSchools from "./data/mbeereNorthSchools";
+import mbeereSouthSchools from "./data/mbeereSouthSchools";
 import c1SchoolsKenya from "./data/c1SchoolsKenya";
 import { useState } from "react";
 
@@ -65,11 +69,18 @@ const murangaSubcountySchools = {
   "Mathioya": mathioyaSchools,
   "Murang'a South": murangaSouthSchools,
 };
+const embuSubcountySchools = {
+  "Manyatta": manyattaSchools,
+  "Runyenjes": runyenjesSchools,
+  "Mbeere North": mbeereNorthSchools,
+  "Mbeere South": mbeereSouthSchools,
+};
 
 const allSubcountySchools = {
   "Nyeri": nyeriSubcountySchools,
   "Kirinyaga": kirinyagaSubcountySchools,
   "Murang'a": murangaSubcountySchools,
+  "Embu": embuSubcountySchools,
 };
 
 const getCountyScore = (schoolCounty, selectedCounties) => {
