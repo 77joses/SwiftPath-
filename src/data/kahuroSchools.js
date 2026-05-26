@@ -23,7 +23,7 @@ const kahuroSchools = [
   },
 
   {
-    name: "Weithaga Boys Secondary",
+    name: "Weithaga Boys Secondary School",
     subcounty: "Kahuro",
     county: "Murang'a",
     category: "C2",
@@ -257,7 +257,7 @@ const kahuroSchools = [
   },
 
   {
-    name: "Kianderi Mixed",
+    name: "Kianderi Mixed Secondary School",
     subcounty: "Kahuro",
     county: "Murang'a",
     category: "C4",
@@ -387,4 +387,15 @@ const kahuroSchools = [
   },
 
   {
-    name: "Yamugwe
+    name: "Yamugwe Secondary School",
+    subcounty: "Kahuro",
+    county: "Murang'a",
+    category: "C4",
+    gender: "Mixed",
+    accommodation: "Day",
+    pathways: ["STEM"],
+  },
+
+];
+
+export default kahuroSchools;
