@@ -1,4 +1,4 @@
-const igemsentralSchools = [
+const igembecentralSchools = [
 
   // C2 — EXTRA COUNTY
 
@@ -598,4 +598,4 @@ const igemsentralSchools = [
 
 ];
 
-export default igemsentralSchools;
+export default igembecentralSchools;
