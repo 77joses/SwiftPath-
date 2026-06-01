@@ -1,4 +1,4 @@
-const igembe SouthSchools = [
+const igembesouthSchools = [
 
   // C2 — EXTRA COUNTY
 
@@ -258,4 +258,4 @@ const igembe SouthSchools = [
 
 ];
 
-export default igembe SouthSchools;
+export default igembesouthSchools;
