@@ -24,6 +24,15 @@ import manyattaSchools from "./data/manyattaSchools";
 import runyenjesSchools from "./data/runyenjesSchools";
 import mbeereNorthSchools from "./data/mbeereNorthSchools";
 import mbeereSouthSchools from "./data/mbeereSouthSchools";
+import imentiCentralSchools from "./data/imentiCentralSchools";
+import imentiNorthSchools from "./data/imentiNorthSchools";
+import imentiSouthSchools from "./data/imentiSouthSchools";
+import tiganiaWestSchools from "./data/tiganiaWestSchools";
+import tiganiaEastSchools from "./data/tiganiaEastSchools";
+import igemsouthSchools from "./data/igemsouthSchools";
+import igemsentralSchools from "./data/igemsentralSchools";
+import igembeNorthSchools from "./data/igembeNorthSchools";
+import buuriSchools from "./data/buuriSchools";
 import c1SchoolsKenya from "./data/c1SchoolsKenya";
 import { useState } from "react";
 
@@ -69,6 +78,7 @@ const murangaSubcountySchools = {
   "Mathioya": mathioyaSchools,
   "Murang'a South": murangaSouthSchools,
 };
+
 const embuSubcountySchools = {
   "Manyatta": manyattaSchools,
   "Runyenjes": runyenjesSchools,
@@ -76,11 +86,24 @@ const embuSubcountySchools = {
   "Mbeere South": mbeereSouthSchools,
 };
 
+const meruSubcountySchools = {
+  "Imenti Central": imentiCentralSchools,
+  "Imenti North": imentiNorthSchools,
+  "Imenti South": imentiSouthSchools,
+  "Tigania West": tiganiaWestSchools,
+  "Tigania East": tiganiaEastSchools,
+  "Igembe South": igemsouthSchools,
+  "Igembe Central": igemsentralSchools,
+  "Igembe North": igembeNorthSchools,
+  "Buuri": buuriSchools,
+};
+
 const allSubcountySchools = {
   "Nyeri": nyeriSubcountySchools,
   "Kirinyaga": kirinyagaSubcountySchools,
   "Murang'a": murangaSubcountySchools,
   "Embu": embuSubcountySchools,
+  "Meru": meruSubcountySchools,
 };
 
 const getCountyScore = (schoolCounty, selectedCounties) => {
@@ -141,7 +164,6 @@ const rankSchools = (
   return scored;
 };
 
-// Subject to pathway mapping for multi-select scoring
 const subjectPathwayMap = {
   "Mathematics": { stem: 4 },
   "Integrated Science": { stem: 4 },
@@ -209,12 +231,6 @@ export default function App() {
   const [selectedGender, setSelectedGender] = useState("");
   const [selectedAccommodation, setSelectedAccommodation] =
     useState("");
-  const [phone, setPhone] = useState("");
-  const [unlocked, setUnlocked] = useState(false);
-  const [generationsLeft, setGenerationsLeft] = useState(0);
-  const [paymentError, setPaymentError] = useState("");
-  const [checkingPayment, setCheckingPayment] = useState(false);
-  const [showSchools, setShowSchools] = useState(false);
 
   const handlePerformanceChange = (subject, band) => {
     setPerformances((prev) => ({ ...prev, [subject]: band }));
@@ -297,7 +313,6 @@ export default function App() {
     let socialScore = 0;
     let reasons = [];
 
-    // Multi-subject selection scoring
     const likedSubjects =
       answers["Which subjects do you enjoy most? (Select all that apply)"] || [];
 
@@ -317,7 +332,6 @@ export default function App() {
       }
     }
 
-    // Yes/No questions
     if (
       answers["Do you enjoy solving complex problems?"] === "Yes"
     ) {
@@ -340,7 +354,6 @@ export default function App() {
       artsScore -= 1;
     }
 
-    // Practical vs theoretical
     if (
       answers["Do you prefer practical or theoretical learning?"] === "Practical"
     ) {
@@ -352,7 +365,6 @@ export default function App() {
       socialScore += 2;
     }
 
-    // Career interests
     const career =
       answers["Which careers interest you most?"];
     if (career && careerPathwayMap[career]) {
@@ -365,7 +377,6 @@ export default function App() {
       );
     }
 
-    // Subject performance scoring
     Object.entries(performances).forEach(([subject, band]) => {
       const score = bandScore(band);
       const mapping = subjectPathwayMap[subject];
@@ -407,40 +418,6 @@ export default function App() {
     setRecommendedPathway(topPathway);
     setRecommendationReason(reasons.join(" "));
     analyzeCombination(topPathway);
-    setShowSchools(false);
-  };
-
-  const handleUnlock = async () => {
-    if (!phone || phone.length < 9) {
-      setPaymentError(
-        "Please enter a valid Safaricom number."
-      );
-      return;
-    }
-    setCheckingPayment(true);
-    setPaymentError("");
-    try {
-      const res = await fetch("/api/check", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone }),
-      });
-      const data = await res.json();
-      if (data.unlocked) {
-        setUnlocked(true);
-        setGenerationsLeft(data.generations_remaining);
-        setShowSchools(true);
-      } else {
-        setPaymentError(
-          "No active unlock found for this number. Please pay KSH 20 to unlock."
-        );
-      }
-    } catch (err) {
-      setPaymentError(
-        "Something went wrong. Please try again."
-      );
-    }
-    setCheckingPayment(false);
   };
 
   const getSubcountySchools = () => {
@@ -744,114 +721,8 @@ export default function App() {
           </div>
         )}
 
-        {/* PAYMENT PROMPT */}
-        {recommendedPathway && !showSchools && (
-          <div
-            style={{
-              marginTop: "40px",
-              width: "100%",
-              maxWidth: "700px",
-              background: "#10213d",
-              padding: "25px",
-              borderRadius: "18px",
-              textAlign: "center",
-            }}
-          >
-            <h2>Your pathway is ready.</h2>
-            <h2>Your schools are waiting.</h2>
-
-            <p
-              style={{
-                marginTop: "15px",
-                lineHeight: "1.7",
-                opacity: 0.9,
-              }}
-            >
-              Unlock your personalised school recommendations
-              for just <strong>KSH 20</strong>.
-            </p>
-            <p
-              style={{
-                marginTop: "8px",
-                fontStyle: "italic",
-                opacity: 0.7,
-              }}
-            >
-              Pay once. Use five times.
-            </p>
-
-            <p
-              style={{
-                marginTop: "20px",
-                fontWeight: "bold",
-                fontSize: "1.1rem",
-              }}
-            >
-              Pay KSH 20 to Till:{" "}
-              <strong>5425894</strong>
-            </p>
-
-            <p style={{ marginTop: "20px", opacity: 0.8 }}>
-              Then enter your M-Pesa number below:
-            </p>
-
-            <input
-              type="tel"
-              placeholder="e.g. 0712345678"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              style={{
-                marginTop: "15px",
-                width: "100%",
-                padding: "14px",
-                borderRadius: "12px",
-                border: "none",
-                fontSize: "1rem",
-                background: "#1a2f55",
-                color: "white",
-              }}
-            />
-
-            {paymentError && (
-              <p
-                style={{
-                  marginTop: "10px",
-                  color: "#ff6b6b",
-                  fontSize: "0.9rem",
-                }}
-              >
-                {paymentError}
-              </p>
-            )}
-
-            <button
-              className="primary"
-              onClick={handleUnlock}
-              style={{ marginTop: "20px", width: "100%" }}
-              disabled={checkingPayment}
-            >
-              {checkingPayment
-                ? "Checking..."
-                : "Unlock My Schools"}
-            </button>
-          </div>
-        )}
-
-        {/* GENERATIONS COUNTER */}
-        {unlocked && (
-          <p
-            style={{
-              marginTop: "15px",
-              opacity: 0.7,
-              fontSize: "0.9rem",
-            }}
-          >
-            Generations remaining: {generationsLeft}
-          </p>
-        )}
-
         {/* SCHOOL RECOMMENDATIONS */}
-        {showSchools && (
+        {recommendedPathway && (
           <div
             style={{
               marginTop: "40px",
