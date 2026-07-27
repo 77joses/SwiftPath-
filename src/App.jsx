@@ -739,7 +739,7 @@ export default function App() {
               c3Schools={c3Schools}
               c4Schools={c4Schools}
             />
-          </div>
+           </div>
         )}
 
       </section>
