@@ -92,8 +92,8 @@ const meruSubcountySchools = {
   "Imenti South": imentiSouthSchools,
   "Tigania West": tiganiaWestSchools,
   "Tigania East": tiganiaEastSchools,
-  "Igembe South": igemsouthSchools,
-  "Igembe Central": igemsentralSchools,
+  "Igembe South": igembesouthSchools,
+  "Igembe Central": igembecentralSchools,
   "Igembe North": igembeNorthSchools,
   "Buuri": buuriSchools,
 };
@@ -164,6 +164,7 @@ const rankSchools = (
   return scored;
 };
 
+// Subject to pathway mapping for multi-select scoring
 const subjectPathwayMap = {
   "Mathematics": { stem: 4 },
   "Integrated Science": { stem: 4 },
@@ -313,6 +314,7 @@ export default function App() {
     let socialScore = 0;
     let reasons = [];
 
+    // Multi-subject selection scoring
     const likedSubjects =
       answers["Which subjects do you enjoy most? (Select all that apply)"] || [];
 
@@ -332,6 +334,7 @@ export default function App() {
       }
     }
 
+    // Yes/No questions
     if (
       answers["Do you enjoy solving complex problems?"] === "Yes"
     ) {
@@ -354,6 +357,7 @@ export default function App() {
       artsScore -= 1;
     }
 
+    // Practical vs theoretical
     if (
       answers["Do you prefer practical or theoretical learning?"] === "Practical"
     ) {
@@ -365,6 +369,7 @@ export default function App() {
       socialScore += 2;
     }
 
+    // Career interests
     const career =
       answers["Which careers interest you most?"];
     if (career && careerPathwayMap[career]) {
@@ -377,6 +382,7 @@ export default function App() {
       );
     }
 
+    // Subject performance scoring
     Object.entries(performances).forEach(([subject, band]) => {
       const score = bandScore(band);
       const mapping = subjectPathwayMap[subject];
